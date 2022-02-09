@@ -8,6 +8,7 @@ const MovieFilter = ({ fields, handleChange }) => {
   return (
     <Box>
       <TextField
+        role="searchbox"
         onChange={(e) => handleChange(e.target.value)}
         placeholder={text}
       />
