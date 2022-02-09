@@ -31,8 +31,7 @@ const useClasses = makeStyles({
 
 // TODO: we don't have price, but we have 'money', but it makes no sense to filter by
 // the studio's money
-// const fields = { name: 'string', genre: 'string', price: 'number' }
-const fields = { name: 'string', genre: 'string' }
+const fields = { name: 'string', genre: 'string', price: 'number' }
 
 const App = () => {
   const classes = useClasses()

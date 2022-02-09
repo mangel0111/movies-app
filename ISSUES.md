@@ -52,7 +52,9 @@ I can see that `studios` has a numeric value, but it's not related to `price` as
 <details>
 <summary>Solution</summary>
 
-Don't overthink the solution. But, in case that someone says *You should still try to do it*, I've prepared (sort of) a hook that merges both elements (`movies` and `studios`) and then return it as one array of objects (which makes it simpler to query it)
+~~Don't overthink the solution. But, in case that someone says *You should still try to do it*, I've prepared (sort of) a hook that merges both elements (`movies` and `studios`) and then return it as one array of objects (which makes it simpler to query it)~~
+
+Never mind, I've just found out `delete movie['price'];` line in the `api` folder
 
 </details>
 

@@ -1,16 +1,7 @@
 import './index.css'
-
-import React from 'react'
 import { render } from 'react-dom'
-import { QueryClient, QueryClientProvider } from 'react-query'
 
 import App from './App.jsx'
+import withQueryClient from './hoc/withQueryClient'
 
-const queryClient = new QueryClient()
-
-render(
-  <QueryClientProvider client={queryClient}>
-    <App />
-  </QueryClientProvider>,
-  document.getElementById('root')
-)
+render(withQueryClient(<App />), document.getElementById('root'))
