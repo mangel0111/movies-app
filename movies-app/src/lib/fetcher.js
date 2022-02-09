@@ -8,7 +8,6 @@ import RESOURCES from '../constants/resources'
  */
 async function fetcher(resource) {
   try {
-    console.log(RESOURCES[resource], resource)
     if (!RESOURCES[resource]) throw new Error('NO VALID RESOURCE')
     const rawData = await fetch(`${config.DOMAIN}/${RESOURCES[resource]}`)
     const data = await rawData.json()

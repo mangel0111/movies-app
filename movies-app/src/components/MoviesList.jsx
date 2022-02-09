@@ -1,31 +1,48 @@
-import config from '../constants/config'
-import { Avatar, Card, Grid, Grow, Typography } from '@material-ui/core'
+import { Box, Card, Grid, Grow, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import useAvatarSize from '../hooks/useAvatarSize'
+import Thumbnail from './Thumbnail'
+
+const useStyles = makeStyles({
+  card: {
+    border: '1px solid gray',
+    borderRadius: '4px',
+    margin: '2px',
+    padding: '5px',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: (props) =>
+      props.cardStyle === 'regularCard' ? 'column' : 'row',
+    justifyContent: (props) =>
+      props.cardStyle === 'regularCard' ? 'center' : 'left',
+  },
+  titleContainer: {
+    display: 'flex',
+    rowGap: 4,
+  },
+  text: {
+    fontWeight: 'bold',
+    display: 'inline-block',
+  },
+})
 
 const MoviesList = ({ movies, studios }) => {
   const { cardStyle, avatarSize } = useAvatarSize()
+  const classes = useStyles({ cardStyle })
+
   return (
     <Grow in>
       <Grid container justify="center" alignItems="center">
         {movies.map((movie) => (
-          //TODO: 3 move styles into a separate js file and export this class using withStyles or similar or just to css file
-          <Grid item xs={12} sm={6} lg={4}>
-            <Card className={cardStyle}>
-              <Avatar
-                alt={movie.name}
-                src={movie.img ? movie.img : config.DEFAULT_AVATAR}
-                style={{ margin: 5, width: avatarSize, height: avatarSize }}
-              />
-              <div>
-                <Typography style={{ display: 'inline-block' }}>
-                  {movie.name + ' '}
-                  <Typography
-                    style={{ fontWeight: 'bold', display: 'inline-block' }}
-                  >
-                    {movie.position}
-                  </Typography>
+          <Grid key={movie.name} item xs={12} sm={6} lg={4}>
+            <Card className={classes.card}>
+              <Thumbnail img={movie.img} size={avatarSize} />
+              <Box className={classes.titleContainer}>
+                <Typography className={classes.text}>{movie.name}</Typography>
+                <Typography className={classes.text}>
+                  {movie.position}
                 </Typography>
-              </div>
+              </Box>
               <Typography>
                 {studios.map((studio) => {
                   if (movie.studioId === studio.id) {

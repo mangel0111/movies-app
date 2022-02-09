@@ -5,17 +5,17 @@ const useAvatarSize = () => {
   const [avatarSize, setAvatarSize] = useState(280)
   const [cardStyle, setCardStyle] = useState('regularCard')
 
-  const asdf = useMediaQuery('(min-width:600px)')
+  const isLess600Width = useMediaQuery('(min-width:600px)')
 
   useEffect(() => {
-    if (asdf) {
+    if (isLess600Width) {
       setAvatarSize(60)
       setCardStyle('smallCard')
     } else {
       setAvatarSize(280)
       setCardStyle('regularCard')
     }
-  }, [asdf])
+  }, [isLess600Width])
 
   return { avatarSize, cardStyle }
 }
