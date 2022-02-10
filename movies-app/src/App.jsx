@@ -3,10 +3,12 @@ import Typography from '@material-ui/core/Typography'
 
 import { makeStyles } from '@material-ui/styles'
 import { lazy, Suspense, useContext } from 'react'
+
 import { DataContext } from './contexts/Data'
 
 const MovieFilter = lazy(() => import('./components/MovieFilter'))
 const MoviesList = lazy(() => import('./components/MoviesList'))
+const MovieTransfer = lazy(() => import('./components/MovieTransfer'))
 
 const useClasses = makeStyles({
   container: {
@@ -41,6 +43,7 @@ const App = () => {
             <>
               <MovieFilter />
               <MoviesList />
+              <MovieTransfer />
             </>
           )}
         </Suspense>

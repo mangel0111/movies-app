@@ -3,15 +3,13 @@ import RESOURCES from '../constants/resources'
 import useFilter from '../hooks/useFilter'
 import useResource from '../hooks/useResource'
 
-const fields = { name: 'string', genre: 'string', price: 'number' }
-
 export const DataContext = createContext({
   loading: true,
   studios: [],
   movies: [],
   filterFields: {},
   movieSelected: null,
-  studioSeleted: null,
+  studioSelected: null,
   isSameStudio: null,
   handleFilterChange: (str) => null,
   handleElementSelect: (type, value) => null,

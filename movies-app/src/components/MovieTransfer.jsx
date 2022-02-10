@@ -6,8 +6,9 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import Typography from '@material-ui/core/Typography'
-import { useMemo, useState } from 'react'
+import { useContext } from 'react'
 import { makeStyles } from '@material-ui/styles'
+import { DataContext } from '../contexts/Data'
 
 const useStyles = makeStyles({
   spacer: {
@@ -15,7 +16,15 @@ const useStyles = makeStyles({
   },
 })
 
-const MovieTransfer = ({ movies, studios }) => {
+const MovieTransfer = () => {
+  const {
+    movieSelected,
+    studioSelected,
+    movies,
+    studios,
+    handleElementSelect,
+    isSameStudio,
+  } = useContext(DataContext)
   const classes = useStyles()
 
   return (
@@ -28,7 +37,10 @@ const MovieTransfer = ({ movies, studios }) => {
           <Grid item md={6} xs={12}>
             <FormControl style={{ width: '50%' }}>
               <InputLabel>Movie</InputLabel>
-              <Select onChange={(e) => handleChange('movie', e.target.value)}>
+              <Select
+                value={movieSelected?.id || ''}
+                onChange={(e) => handleElementSelect('movie', e.target.value)}
+              >
                 {movies.map((movie) => (
                   <MenuItem key={movie.id} value={movie.id}>
                     {movie.name}
@@ -40,7 +52,10 @@ const MovieTransfer = ({ movies, studios }) => {
           <Grid item md={6} xs={12}>
             <FormControl style={{ width: '50%' }}>
               <InputLabel>Studio</InputLabel>
-              <Select onChange={(e) => handleChange('studio', e.target.value)}>
+              <Select
+                value={studioSelected?.id || ''}
+                onChange={(e) => handleElementSelect('studio', e.target.value)}
+              >
                 {studios.map((studio) => (
                   <MenuItem key={studio.id} value={studio.id}>
                     {studio.name}
@@ -53,7 +68,7 @@ const MovieTransfer = ({ movies, studios }) => {
         <Grid container justify="center" className={classes.spacer}>
           <Grid item xs={12}>
             <Button
-              disabled={isSameStudio || !movieIdSelected || !studioIdSelected}
+              disabled={isSameStudio || !movieSelected || !studioSelected}
               variant="contained"
             >
               Transfer ownership
