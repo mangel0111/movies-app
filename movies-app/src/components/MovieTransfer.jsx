@@ -22,8 +22,9 @@ const MovieTransfer = () => {
     studioSelected,
     movies,
     studios,
-    handleElementSelect,
     isSameStudio,
+    handleElementSelect,
+    handleTransferOwnership,
   } = useContext(DataContext)
   const classes = useStyles()
 
@@ -68,6 +69,10 @@ const MovieTransfer = () => {
         <Grid container justify="center" className={classes.spacer}>
           <Grid item xs={12}>
             <Button
+              onClick={() => {
+                console.log('CLICKED')
+                handleTransferOwnership(movieSelected, studioSelected)
+              }}
               disabled={isSameStudio || !movieSelected || !studioSelected}
               variant="contained"
             >

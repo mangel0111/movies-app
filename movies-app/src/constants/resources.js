@@ -1,6 +1,11 @@
 const RESOURCES = {
-  studios: 'studios',
-  movies: 'movies',
+  GET: {
+    studios: 'studios',
+    movies: 'movies',
+  },
+  POST: {
+    transfer: 'transfer',
+  },
 }
 
 export default RESOURCES
