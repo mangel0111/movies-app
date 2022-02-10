@@ -6,12 +6,13 @@ import fetcher from '../lib/fetcher'
 /**
  *
  * @param {keyof RESOURCES} resource
- * @returns
  */
 const useResource = (resource) => {
-  const { isLoading, data, error } = useQuery(resource, () => fetcher(resource))
+  const { isLoading, data, error, isSuccess } = useQuery(resource, () =>
+    fetcher(resource)
+  )
 
-  return [data, isLoading, error]
+  return [data, isLoading, isSuccess, error]
 }
 
 export default useResource

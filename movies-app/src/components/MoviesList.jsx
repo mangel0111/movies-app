@@ -32,9 +32,14 @@ const MoviesList = ({ movies, studios }) => {
 
   return (
     <Grow in>
-      <Grid container justify="center" alignItems="center">
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        data-testid="movie-list"
+      >
         {movies.map((movie) => (
-          <Grid key={movie.name} item xs={12} sm={6} lg={4}>
+          <Grid data-testid="movie" key={movie.name} item xs={12} sm={6} lg={4}>
             <Card className={classes.card}>
               <Thumbnail img={movie.img} size={avatarSize} />
               <Box className={classes.titleContainer}>
