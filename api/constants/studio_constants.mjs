@@ -1,4 +1,3 @@
-
 export const movieAge = [
   {
     movieId: '11',
@@ -46,14 +45,14 @@ export const movieAge = [
   {
     movieId: '34',
     years: 3,
-  }
+  },
 ]
 
 export const GENRE_ID = {
   adventures: 9,
   horror: 6,
   animation: 4,
-  heroes: 1
+  heroes: 1,
 }
 
 export const GENRE_STRING = {
@@ -98,7 +97,7 @@ export const disney = {
       url: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/John_carter_poster.jpg/220px-John_carter_poster.jpg',
       price: 400,
     },
-  ]
+  ],
 }
 
 export const warner = {
@@ -136,7 +135,7 @@ export const warner = {
       img: 'https://i.pinimg.com/originals/11/95/b8/1195b802fe9108f0458830054ba1fd57.jpg',
       price: 500,
     },
-  ]
+  ],
 }
 
 export const sony = {
@@ -170,7 +169,7 @@ export const sony = {
       genre: GENRE_ID.adventures,
       price: 10000000000000,
     },
-  ]
+  ],
 }
 
 export const sonyImages = {
@@ -180,10 +179,8 @@ export const sonyImages = {
   34: 'https://static.wikia.nocookie.net/ideas/images/0/0e/Last_action_hero_ver2.jpg/revision/latest/top-crop/width/360/height/450?cb=20180121010346',
 }
 
-
 export const studiosMap = {
   1: disney,
   2: warner,
-  3: sony
+  3: sony,
 }
-
