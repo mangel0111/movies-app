@@ -7,6 +7,6 @@ const logger = bunyan.createLogger({
   name: process.env.npm_package_name || 'studio-app',
   stream: formatLogger,
   level: 'debug',
-})a
+})
 
 export default logger
