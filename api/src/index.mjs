@@ -22,7 +22,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(function (req, res, next) {
   logger.info(`${req.method} ${req.url} ${res.statusCode}`)
-  if (req.body) {
+  if (Object.keys(req.body).length > 0) {
     logger.info(`${req.method} Body: ${JSON.stringify(req.body)}`)
   }
   next()
