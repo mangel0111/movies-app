@@ -1,5 +1,7 @@
 import { Box, Card, Grid, Grow, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import { useContext } from 'react'
+import { DataContext } from '../contexts/Data'
 import useAvatarSize from '../hooks/useAvatarSize'
 import Thumbnail from './Thumbnail'
 
@@ -26,7 +28,8 @@ const useStyles = makeStyles({
   },
 })
 
-const MoviesList = ({ movies, studios }) => {
+const MoviesList = () => {
+  const { movies, studios } = useContext(DataContext)
   const { cardStyle, avatarSize } = useAvatarSize()
   const classes = useStyles({ cardStyle })
 

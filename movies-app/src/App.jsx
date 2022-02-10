@@ -1,12 +1,11 @@
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/styles'
-import React, { lazy, Suspense } from 'react'
-import MovieFilter from './components/MovieFilter'
-import RESOURCES from './constants/resources'
-import useFilter from './hooks/useFilter'
-import useResource from './hooks/useResource'
 
+import { makeStyles } from '@material-ui/styles'
+import { lazy, Suspense, useContext } from 'react'
+import { DataContext } from './contexts/Data'
+
+const MovieFilter = lazy(() => import('./components/MovieFilter'))
 const MoviesList = lazy(() => import('./components/MoviesList'))
 
 const useClasses = makeStyles({
@@ -29,29 +28,20 @@ const useClasses = makeStyles({
   },
 })
 
-const fields = { name: 'string', genre: 'string', price: 'number' }
-
 const App = () => {
+  const { loading } = useContext(DataContext)
   const classes = useClasses()
-  const [studios, studiosLoading] = useResource(RESOURCES.studios)
-  const [rawMovies, moviesLoading] = useResource(RESOURCES.movies)
-  const {
-    data: movies,
-
-    handleChange,
-  } = useFilter({
-    data: rawMovies,
-    fields,
-  })
 
   return (
     <Box className={classes.container}>
       <div className={classes.app}>
-        <MovieFilter fields={Object.keys(fields)} handleChange={handleChange} />
         <h3>Images:</h3>
         <Suspense fallback={<Typography>LOADING</Typography>}>
-          {!moviesLoading && !studiosLoading && (
-            <MoviesList movies={movies} studios={studios} />
+          {!loading && (
+            <>
+              <MovieFilter />
+              <MoviesList />
+            </>
           )}
         </Suspense>
       </div>

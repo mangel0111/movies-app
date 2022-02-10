@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 
 /**
  *
- * @param {{ data: any, fields: { [type]: string } }} param0
+ * @param {[ any, { [type]: string }, (str: string) => void]} param0
  */
 const useFilter = ({ data: rawData, fields }) => {
-  const [data, setData] = useState(rawData)
+  const [data, setData] = useState(rawData || [])
   const [input, setInput] = useState('')
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const useFilter = ({ data: rawData, fields }) => {
     setInput(str)
   }
 
-  return { data, value: input, handleChange }
+  return [data, input, handleChange]
 }
 
 export default useFilter
