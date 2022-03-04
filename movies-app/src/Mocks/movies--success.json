@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Nightmare before christmas",
+    "genre": 6,
+    "img": "https://www.dimanoinmano.it/img/638590/full/libri-per-ragazzi/infanzia/nightmare-before-christmas.jpg",
+    "studioId": "1"
+  },
+  {
+    "name": "Aladdin",
+    "genre": 4,
+    "img": "https://upload.wikimedia.org/wikipedia/en/9/9a/Aladdin_%28Official_2019_Film_Poster%29.png",
+    "studioId": "1"
+  },
+  {
+    "name": "The avengers",
+    "genre": 1,
+    "img": "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/2/2b/The_Avengers_Poster.png/revision/latest?cb=20150610135853&path-prefix=es",
+    "studioId": "1"
+  },
+  {
+    "name": "John Carter",
+    "genre": 9,
+    "img": "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/John_carter_poster.jpg/220px-John_carter_poster.jpg",
+    "studioId": "1"
+  },
+  {
+    "name": "The conjuring",
+    "genre": 6,
+    "img": "https://m.media-amazon.com/images/M/MV5BMTM3NjA1NDMyMV5BMl5BanBnXkFtZTcwMDQzNDMzOQ@@._V1_.jpg",
+    "studioId": "2"
+  },
+  {
+    "name": "Space Jame",
+    "genre": 4,
+    "img": "https://static.wikia.nocookie.net/warnerbros/images/d/d0/SpaceJam.jpg/revision/latest/scale-to-width-down/350?cb=20120727135751&path-prefix=es",
+    "studioId": "2"
+  },
+  {
+    "name": "The dark knight rises",
+    "genre": 1,
+    "img": "https://pics.filmaffinity.com/The_Dark_Knight_Rises-149544881-large.jpg",
+    "studioId": "2"
+  },
+  {
+    "name": "Fantastic beasts and where to find them",
+    "genre": 9,
+    "img": "https://i.pinimg.com/originals/11/95/b8/1195b802fe9108f0458830054ba1fd57.jpg",
+    "studioId": "2"
+  },
+  {
+    "name": "Slender man",
+    "genre": 6,
+    "img": "https://m.media-amazon.com/images/M/MV5BMjE0MzcwMDAyNl5BMl5BanBnXkFtZTgwMzc4ODg0NDM@._V1_UY1200_CR90,0,630,1200_AL_.jpg",
+    "studioId": "3"
+  },
+  {
+    "name": "Spider-man into the spider-verse",
+    "genre": 4,
+    "img": "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg",
+    "studioId": "3"
+  },
+  {
+    "name": "Spider-man",
+    "genre": 1,
+    "img": "https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_FMjpg_UX1000_.jpg",
+    "studioId": "3"
+  },
+  {
+    "name": "Last action hero",
+    "genre": 9,
+    "img": "https://static.wikia.nocookie.net/ideas/images/0/0e/Last_action_hero_ver2.jpg/revision/latest/top-crop/width/360/height/450?cb=20180121010346",
+    "studioId": "3"
+  }
+]

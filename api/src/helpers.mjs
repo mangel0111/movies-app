@@ -1,4 +1,4 @@
-import {GENRE_STRING} from '../constants/studio_constants.mjs'
+import {disney, GENRE_ID, GENRE_STRING, sony, warner} from "../constants/studio_constants.mjs";
 
 
 export const getMovie = (movieId, studios) => {
@@ -40,8 +40,38 @@ export const movieConstructor = (movie, studio) => {
     Object.getOwnPropertyDescriptor(studio, 'id'));
   //Remove non wanted properties
   delete movie['price'];
-  delete movie['id'];
 
   return movie;
-}
+};
 
+export const getGenres = (genres) => {
+  return Object.keys(genres).map(key => ({
+    id: key,
+    genre: genres[key],
+    name: Object.keys(GENRE_ID).find((label) => GENRE_ID[label] == key),
+  }));
+};
+
+export const getStudio = studioId => {
+  switch (studioId) {
+    case sony.id:
+      return sony;
+    case disney.id:
+      return disney;
+    case warner.id:
+      return warner;
+  }
+
+  return null;
+};
+
+export const transferStudio = (originId, destinyId, movieId) => {
+   const originalStudio = getStudio(originId);
+   const destinyStudio = getStudio(destinyId);
+   const { movie } = getMovie(movieId, [originalStudio]);
+
+   if (!originalStudio || !destinyStudio || !movie) throw new Error("Wrong data, please check the values");
+
+  originalStudio.movies = originalStudio.movies.filter(({ id }) => id !== movie.id);
+  destinyStudio.movies = destinyStudio.movies.concat(movie);
+};

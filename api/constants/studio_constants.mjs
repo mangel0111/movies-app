@@ -81,7 +81,7 @@ export const disney = {
       id: '12',
       name: 'Aladdin',
       genre: GENRE_ID.animation,
-      url: 'https://www.lainformacion.com/files/article_default_content/uploads/2018/11/23/5bf84292d23b5.jpeg',
+      url: 'https://upload.wikimedia.org/wikipedia/en/9/9a/Aladdin_%28Official_2019_Film_Poster%29.png',
       price: 10000000000,
     },
     {
@@ -150,36 +150,32 @@ export const sony = {
       id: '31',
       name: 'Slender man',
       genre: GENRE_ID.horror,
+      img: 'https://m.media-amazon.com/images/M/MV5BMjE0MzcwMDAyNl5BMl5BanBnXkFtZTgwMzc4ODg0NDM@._V1_UY1200_CR90,0,630,1200_AL_.jpg',
       price: 700,
     },
     {
       id: '32',
       name: 'Spider-man into the spider-verse',
       genre: GENRE_ID.animation,
+      img: 'https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg',
       price: 450,
     },
     {
       id: '33',
       name: 'Spider-man',
       genre: GENRE_ID.heroes,
+      img: 'https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_FMjpg_UX1000_.jpg',
       price: 500,
     },
     {
       id: '34',
       name: 'Last action hero',
       genre: GENRE_ID.adventures,
+      img: 'https://static.wikia.nocookie.net/ideas/images/0/0e/Last_action_hero_ver2.jpg/revision/latest/top-crop/width/360/height/450?cb=20180121010346',
       price: 10000000000000,
     },
   ]
 }
-
-export const sonyImages = {
-  31: 'https://m.media-amazon.com/images/M/MV5BMjE0MzcwMDAyNl5BMl5BanBnXkFtZTgwMzc4ODg0NDM@._V1_UY1200_CR90,0,630,1200_AL_.jpg',
-  32: 'https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg',
-  33: 'https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_FMjpg_UX1000_.jpg',
-  34: 'https://static.wikia.nocookie.net/ideas/images/0/0e/Last_action_hero_ver2.jpg/revision/latest/top-crop/width/360/height/450?cb=20180121010346',
-}
-
 
 export const studiosMap = {
   1: disney,
