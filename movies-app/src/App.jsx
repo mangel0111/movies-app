@@ -1,10 +1,11 @@
 import './App.css'
-import React, { PureComponent } from 'react'
+import React from 'react'
 import { Card, Grid, Typography, styled } from '@material-ui/core'
 import DefaultImage from './components/DefaultImage'
 import Avatar from './components/Avatar'
 import Container from './components/Container'
 import StudioContainer from './components/StudioContainer'
+import Filters from './components/Filters'
 import * as Api from './api'
 // TODO: Review image loading from wikia.com
 const defaultAvatar = 'https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg'
@@ -12,6 +13,13 @@ const defaultAvatar = 'https://image.shutterstock.com/image-vector/male-avatar-p
 const App = () => {
   const [studios, setStudios] = React.useState([])
   const [movies, setMovies] = React.useState([])
+  const [genresList, setGenresList] = React.useState([])
+  const [filters, setFilters] = React.useState({
+    genreId: undefined,
+    minPrice: 0,
+    maxPrice: undefined,
+    title: undefined
+  })
   const [avatarSize, setAvatarSize] = React.useState(280)
   const [cardStyle, setCardStyle] = React.useState('regularCard')
 
@@ -29,23 +37,40 @@ const App = () => {
 
   React.useEffect(() => {
     window.addEventListener('resize', responsiveStyle())
-    Api.getMovies()
-      .then(movies => {
-        console.log("MOVIES", movies)
-        setMovies(movies)
-      });
+
     Api.getStudios()
       .then(studios => {
         setStudios(studios)
       });
+    Api.getGenres()
+      .then(genres => {
+        setGenresList(genres)
+      });
   }, [])
 
+  React.useEffect(() => {
+    Api.getMovies(filters)
+      .then(movies => {
+        setMovies(movies)
+      });
+  }, [filters])
+
+  const handleFilterChange = (id) => {
+    return (e) => {
+      if (['minPrice', 'maxPrice'].includes(id)) {
+        if ((/^\d*$/).test(e.target.value)) {
+          setFilters(prev => ({ ...prev, [id]: e.target.value }))
+        }
+      } else {
+        setFilters(prev => ({ ...prev, [id]: e.target.value }))
+      }
+    }
+  }
   return (
     <Container>
-      <StudioContainer> {
-        //TODO: 4 Filter the movies by genre, price and title
-      }
+      <StudioContainer> 
         <h3>Images:</h3>
+        <Filters {...{ genresList, handleFilterChange, filters }} />
         <Grid container justify="center" alignItems="center">
           {movies.map(movie =>
             <Grid item xs={12} sm={6} lg={4}>

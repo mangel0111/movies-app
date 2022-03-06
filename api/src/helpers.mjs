@@ -1,4 +1,4 @@
-import {GENRE_STRING} from '../constants/studio_constants.mjs'
+import { GENRE_STRING, GENRE_ID } from '../constants/studio_constants.mjs'
 
 
 export const getMovie = (movieId, studios) => {
@@ -8,19 +8,26 @@ export const getMovie = (movieId, studios) => {
     return movie
   })
   if (movie && studio) {
-    return {movie, studioId: studio.id}
+    return { movie, studioId: studio.id }
   }
 
   return false
 };
 
-export const getAllMoviesFromStudios = (studios) => {
+export const getAllMoviesFromStudios = (studios, { genreId, minPrice, maxPrice, title }) => {
   let allMovies = [];
   studios.forEach(singleStudio => {
     singleStudio.movies.map(movie => {
+      
       allMovies.push(movieConstructor(movie, singleStudio))
     })
   });
+  
+  if (genreId) allMovies = allMovies.filter(movie => movie.genre == genreId)
+  if (minPrice) allMovies = allMovies.filter(movie => movie.price >= Number(minPrice))
+  if (maxPrice) allMovies = allMovies.filter(movie => movie.price <= Number(maxPrice))
+  if (title) allMovies = allMovies.filter(movie => movie.name.includes(title))
+  
   return allMovies;
 };
 
@@ -39,9 +46,13 @@ export const movieConstructor = (movie, studio) => {
   Object.defineProperty(movie, 'studioId',
     Object.getOwnPropertyDescriptor(studio, 'id'));
   //Remove non wanted properties
-  delete movie['price'];
-  delete movie['id'];
+  //delete movie['price'];
+  //delete movie['id'];
 
   return movie;
 }
 
+export const genreListConstructor = () => {
+  return Object.entries(GENRE_ID).map(([key, value]) => ({ id: value, value: key.replace(/^\w/, (c) => c.toUpperCase()) }))
+
+}
