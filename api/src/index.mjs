@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import { getAllMoviesFromStudios, genreListConstructor } from '../src/helpers.mjs'
-import { sony, warner, disney, movieAge, GENRE_ID } from '../constants/studio_constants.mjs'
+import { sony, warner, disney, movieAge, studiosMap } from '../constants/studio_constants.mjs'
 
 const app = express();
 
@@ -27,7 +27,7 @@ app.get('/studios', function (req, res) {
 
 app.get('/movies', function (req, res) {
   try {
-    const params = { 
+    const params = {
       genreId: req.query.genreId,
       minPrice: req.query.minPrice,
       maxPrice: req.query.maxPrice,
@@ -52,8 +52,16 @@ app.get('/movieAge', function (req, res) {
   res.json(movieAge)
 });
 
-//TODO: 1 add the capability to sell the movie rights to another studio
 app.post('/transfer', function (req, res) {
+  const { movieId, movieStudioId, nextStudioId } = req.body
+  if (req.method === 'POST') {
+    const movie = studiosMap[movieStudioId].movies.filter(movie => movie.id === movieId)[0]
+    const movieIndex = studiosMap[movieStudioId].movies.indexOf(movie)
+    studiosMap[movieStudioId].movies.splice(movieIndex,1)
+    studiosMap[nextStudioId].money -= movie.price 
+    studiosMap[nextStudioId].movies.push(movie)
+    res.json({movies: getAllMoviesFromStudios(Object.values(studiosMap), {}), studios: Object.values(studiosMap)})
+  }
 });
 
 app.listen(3030)

@@ -26,7 +26,7 @@ export const getAllMoviesFromStudios = (studios, { genreId, minPrice, maxPrice, 
   if (genreId) allMovies = allMovies.filter(movie => movie.genre == genreId)
   if (minPrice) allMovies = allMovies.filter(movie => movie.price >= Number(minPrice))
   if (maxPrice) allMovies = allMovies.filter(movie => movie.price <= Number(maxPrice))
-  if (title) allMovies = allMovies.filter(movie => movie.name.includes(title))
+  if (title) allMovies = allMovies.filter(movie => movie.name.toLowerCase().includes(title.toLowerCase()))
   
   return allMovies;
 };
@@ -45,9 +45,6 @@ export const movieConstructor = (movie, studio) => {
   //Add studioId from parent object
   Object.defineProperty(movie, 'studioId',
     Object.getOwnPropertyDescriptor(studio, 'id'));
-  //Remove non wanted properties
-  //delete movie['price'];
-  //delete movie['id'];
 
   return movie;
 }

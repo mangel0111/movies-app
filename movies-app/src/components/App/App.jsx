@@ -20,7 +20,7 @@ const App = () => {
   })
 
   const isSmallCard = useMediaQuery('(max-width:600px)')
-  
+
   React.useEffect(() => {
     Api.getStudios()
       .then(studios => {
@@ -50,15 +50,24 @@ const App = () => {
       }
     }
   }
+
+  const handleOnSellMovie = async (movieId, movieStudioId, nextStudioId) => {
+    await Api.transferMovie({ movieId, movieStudioId, nextStudioId })
+      .then(({movies,studios}) => {
+        setMovies(movies)
+        setStudios(studios)
+      })
+  }
+  console.log("Studios", studios)
   return (
     <Container>
-      <StudioContainer> 
+      <StudioContainer>
         <h3 id="title">Images:</h3>
         <Filters {...{ genresList, handleFilterChange, filters }} />
         <Grid container justify="center" alignItems="center">
           {movies.map(movie =>
             <Grid item xs={12} sm={6} lg={4}>
-              <Card {...{isSmallCard, movie, studios}} />
+              <Card {...{ isSmallCard, movie, studios}} onSellMovie={handleOnSellMovie} />
             </Grid>)}
         </Grid>
       </StudioContainer>
