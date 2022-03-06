@@ -1,14 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser'
+import morgan from 'morgan'
 import { getAllMoviesFromStudios, genreListConstructor } from '../src/helpers.mjs'
 import { sony, warner, disney, movieAge, GENRE_ID } from '../constants/studio_constants.mjs'
-
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
 app.get('/studios', function (req, res) {
   let disneyTemp = { ...disney }
@@ -54,7 +55,5 @@ app.get('/movieAge', function (req, res) {
 //TODO: 1 add the capability to sell the movie rights to another studio
 app.post('/transfer', function (req, res) {
 });
-
-// TODO: 2 Add logging capabilities into the movies-app
 
 app.listen(3030)
