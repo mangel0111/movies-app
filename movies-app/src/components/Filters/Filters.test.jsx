@@ -1,6 +1,4 @@
 import { render, act, waitFor, screen, fireEvent } from "@testing-library/react";
-import userEvent from '@testing-library/user-event'
-
 import Filters from './Filters';
 import * as Api from '../../api'
 import '@testing-library/jest-dom'
