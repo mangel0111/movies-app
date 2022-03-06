@@ -15,7 +15,6 @@ const Selector = ({ options, value, onChange, label }) => {
                 label={label}
                 onChange={onChange}
             >
-                <MenuItem value={undefined}></MenuItem>
                 {
                     options.map(opt => (
                         <MenuItem key={opt.id} value={opt.id}>{opt.value}</MenuItem>
