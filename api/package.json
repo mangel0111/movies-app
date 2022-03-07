@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --config=jest.config.js",
     "start": "nodemon --experimental-modules ./src/index.mjs"
   },
   "author": "",
@@ -14,10 +14,20 @@
     "bunyan": "^1.8.12",
     "bunyan-format": "^0.2.1",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "morgan": "^1.10.0"
+    "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "@babel/preset-env": "^7.16.11",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@webpack-cli/serve": "^1.6.1",
+    "babel-jest": "^27.5.1",
+    "jest": "^27.5.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^1.19.1",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "engines": {
+    "node": ">= 14.0.0",
+    "npm": ">= 3.0.0"
   }
 }
