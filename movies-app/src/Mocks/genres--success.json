@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "genre": "HER",
+    "name": "heroes"
+  },
+  {
+    "id": "4",
+    "genre": "ANI",
+    "name": "animation"
+  },
+  {
+    "id": "6",
+    "genre": "HOR",
+    "name": "horror"
+  },
+  {
+    "id": "9",
+    "genre": "ADV",
+    "name": "adventures"
+  }
+]

@@ -1,13 +1,42 @@
 import express from 'express';
 import cors from 'cors';
-import bodyParser from 'body-parser'
-import {getAllMoviesFromStudios} from '../src/helpers.mjs'
-import {sony, warner, disney, movieAge} from '../constants/studio_constants.mjs'
+import bodyParser from 'body-parser';
+import {getAllMoviesFromStudios, getGenres, transferStudio} from '../src/helpers.mjs';
+import {sony, warner, disney, movieAge, GENRE_STRING} from '../constants/studio_constants.mjs';
+import {createLogger} from 'bunyan';
+import bformat from 'bunyan-format';
+
+console.clear();
+
+process.env.PORT = 8080;
+
+const formatOut = bformat({ outputMode: 'short' });
+const log = createLogger({
+  name: 'Request',
+  src: true,
+  stream: formatOut,
+});
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+
+const logger = (req, _, next) => {
+  const createLog = (req) => ({
+    headers: req.headers,
+    path: req.path,
+    method: req.method,
+    ...(req.body && { body: req.body }),
+  });
+
+  log.info('Request', createLog(req));
+
+  next();
+};
+
+app.use(logger);
+
 
 app.get('/studios', function (req, res) {
   let disneyTemp = {...disney}
@@ -31,14 +60,22 @@ app.get('/movies', function (req, res) {
   }
 });
 
+app.get('/genres', function (req, res) {
+  res.json(getGenres(GENRE_STRING));
+});
+
 app.get('/movieAge', function (req, res) {
   res.json(movieAge)
 });
 
-//TODO: 1 add the capability to sell the movie rights to another studio
 app.post('/transfer', function (req, res) {
+  const { from, to, movieId } = req.body;
+
+  transferStudio(from, to, movieId);
+
+  res.json({
+    status: 200
+  });
 });
 
-// TODO: 2 Add logging capabilities into the movies-app
-
-app.listen(3000)
+app.listen(process.env.PORT);
