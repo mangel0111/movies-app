@@ -8,13 +8,14 @@ const mockStore = {
     genresList: [{"id":9,"value":"Adventures"},{"id":6,"value":"Horror"},{"id":4,"value":"Animation"},{"id":1,"value":"Heroes"}]
 }
 describe("Card", () => {
-    it("With small card should add the correct class", async () => {
+    beforeEach(() => {
         const dispatchSpy = jest.spyOn(redux, 'useDispatch');
         const selectorSpy = jest.spyOn(redux, 'useSelector');
     
         dispatchSpy.mockReturnValue(jest.fn())
         selectorSpy.mockReturnValue(mockStore)
-
+    })
+    it("With small card should add the correct class", async () => {
         const container = render(<Card isSmallCard movie={mockStore.movies[0]} />);
         const card = container.container.querySelector(`#${mockStore.movies[0].name}-card`)
 
@@ -25,12 +26,6 @@ describe("Card", () => {
     });
 
     it("Without small card should add the regularCard class", async () => {
-        const dispatchSpy = jest.spyOn(redux, 'useDispatch');
-        const selectorSpy = jest.spyOn(redux, 'useSelector');
-    
-        dispatchSpy.mockReturnValue(jest.fn())
-        selectorSpy.mockReturnValue(mockStore)
-
         const container = render(<Card movie={mockStore.movies[0]} />);
         const card = container.container.querySelector(`#${mockStore.movies[0].name}-card`)
 
@@ -41,12 +36,6 @@ describe("Card", () => {
     });
 
     it("Without small card should set the avatar size to 280px", async () => {
-        const dispatchSpy = jest.spyOn(redux, 'useDispatch');
-        const selectorSpy = jest.spyOn(redux, 'useSelector');
-    
-        dispatchSpy.mockReturnValue(jest.fn())
-        selectorSpy.mockReturnValue(mockStore)
-
         const container = render(<Card movie={mockStore.movies[0]} />);
         const avatar = container.container.querySelector(`#${mockStore.movies[0].name}-avatar`)
 
@@ -58,12 +47,6 @@ describe("Card", () => {
     });
 
     it("With smallCard property should set the avatar size to 60px", async () => {
-        const dispatchSpy = jest.spyOn(redux, 'useDispatch');
-        const selectorSpy = jest.spyOn(redux, 'useSelector');
-    
-        dispatchSpy.mockReturnValue(jest.fn())
-        selectorSpy.mockReturnValue(mockStore)
-
         const container = render(<Card isSmallCard movie={mockStore.movies[0]} />);
         const avatar = container.container.querySelector(`#${mockStore.movies[0].name}-avatar`)
 
@@ -75,11 +58,6 @@ describe("Card", () => {
     });
 
     it("Should render the studios list", async () => {
-        const dispatchSpy = jest.spyOn(redux, 'useDispatch');
-        const selectorSpy = jest.spyOn(redux, 'useSelector');
-    
-        dispatchSpy.mockReturnValue(jest.fn())
-        selectorSpy.mockReturnValue(mockStore)
         const studio = mockStore.studios.find(studio => studio.id === mockStore.movies[0].studioId)
         render(<Card movie={mockStore.movies[0]} />);
         const studioName = screen.getByText(studio.name)
