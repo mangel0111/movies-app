@@ -1,5 +1,6 @@
 import React from 'react'
 import { Typography, styled } from '@material-ui/core'
+
 const NameLabel = styled(Typography)({
     display: 'inline-block'
 })

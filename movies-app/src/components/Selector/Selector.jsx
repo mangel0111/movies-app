@@ -6,7 +6,7 @@ import Select from '@material-ui/core/Select';
 
 const Selector = ({ options, value, onChange, label }) => {
     return (
-        <FormControl fullWidth>
+        <FormControl fullWidth variant="filled">
             <InputLabel id="selector">{label}</InputLabel>
             <Select
                 labelId="selector"
@@ -14,7 +14,11 @@ const Selector = ({ options, value, onChange, label }) => {
                 value={value}
                 label={label}
                 onChange={onChange}
+                InputLabelProps={{
+                    shrink: true
+                }}
             >
+                <MenuItem key={"none"} value="">None</MenuItem>
                 {
                     options.map(opt => (
                         <MenuItem key={opt.id} value={opt.id}>{opt.value}</MenuItem>

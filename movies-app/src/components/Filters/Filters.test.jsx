@@ -21,9 +21,9 @@ describe("Filters", () => {
             }
         ]
         const {container} = render(<Filters filters={filtersData} genresList={genresList} handleFilterChange={HandleChange} />);
-        const titleFilter = container.querySelector("#Title")
+        const titleFilter = container.querySelector("#title")
         fireEvent.change(titleFilter, {target: {value: "newFilter"}})
-        const postChangeFilter = container.querySelector("#Title")
+        const postChangeFilter = container.querySelector("#title")
 
         await waitFor(() => {
             expect(spy).toHaveBeenCalledTimes(1)

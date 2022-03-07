@@ -12,7 +12,7 @@ describe("App", () => {
         const title = getByRole('heading', { level: 3 })
 
         await waitFor(() => {
-            expect(title.innerHTML).toBe("Images:")
+            expect(title.innerHTML).toBe("Movies App")
         })
 
     });

@@ -5,18 +5,47 @@ import Selector from '../Selector/Selector'
 
 const Filters = ({ filters, genresList, handleFilterChange }) => {
     return (
-        <Grid container>
+        <Grid container spacing={2}>
             <Grid item xs={12} md={3}>
-                <Selector value={filters.genreId} options={genresList} onChange={handleFilterChange('genreId')} label="Genre" />
+                <Selector
+                    variant="outlined"
+                    value={filters.genreId}
+                    options={genresList}
+                    onChange={handleFilterChange('genreId')}
+                    label="Genre"
+                    color="primary"
+                />
             </Grid>
             <Grid item xs={12} md={3}>
-                <TextField fullWidth value={filters.minPrice} placeholder={"Enter min price"} id="minPrice" label="Min Price" onChange={handleFilterChange('minPrice')} />
+                <TextField
+                    variant="outlined"
+                    fullWidth
+                    value={filters.minPrice}
+                    placeholder={"Enter min price"}
+                    id="minPrice"
+                    label="Min Price"
+                    onChange={handleFilterChange('minPrice')}
+                />
             </Grid>
             <Grid item xs={12} md={3}>
-                <TextField fullWidth value={filters.maxPrice} id="maxPrice" label="Max Price" onChange={handleFilterChange('maxPrice')} />
+                <TextField
+                    variant="outlined"
+                    fullWidth
+                    value={filters.maxPrice}
+                    id="maxPrice"
+                    label="Max Price"
+                    onChange={handleFilterChange('maxPrice')}
+                />
             </Grid>
             <Grid item xs={12} md={3}>
-                <TextField fullWidth value={filters.title} id="Title" label="Title" onChange={handleFilterChange('title')} />
+                <TextField
+                    variant="outlined"
+                    fullWidth
+                    value={filters.title}
+                    id="title"
+                    label="Title"
+                    onChange={handleFilterChange('title')}
+                />
             </Grid>
         </Grid>
     )
