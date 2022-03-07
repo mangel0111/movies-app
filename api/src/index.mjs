@@ -55,12 +55,16 @@ app.get('/movieAge', function (req, res) {
 app.post('/transfer', function (req, res) {
   const { movieId, movieStudioId, nextStudioId } = req.body
   if (req.method === 'POST') {
-    const movie = studiosMap[movieStudioId].movies.filter(movie => movie.id === movieId)[0]
-    const movieIndex = studiosMap[movieStudioId].movies.indexOf(movie)
-    studiosMap[movieStudioId].movies.splice(movieIndex,1)
-    studiosMap[nextStudioId].money -= movie.price 
-    studiosMap[nextStudioId].movies.push(movie)
-    res.json({movies: getAllMoviesFromStudios(Object.values(studiosMap), {}), studios: Object.values(studiosMap)})
+    try {
+      const movie = studiosMap[movieStudioId].movies.filter(movie => movie.id === movieId)[0]
+      const movieIndex = studiosMap[movieStudioId].movies.indexOf(movie)
+      studiosMap[movieStudioId].movies.splice(movieIndex, 1)
+      studiosMap[nextStudioId].money -= movie.price
+      studiosMap[nextStudioId].movies.push(movie)
+      res.json({ movies: getAllMoviesFromStudios(Object.values(studiosMap), {}), studios: Object.values(studiosMap) })
+    } catch (error) {
+      res.statusCode(500).json({ status: 'fail', message: `Error on movie transfer from ${movieStudioId} to ${nextStudioId}` })
+    }
   }
 });
 
