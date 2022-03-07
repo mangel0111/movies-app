@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "15"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "start": "nodemon --experimental-modules ./src/index.mjs"
   },
   "author": "",
@@ -17,6 +20,36 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "@babel/preset-env": "^7.16.11",
+    "jest": "^27.5.1",
+    "jest-cli": "^27.5.1",
+    "nodemon": "^1.19.1",
+    "supertest": "^6.2.2"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest",
+      "^.+\\.mjs$": "babel-jest",
+      "^.+\\.ts$": "babel-jest",
+      "^.+\\.tsx$": "babel-jest"
+    },
+    "testMatch": [
+      "**/spec/**/*.js?(x)",
+      "**/?(*.)(spec|test).js?(x)",
+      "**/spec/**/*.mjs",
+      "**/?(*.)(spec|test).mjs"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/build/",
+      "<rootDir>/node_modules/"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "mjs"
+    ],
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }

@@ -1,8 +1,15 @@
 import './index.css'
-
-import React from 'react'
-import {render} from 'react-dom'
+import { render } from 'react-dom'
 
 import App from './App.jsx'
+import withQueryClient from './hoc/withQueryClient'
+import { DataProvider } from './contexts/Data'
 
-render(<App/>, document.getElementById('root'))
+render(
+  withQueryClient(
+    <DataProvider>
+      <App />
+    </DataProvider>
+  ),
+  document.getElementById('root')
+)
