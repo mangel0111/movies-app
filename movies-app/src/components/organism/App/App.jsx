@@ -1,9 +1,9 @@
 import React from 'react'
-import MoviesGrid from '../MoviesGrid/MoviesGrid'
-import { ThemeProvider } from '@material-ui/styles';
-import theme from '../../theme'
 import { Provider } from "react-redux";
-import store from '../../store'
+import { ThemeProvider } from '@material-ui/styles';
+import MoviesGrid from 'components/organism/MoviesGrid/MoviesGrid'
+import theme from 'theme'
+import store from 'store'
 
 const App = () => {
   return (

@@ -6,7 +6,6 @@ export default styled("div")(({ theme }) => ({
     textAlign: "center",
     display: "flex",
     flexDirection: "column",
-    justifyCSontent: "stretch",
+    justifyContent: "stretch",
     backgroundColor: theme.palette.background.main
-
 }))

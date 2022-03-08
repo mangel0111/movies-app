@@ -1,6 +1,6 @@
 import { render, act, waitFor, screen } from "@testing-library/react";
 import App from './App';
-import * as Api from '../../api'
+import * as Api from '../../../api'
 
 describe("App", () => {
     it("Should render title", async () => {

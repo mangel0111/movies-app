@@ -1,11 +1,11 @@
 import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import { Grid, Card, Typography, Button } from '@material-ui/core'
 import { styled } from '@material-ui/core'
-import DefaultImage from '../DefaultImage/DefaultImage'
-import Avatar from '../Avatar/Avatar'
-import * as Api from '../../api'
-import { useDispatch, useSelector } from "react-redux";
-import {updateMovies, updateStudios} from "../../actions"
+import {updateMovies, updateStudios} from "actions"
+import * as Api from 'api'
+import DefaultImage from 'components/atoms/DefaultImage/DefaultImage'
+import Avatar from 'components/atoms/Avatar/Avatar'
 
 const defaultAvatar = 'https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg'
 
@@ -84,10 +84,7 @@ const MyCard = ({ isSmallCard, movie }) => {
                         </>
                     )
                 }
-
             </Grid>
-
-
         </StyledCard>
     )
 }

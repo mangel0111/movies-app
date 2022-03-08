@@ -1,7 +1,6 @@
 import styled from '@material-ui/core/styles/styled'
 
 export default styled("div")(({theme}) => ({
-    flex: 1,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

@@ -1,7 +1,7 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField';
-import Selector from '../Selector/Selector'
+import Selector from 'components/atoms/Selector/Selector'
 
 const Filters = ({ filters, genresList, handleFilterChange }) => {
     return (

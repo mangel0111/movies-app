@@ -1,13 +1,13 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
-import Container from '../Container/Container'
-import StudioContainer from '../StudioContainer/StudioContainer'
-import Filters from '../Filters/Filters'
-import * as Api from '../../api'
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Card from '../Card/Card'
 import { useDispatch, useSelector } from "react-redux";
-import { updateGenres, updateStudios, updateMovies, updateFilters } from "../../actions"
+import { Grid, Typography } from '@material-ui/core'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { updateGenres, updateStudios, updateMovies, updateFilters } from "actions"
+import * as Api from 'api'
+import Container from 'components/atoms/Container/Container'
+import StudioContainer from 'components/atoms/StudioContainer/StudioContainer'
+import Filters from 'components/molecules/Filters/Filters'
+import Card from 'components/molecules/Card/Card'
 
 const MoviesGrid = () => {
     const dispatch = useDispatch();
