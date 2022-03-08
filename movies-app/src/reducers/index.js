@@ -3,7 +3,7 @@ const initialState = {
     studios: [],
     genresList: [],
     filters: {
-        genreId: undefined,
+        genreId: '',
         minPrice: 0,
         maxPrice: undefined,
         title: undefined

@@ -36,6 +36,9 @@ const MyCard = ({ isSmallCard, movie }) => {
                 width={isSmallCard ? 60 : 280}
                 height={isSmallCard ? 60 : 280}
                 alt={movie.name}
+                imgProps={{
+                    referrerPolicy:"no-referrer"
+                }}
                 src={movie.img || defaultAvatar}
             />
             <DefaultImage movie={movie} />
