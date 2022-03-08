@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import { getAllMoviesFromStudios, genreListConstructor } from '../src/helpers.mjs'
 import { sony, warner, disney, movieAge, studiosMap } from '../constants/studio_constants.mjs'
+import { transferMovie } from './helpers.mjs';
 
 const app = express();
 
@@ -56,12 +57,9 @@ app.post('/transfer', function (req, res) {
   const { movieId, movieStudioId, nextStudioId } = req.body
   if (req.method === 'POST') {
     try {
-      const movie = studiosMap[movieStudioId].movies.filter(movie => movie.id === movieId)[0]
-      const movieIndex = studiosMap[movieStudioId].movies.indexOf(movie)
-      studiosMap[movieStudioId].movies.splice(movieIndex, 1)
-      studiosMap[nextStudioId].money -= movie.price
-      studiosMap[nextStudioId].movies.push(movie)
-      res.json({ movies: getAllMoviesFromStudios(Object.values(studiosMap), {}), studios: Object.values(studiosMap) })
+      const studios = transferMovie({ movieId, movieStudioId, nextStudioId })
+      const allMovies = getAllMoviesFromStudios(Object.values(studios), {})
+      res.json({ movies: allMovies, studios: Object.values(studios) })
     } catch (error) {
       res.statusCode(500).json({ status: 'fail', message: `Error on movie transfer from ${movieStudioId} to ${nextStudioId}` })
     }

@@ -1,7 +1,8 @@
 require('regenerator-runtime/runtime')
 require("@testing-library/jest-dom");
+import { studiosMap } from '../constants/studio_constants'
 const helpers = require('../src/helpers.mjs')
-const mockedData = {
+const mockedDataDisney = {
     id: '1',
     name: 'Disney studios',
     shortName: 'Disney',
@@ -39,43 +40,101 @@ const mockedData = {
     ]
 }
 describe("Helpers", () => {
-    it("genreListConstructor - Without parameters should retrieve all the movies", () => {
-        const movies = helpers.getAllMoviesFromStudios([mockedData],{})
-        expect(movies.length).toBe(mockedData.movies.length)
-    })
-
-    it("genreListConstructor - With title parameters should retrieve the movies having that text", () => {
-        const movies = helpers.getAllMoviesFromStudios([mockedData],{
-            title: "carter"
-        })
-        expect(movies[0].name).toBe(mockedData.movies[3].name)
-        expect(movies.length).toBe(1)
-    })
-
-    it("genreListConstructor - With genre parameter should retrieve the movies having that genreId", () => {
-        const movies = helpers.getAllMoviesFromStudios([mockedData],{
-            genreId: "4"
+    describe("GetAllMoviesFromStudios", () => {
+        it("Without parameters should retrieve all the movies", () => {
+            const movies = helpers.getAllMoviesFromStudios([mockedDataDisney], {})
+            expect(movies.length).toBe(mockedDataDisney.movies.length)
         })
 
-        expect(movies[0].name).toBe(mockedData.movies[1].name)
-        expect(movies[0].genre).toBe(4)
-        expect(movies.length).toBe(1)
+        it("With title parameters should retrieve the movies having that text", () => {
+            const movies = helpers.getAllMoviesFromStudios([mockedDataDisney], {
+                title: "carter"
+            })
+            expect(movies[0].name).toBe(mockedDataDisney.movies[3].name)
+            expect(movies.length).toBe(1)
+        })
+
+        it("With genre parameter should retrieve the movies having that genreId", () => {
+            const movies = helpers.getAllMoviesFromStudios([mockedDataDisney], {
+                genreId: "4"
+            })
+
+            expect(movies[0].name).toBe(mockedDataDisney.movies[1].name)
+            expect(movies[0].genre).toBe(4)
+            expect(movies.length).toBe(1)
+        })
+
+        it("With minPrice parameter should retrieve the movies having that minimum value", () => {
+            const movies = helpers.getAllMoviesFromStudios([mockedDataDisney], {
+                minPrice: 600
+            })
+            expect(movies[0].name).toBe(mockedDataDisney.movies[0].name)
+            expect(movies[1].name).toBe(mockedDataDisney.movies[1].name)
+            expect(movies.length).toBe(2)
+        })
+
+        it("With maxPrice parameter should retrieve the movies having that maximum value", () => {
+            const movies = helpers.getAllMoviesFromStudios([mockedDataDisney], {
+                maxPrice: 300
+            })
+            expect(movies[0].name).toBe(mockedDataDisney.movies[2].name)
+            expect(movies.length).toBe(1)
+        })
     })
 
-    it("genreListConstructor - With minPrice parameter should retrieve the movies having that minimum value", () => {
-        const movies = helpers.getAllMoviesFromStudios([mockedData],{
-            minPrice: 600
+    describe("Transfer Movie", () => {
+        it('Having all parameters should transfer the movie', () => {
+            const movie = studiosMap['1'].movies[0]
+            const movieStudio = studiosMap['1']
+            const nextStudio = studiosMap['2']
+            const newStudioList = helpers.transferMovie({ movieId: movie.id, movieStudioId: movieStudio.id, nextStudioId: nextStudio.id })
+            const transferedMovie = newStudioList['2'].movies.filter(mov => mov.name === movie.name)[0]
+            expect(movie).toMatchObject(transferedMovie)
+
         })
-        expect(movies[0].name).toBe(mockedData.movies[0].name)
-        expect(movies[1].name).toBe(mockedData.movies[1].name)
-        expect(movies.length).toBe(2)
+
+        it('Withoud MovieId shoudl throw an error', () => {
+            const movieStudio = studiosMap['1']
+            const nextStudio = studiosMap['2']
+
+            try {
+                helpers.transferMovie({ movieStudioId: movieStudio.id, nextStudioId: nextStudio.id })
+            } catch (error) {
+                expect(error.message).toBe("Missing movie id")
+            }
+
+        })
+
+        it('Withoud movieStudioId should throw an error', () => {
+            const movie = studiosMap['1'].movies[0]
+            const nextStudio = studiosMap['2']
+
+            try {
+                helpers.transferMovie({ movieId: movie.id, nextStudioId: nextStudio.id })
+            } catch (error) {
+                expect(error.message).toBe("Missing movie studio id")
+            }
+
+        })
+        it('Withoud nextStudioId should throw an error', () => {
+            const movie = studiosMap['1'].movies[0]
+            const movieStudio = studiosMap['1']
+
+            try {
+                helpers.transferMovie({ movieId: movie.id, movieStudioId: movieStudio.id })
+            } catch (error) {
+                expect(error.message).toBe("Missing next movie studio id")
+            }
+
+        })
     })
 
-    it("genreListConstructor - With maxPrice parameter should retrieve the movies having that maximum value", () => {
-        const movies = helpers.getAllMoviesFromStudios([mockedData],{
-            maxPrice: 300
+    describe('GenreListConstructor', () => {
+        it('Should generate a new list with each label capitalize', () => {
+            const list = helpers.genreListConstructor()
+            const validations = list.every(label => (/^[A-Z]/).test(label.value))
+
+            expect(validations).toBeTruthy()
         })
-        expect(movies[0].name).toBe(mockedData.movies[2].name)
-        expect(movies.length).toBe(1)
     })
 })

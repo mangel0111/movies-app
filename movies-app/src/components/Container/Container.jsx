@@ -1,7 +1,7 @@
 import styled from '@material-ui/core/styles/styled'
 
 export default styled("div")(({ theme }) => ({
-    height: "100%",
+    height: "100vh",
     minHeight: 400,
     textAlign: "center",
     display: "flex",

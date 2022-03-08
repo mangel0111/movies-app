@@ -29,7 +29,7 @@ describe("Card", () => {
     it("Without small card should add the regularCard class", async () => {
         const container = render(<Card movie={mockStore.movies[0]} />);
         const card = container.container.querySelector(`#${mockStore.movies[0].name}-card`)
-        console.log("card",card)
+
         await waitFor(() => {
             expect(card).toHaveStyle("flex-direction: column")
             expect(card).toHaveStyle("justify-content: center")
