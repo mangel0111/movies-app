@@ -1,8 +1,8 @@
 import './index.css'
 
 import React from 'react'
-import {render} from 'react-dom'
+import { render } from 'react-dom'
 
-import App from './App.jsx'
+import App from 'components/organism/App/App'
 
-render(<App/>, document.getElementById('root'))
+render(<App />, document.getElementById('root'))
