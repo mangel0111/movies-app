@@ -1,0 +1,19 @@
+- I was not able to push to the main repo, in order to commit my result I have to fork the repo and create a new pr
+
+
+1- The index.html file was in the incorrect path
+	- Move to the public directory
+
+2- Port overlapping
+    - Change server port due to it crashes with the app port
+
+3- The Aladdin's movie cover is not available any more
+
+4 - To be able to test the API I installed Jest and configure it
+    - I had some issues with Babel and I fixed it setting Node version to 14 due to the ES6 modules mostly
+
+5 - To log on the backend side I decided to use Morgan
+
+6 - To improve the responsiveness logic I used the useMediaQuery hook from MUI
+
+7 - After a long research and debugging to fix the images problem, including fetching the image from the API and returning the base64 string, I noticed that the request from the browser had a refferer policy set as strict. I did some reasearch and I set the referrer policy to the avatar component which fixed the problem
