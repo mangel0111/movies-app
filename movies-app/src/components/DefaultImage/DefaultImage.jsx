@@ -13,7 +13,7 @@ const MoviePosition = styled(Typography)({
 const DefaultImage = ({ movie }) => {
     return (
         <div>
-            <NameLabel>
+            <NameLabel variant="h5">
                 {movie.name + ' '}
                 <MoviePosition>
                     {movie.position}

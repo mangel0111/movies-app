@@ -7,6 +7,7 @@ import * as Api from '../../api'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Card from '../Card/Card'
 import { useDispatch, useSelector } from "react-redux";
+import { updateGenres, updateStudios, updateMovies, updateFilters } from "../../actions"
 
 const MoviesGrid = () => {
     const dispatch = useDispatch();
@@ -18,13 +19,13 @@ const MoviesGrid = () => {
         if (!studios.length) {
             Api.getStudios()
                 .then(studios => {
-                    dispatch({ type: "UPDATE_STUDIOS", payload: studios })
+                    dispatch(updateStudios(studios))
                 });
         }
         if (!genresList.length) {
             Api.getGenres()
                 .then(genres => {
-                    dispatch({ type: "UPDATE_GENRES", payload: genres })
+                    dispatch(updateGenres(genres))
                 });
         }
     }, [dispatch, studios, genresList])
@@ -32,19 +33,17 @@ const MoviesGrid = () => {
     React.useEffect(() => {
         Api.getMovies(filters)
             .then(movies => {
-                dispatch({ type: "UPDATE_MOVIES", payload: movies })
+                dispatch(updateMovies(movies))
             });
     }, [filters, dispatch])
 
     const handleFilterChange = (id) => {
         return (e) => {
-            if (['minPrice', 'maxPrice'].includes(id)) {
-                if ((/^\d*$/).test(e.target.value)) {
-                    dispatch({ type: "UPDATE_FILTERS", payload: { [id]: e.target.value } })
-                }
-            } else {
-                dispatch({ type: "UPDATE_FILTERS", payload: { [id]: e.target.value } })
+            let payload = { [id]: e.target.value }
+            if (['minPrice', 'maxPrice'].includes(id) && !(/^\d*$/).test(e.target.value)) {
+                payload = {}
             }
+            dispatch(updateFilters(payload))
         }
     }
 
