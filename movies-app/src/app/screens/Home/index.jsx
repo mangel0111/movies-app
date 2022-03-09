@@ -3,7 +3,8 @@ import { useQuery } from "react-query";
 import { Avatar, Card, Grid, Typography, TextField } from "@material-ui/core";
 
 import LoadingWrapper from "../../../components/LoadingWrapper";
-import { getMovies } from "../../../services/movies/service";
+import { getMovies } from "../../../services/Movies/service";
+import { getStudios } from "../../../services/Studios/service";
 import useIsMobile from "../../../hooks/useMobile";
 
 import { CARD_SIZE_CONFIG, DEFAULT_AVATAR, ENTER_KEY_CODE } from "./constants";
@@ -14,9 +15,15 @@ import styles from "./styles.module.scss";
 function Home() {
   const isMobile = useIsMobile();
   const [filter, setFilter] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [studios, setStudios] = useState([]);
 
-  const { data: movies, isFetching: moviesLoading } = useQuery("movies", () =>
-    getMovies()
+  const { isFetching: moviesLoading } = useQuery("movies", () =>
+    getMovies().then((response) => setMovies(response))
+  );
+
+  const { isFetching: studiosLoading } = useQuery("studios", () =>
+    getStudios().then((response) => setStudios(response))
   );
 
   const onHandleSearch = (inputValue) => setFilter(inputValue.toLowerCase());
@@ -40,7 +47,7 @@ function Home() {
   };
 
   return (
-    <LoadingWrapper loading={moviesLoading}>
+    <LoadingWrapper loading={moviesLoading || studiosLoading}>
       <div className={styles.homeContainer}>
         <div className={styles.homeBody}>
           <h1>Images</h1>
