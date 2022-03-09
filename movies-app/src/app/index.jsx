@@ -1,77 +1,64 @@
-import React, { PureComponent } from "react";
+import React from "react";
+import { useQuery } from "react-query";
 import { Avatar, Card, Grid, Typography } from "@material-ui/core";
 
+import useIsMobile from "../hooks/useMobile";
+import { getMovies } from "../services/movies/service";
+import { getStudios } from "../services/studios/service";
+
+import { CARD_SIZE_CONFIG, DEFAULT_AVATAR } from "./constants";
 import "./index.css";
 
-//TODO: 2 Move these calls into a proper api layer
-const domain = "http://localhost:3001";
-const defaultAvatar =
-  "https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg";
+function App() {
+  const isMobile = useIsMobile();
 
-//TODO: 1 this is a really old class component refactor it into a modern functional component
-class App extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      studios: [],
-      movies: [],
-      avatarSize: 280,
-      cardStyle: "regularCard",
-    };
-    this.responsiveStyle = this.responsiveStyle.bind(this);
-  }
+  const { data: studios, isFetching: studiosLoading } = useQuery(
+    "studios",
+    () => getStudios()
+  );
 
-  componentDidMount() {
-    window.addEventListener("resize", this.responsiveStyle);
-    fetch(`${domain}/studios`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((studios) => {
-        this.setState({ studios });
-      });
-    fetch(`${domain}/movies`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((movies) => {
-        this.setState({ movies });
-      });
-  }
+  const { data: movies, isFetching: moviesLoading } = useQuery("movies", () =>
+    getMovies()
+  );
 
-  responsiveStyle() {
-    //TODO: produce a better resize strategy
-    if (window.innerWidth < 601) {
-      console.log(window.innerWidth);
-      this.setState({ avatarSize: 60, cardStyle: "smallCard" });
-    } else {
-      this.setState({ avatarSize: 280, cardStyle: "regularCard" });
-    }
-  }
+  const size = isMobile
+    ? CARD_SIZE_CONFIG.SMALL.size
+    : CARD_SIZE_CONFIG.REGULAR.size;
 
-  render() {
-    const { movies, studios, avatarSize } = this.state;
+  const cardStyle = isMobile
+    ? CARD_SIZE_CONFIG.SMALL.style
+    : CARD_SIZE_CONFIG.REGULAR.style;
 
-    return (
-      <div className="App">
-        <div className="App-studios App-flex">
-          {
-            //TODO: 4 Filter the movies by genre, price and title
-          }
-          <h3>Images:</h3>
-          <Grid container justify="center" alignItems="center">
-            {movies.map((movie) => (
+  return (
+    <div className="App">
+      <div className="App-studios App-flex">
+        {
+          //TODO: 4 Filter the movies by genre, price and title
+        }
+        <h3>Images</h3>
+        <Grid container justify="center" alignItems="center">
+          {!moviesLoading &&
+            movies.map((movie) => (
               //TODO: 3 move styles into a separate js file and export this class using withStyles or similar or just to css file
               <Grid key={movie.id} item xs={12} sm={6} lg={4}>
-                <Card className={this.state.cardStyle}>
+                <Card className={cardStyle}>
                   <Avatar
                     alt={movie.name}
-                    src={movie.img || defaultAvatar}
-                    style={{ margin: 5, width: avatarSize, height: avatarSize }}
-                  />
+                    src={movie.img}
+                    style={{ margin: 5, width: size, height: size }}
+                  >
+                    <Avatar
+                      style={{
+                        margin: 5,
+                        width: size,
+                        height: size,
+                      }}
+                      src={DEFAULT_AVATAR}
+                    />
+                  </Avatar>
                   <div>
                     <Typography style={{ display: "inline-block" }}>
-                      {movie.name + " "}
+                      {movie.name}
                       <Typography
                         style={{ fontWeight: "bold", display: "inline-block" }}
                       >
@@ -79,24 +66,25 @@ class App extends PureComponent {
                       </Typography>
                     </Typography>
                   </div>
-                  <Typography>
-                    {
-                      // eslint-disable-next-line
-                      studios.map((studio) => {
-                        if (movie.studioId === studio.id) {
-                          return studio.name;
-                        }
-                      })
-                    }
-                  </Typography>
+                  {!studiosLoading && (
+                    <Typography>
+                      {
+                        // eslint-disable-next-line
+                        studios.map((studio) => {
+                          if (movie.studioId === studio.id) {
+                            return studio.name;
+                          }
+                        })
+                      }
+                    </Typography>
+                  )}
                 </Card>
               </Grid>
             ))}
-          </Grid>
-        </div>
+        </Grid>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default App;
