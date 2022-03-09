@@ -1,24 +1,15 @@
 import React from "react";
 import { render } from "react-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { Provider } from "react-redux";
 
 import App from "./app/screens/Home";
+import store from "./redux/store";
 
 import "./index.css";
 
-// Global react-query configs
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: 0,
-    },
-  },
-});
-
 render(
-  <QueryClientProvider client={queryClient}>
+  <Provider store={store}>
     <App />
-  </QueryClientProvider>,
+  </Provider>,
   document.getElementById("root")
 );

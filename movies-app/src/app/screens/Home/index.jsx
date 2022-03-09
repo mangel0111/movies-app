@@ -1,9 +1,17 @@
-import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { Avatar, Card, Grid, Typography, TextField } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Avatar,
+  Card,
+  Grid,
+  Typography,
+  TextField,
+  NativeSelect,
+} from "@material-ui/core";
 
 import LoadingWrapper from "../../../components/LoadingWrapper";
-import { getMovies } from "../../../services/movies/service";
+import * as moviesActions from "../../../redux/Movie/actions";
+import * as studiosActions from "../../../redux/Studio/actions";
 import useIsMobile from "../../../hooks/useMobile";
 
 import { CARD_SIZE_CONFIG, DEFAULT_AVATAR, ENTER_KEY_CODE } from "./constants";
@@ -14,10 +22,22 @@ import styles from "./styles.module.scss";
 function Home() {
   const isMobile = useIsMobile();
   const [filter, setFilter] = useState("");
+  const dispatch = useDispatch();
 
-  const { data: movies, isFetching: moviesLoading } = useQuery("movies", () =>
-    getMovies()
-  );
+  const {
+    movies: { movies, moviesLoading },
+    studios: { studios, studiosLoading },
+  } = useSelector((state) => state);
+
+  useEffect(() => {
+    if (!movies) {
+      dispatch(moviesActions.getMovies());
+    }
+
+    if (!studios) {
+      dispatch(studiosActions.getStudios());
+    }
+  });
 
   const onHandleSearch = (inputValue) => setFilter(inputValue.toLowerCase());
   const onHandleKeyDown = (e) =>
@@ -40,7 +60,7 @@ function Home() {
   };
 
   return (
-    <LoadingWrapper loading={moviesLoading}>
+    <LoadingWrapper loading={(moviesLoading, studiosLoading)}>
       <div className={styles.homeContainer}>
         <div className={styles.homeBody}>
           <h1>Images</h1>
@@ -55,8 +75,7 @@ function Home() {
             container
             className={styles.gridContainer}
           >
-            {!moviesLoading &&
-              filteredMovies &&
+            {filteredMovies &&
               filteredMovies.length > 0 &&
               filteredMovies.map((movie) => (
                 <Grid key={movie.id} item xs={12} sm={6} lg={4}>
@@ -71,7 +90,28 @@ function Home() {
                       <Typography className={styles.genreFont}>
                         {movie.genre}
                       </Typography>
-                      <Typography>{movie.studioName}</Typography>
+                      <NativeSelect
+                        defaultValue={movie.studioName}
+                        inputProps={{
+                          name: "studio",
+                          id: "uncontrolled-native",
+                        }}
+                        onChange={(e) =>
+                          console.log(
+                            `Change studio for movie ${movie.name} from ${movie.studioName} to ${e.target.value}`
+                          )
+                        }
+                      >
+                        {studios &&
+                          studios.map((studio) => (
+                            <option
+                              className={styles.option}
+                              value={studio.name}
+                            >
+                              {studio.name}
+                            </option>
+                          ))}
+                      </NativeSelect>
                     </div>
                   </Card>
                 </Grid>

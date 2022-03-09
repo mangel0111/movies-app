@@ -1,3 +1,5 @@
-import { apiCall } from "../../hooks/useApi";
-
-export const getMovies = () => apiCall(`/movies`);
+export const getMovies = () => {
+  return fetch(`${process.env.REACT_APP_API_URL}/movies`).then((response) => {
+    return response.json();
+  });
+};
