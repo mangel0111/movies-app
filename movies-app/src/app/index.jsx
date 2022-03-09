@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { Avatar, Card, Grid, Typography } from "@material-ui/core";
+import { Avatar, Card, Grid, Typography, TextField } from "@material-ui/core";
 
 import useIsMobile from "../hooks/useMobile";
 import { getMovies } from "../services/movies/service";
 
-import { CARD_SIZE_CONFIG, DEFAULT_AVATAR } from "./constants";
+import { CARD_SIZE_CONFIG, DEFAULT_AVATAR, ENTER_KEY_CODE } from "./constants";
+import { getFilteredMovies } from "./utils";
 import "./index.css";
 
 function App() {
   const isMobile = useIsMobile();
+  const [filter, setFilter] = useState("");
 
   const { data: movies, isFetching: moviesLoading } = useQuery("movies", () =>
     getMovies()
   );
+
+  const onHandleSearch = (inputValue) => setFilter(inputValue.toLowerCase());
+  const onHandleKeyDown = (e) =>
+    e.key === ENTER_KEY_CODE && movies && onHandleSearch(e.target.value);
 
   const size = isMobile
     ? CARD_SIZE_CONFIG.SMALL.size
@@ -23,17 +29,22 @@ function App() {
     ? CARD_SIZE_CONFIG.SMALL.style
     : CARD_SIZE_CONFIG.REGULAR.style;
 
+  console.log(movies);
+  const filteredMovies = getFilteredMovies(filter, movies);
+
   return (
     <div className="App">
       <div className="App-studios App-flex">
-        {
-          //TODO: 4 Filter the movies by genre, price and title
-        }
-        <h3>Images</h3>
+        <h1>Images</h1>
+        <TextField
+          className="movies-search-input"
+          inputProps={{ "data-testid": "movies-app-search-input" }}
+          onKeyDown={onHandleKeyDown}
+          placeholder="Find by genre, price and title"
+        />
         <Grid container justify="center" alignItems="center">
           {!moviesLoading &&
-            movies.map((movie) => (
-              //TODO: 3 move styles into a separate js file and export this class using withStyles or similar or just to css file
+            filteredMovies.map((movie) => (
               <Grid key={movie.id} item xs={12} sm={6} lg={4}>
                 <Card className={cardStyle}>
                   <Avatar
@@ -50,17 +61,13 @@ function App() {
                       src={DEFAULT_AVATAR}
                     />
                   </Avatar>
-                  <Typography
-                    style={{ display: "flex", flexDirection: "column" }}
-                  >
-                    {movie.name}
-                    <Typography
-                      style={{ fontWeight: "bold", display: "inline-block" }}
-                    >
+                  <Typography className="movie-info">
+                    {movie.name} - ${movie.price}
+                    <Typography className="genre-font">
                       {movie.genre}
                     </Typography>
+                    <Typography>{movie.studioName}</Typography>
                   </Typography>
-                  <Typography>{movie.studioName}</Typography>
                 </Card>
               </Grid>
             ))}

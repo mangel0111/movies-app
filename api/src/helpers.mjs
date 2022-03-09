@@ -61,8 +61,5 @@ export const movieConstructor = (movie, studio) => {
     movie.img = sonyImages[movie.id];
   }
 
-  //Remove non wanted properties
-  delete movie["price"];
-
   return movie;
 };

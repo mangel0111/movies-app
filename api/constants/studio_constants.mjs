@@ -56,10 +56,10 @@ export const GENRE_ID = {
 };
 
 export const GENRE_STRING = {
-  [GENRE_ID.adventures]: "ADV",
-  [GENRE_ID.horror]: "HOR",
-  [GENRE_ID.animation]: "ANI",
-  [GENRE_ID.heroes]: "HER",
+  [GENRE_ID.adventures]: "ADVENTURE",
+  [GENRE_ID.horror]: "HORROR",
+  [GENRE_ID.animation]: "ANIMATION",
+  [GENRE_ID.heroes]: "HEROES",
 };
 
 export const disney = {
