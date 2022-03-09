@@ -37,15 +37,24 @@ export const movieConstructor = (movie, studio) => {
     );
     delete movie["url"];
   }
-  //Map position id to string
-  else if (typeof movie.position === "number") {
-    movie["position"] = GENRE_STRING[movie.price];
+
+  //Map genre id to string
+  if (typeof movie.genre === "number") {
+    movie["genre"] = GENRE_STRING[movie.genre];
   }
+
   //Add studioId from parent object
   Object.defineProperty(
     movie,
     "studioId",
     Object.getOwnPropertyDescriptor(studio, "id")
+  );
+
+  //Add studioName from parent object
+  Object.defineProperty(
+    movie,
+    "studioName",
+    Object.getOwnPropertyDescriptor(studio, "name")
   );
 
   if (!movie.url && !movie.img && studio.id === sony.id) {

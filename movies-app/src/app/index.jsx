@@ -4,18 +4,12 @@ import { Avatar, Card, Grid, Typography } from "@material-ui/core";
 
 import useIsMobile from "../hooks/useMobile";
 import { getMovies } from "../services/movies/service";
-import { getStudios } from "../services/studios/service";
 
 import { CARD_SIZE_CONFIG, DEFAULT_AVATAR } from "./constants";
 import "./index.css";
 
 function App() {
   const isMobile = useIsMobile();
-
-  const { data: studios, isFetching: studiosLoading } = useQuery(
-    "studios",
-    () => getStudios()
-  );
 
   const { data: movies, isFetching: moviesLoading } = useQuery("movies", () =>
     getMovies()
@@ -56,28 +50,17 @@ function App() {
                       src={DEFAULT_AVATAR}
                     />
                   </Avatar>
-                  <div>
-                    <Typography style={{ display: "inline-block" }}>
-                      {movie.name}
-                      <Typography
-                        style={{ fontWeight: "bold", display: "inline-block" }}
-                      >
-                        {movie.position}
-                      </Typography>
+                  <Typography
+                    style={{ display: "flex", flexDirection: "column" }}
+                  >
+                    {movie.name}
+                    <Typography
+                      style={{ fontWeight: "bold", display: "inline-block" }}
+                    >
+                      {movie.genre}
                     </Typography>
-                  </div>
-                  {!studiosLoading && (
-                    <Typography>
-                      {
-                        // eslint-disable-next-line
-                        studios.map((studio) => {
-                          if (movie.studioId === studio.id) {
-                            return studio.name;
-                          }
-                        })
-                      }
-                    </Typography>
-                  )}
+                  </Typography>
+                  <Typography>{movie.studioName}</Typography>
                 </Card>
               </Grid>
             ))}
