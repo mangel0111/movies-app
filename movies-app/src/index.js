@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-import App from "./app";
+import App from "./app/screens/Home";
 
 import "./index.css";
 

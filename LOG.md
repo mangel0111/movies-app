@@ -40,3 +40,9 @@ I added to the API the studio name when building the movie object so we dont hav
 ## Movie position
 
 Changed position name for genre in order to me more descriptive for both UI and API
+
+## sass modules
+
+I installed https://github.com/harrysolovay/rescripts in order to add CamelCase configs for using sass modules without ejecting
+
+## Testing

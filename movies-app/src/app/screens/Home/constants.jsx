@@ -1,8 +1,10 @@
+import styles from "./styles.module.scss";
+
 export const CARD_SIZE_CONFIG = {
-  SMALL: { size: 60, style: "smallcard" },
+  SMALL: { size: 60, style: styles.smallCard },
   REGULAR: {
     size: 280,
-    style: "regular-card",
+    style: styles.regularCard,
   },
 };
 
