@@ -4,7 +4,7 @@ import { Avatar, Card, Grid, Typography } from "@material-ui/core";
 import "./index.css";
 
 //TODO: 2 Move these calls into a proper api layer
-const domain = "http://localhost:3000";
+const domain = "http://localhost:3001";
 const defaultAvatar =
   "https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg";
 
@@ -51,7 +51,6 @@ class App extends PureComponent {
 
   render() {
     const { movies, studios, avatarSize } = this.state;
-    console.log(movies);
 
     return (
       <div className="App">
@@ -63,11 +62,11 @@ class App extends PureComponent {
           <Grid container justify="center" alignItems="center">
             {movies.map((movie) => (
               //TODO: 3 move styles into a separate js file and export this class using withStyles or similar or just to css file
-              <Grid item xs={12} sm={6} lg={4}>
+              <Grid key={movie.id} item xs={12} sm={6} lg={4}>
                 <Card className={this.state.cardStyle}>
                   <Avatar
                     alt={movie.name}
-                    src={movie.img ? movie.img : defaultAvatar}
+                    src={movie.img || defaultAvatar}
                     style={{ margin: 5, width: avatarSize, height: avatarSize }}
                   />
                   <div>
