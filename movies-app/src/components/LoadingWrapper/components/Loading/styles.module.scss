@@ -1,0 +1,8 @@
+.spinner-container {
+  animation: appear 290ms cubic-bezier(0.79, 0.01, 0.375, 0.995);
+  animation-fill-mode: both;
+  animation-delay: #{--animation-delay};
+  margin: auto;
+  height: 120px;
+  width: 120px;
+}

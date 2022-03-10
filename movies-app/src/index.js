@@ -1,8 +1,24 @@
-import './index.css'
+import React from "react";
+import { render } from "react-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-import React from 'react'
-import {render} from 'react-dom'
+import App from "./app/screens/Home";
 
-import App from './App.jsx'
+import "./index.css";
 
-render(<App/>, document.getElementById('root'))
+// Global react-query configs
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+  },
+});
+
+render(
+  <QueryClientProvider client={queryClient}>
+    <App />
+  </QueryClientProvider>,
+  document.getElementById("root")
+);
