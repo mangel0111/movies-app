@@ -41,15 +41,12 @@ describe("<Home/>", () => {
     expect(
       getByText(`${MOVIES_TEST_MOCK[0].name} - $${MOVIES_TEST_MOCK[0].price}`)
     ).not.toBeNull();
-    expect(getByText(MOVIES_TEST_MOCK[0].studioName)).not.toBeNull();
     expect(
       getByText(`${MOVIES_TEST_MOCK[1].name} - $${MOVIES_TEST_MOCK[1].price}`)
     ).not.toBeNull();
-    expect(getByText(MOVIES_TEST_MOCK[1].studioName)).not.toBeNull();
     expect(
       getByText(`${MOVIES_TEST_MOCK[2].name} - $${MOVIES_TEST_MOCK[2].price}`)
     ).not.toBeNull();
-    expect(getByText(MOVIES_TEST_MOCK[2].studioName)).not.toBeNull();
   });
 
   it("Renders Home with all Movies and it filters by name", async () => {
