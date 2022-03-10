@@ -24,14 +24,24 @@ app.get("/studios", function (req, res) {
   delete warnerTemp.movies;
   let sonyTemp = { ...sony };
   delete sonyTemp.movies;
-  res.json([disneyTemp, warnerTemp, sonyTemp]);
+  try {
+    res.json([disneyTemp, warnerTemp, sonyTemp]);
+  } catch (e) {
+    res.statusCode(500).json({
+      status: "fail",
+      message: "Failing when getting all studios",
+    });
+  }
 });
 
 app.get("/movies", function (req, res) {
   try {
     res.json(getAllMoviesFromStudios([disney, warner, sony]));
   } catch (e) {
-    res.statusCode(500);
+    res.statusCode(500).json({
+      status: "fail",
+      message: "Failing when getting all movies",
+    });
   }
 });
 
@@ -61,7 +71,5 @@ app.post("/transfer", function (req, res) {
     }
   }
 });
-
-// TODO: 2 Add logging capabilities into the movies-app
 
 app.listen(3001);
