@@ -1,9 +1,16 @@
 import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { Avatar, Card, Grid, Typography, TextField } from "@material-ui/core";
+import { useQuery, useMutation } from "react-query";
+import {
+  Avatar,
+  Card,
+  Grid,
+  Typography,
+  TextField,
+  NativeSelect,
+} from "@material-ui/core";
 
 import LoadingWrapper from "../../../components/LoadingWrapper";
-import { getMovies } from "../../../services/Movies/service";
+import { getMovies, transferMovie } from "../../../services/Movies/service";
 import { getStudios } from "../../../services/Studios/service";
 import useIsMobile from "../../../hooks/useMobile";
 
@@ -26,6 +33,12 @@ function Home() {
     getStudios().then((response) => setStudios(response))
   );
 
+  const { isLoading } = useMutation("transfer-movie", () =>
+    transferMovie().then((response) => setMovies(response))
+  );
+
+  console.log(isLoading);
+
   const onHandleSearch = (inputValue) => setFilter(inputValue.toLowerCase());
   const onHandleKeyDown = (e) =>
     e.key === ENTER_KEY_CODE && movies && onHandleSearch(e.target.value);
@@ -47,7 +60,7 @@ function Home() {
   };
 
   return (
-    <LoadingWrapper loading={moviesLoading || studiosLoading}>
+    <LoadingWrapper loading={moviesLoading || studiosLoading || isLoading}>
       <div className={styles.homeContainer}>
         <div className={styles.homeBody}>
           <h1>Images</h1>
@@ -78,7 +91,31 @@ function Home() {
                       <Typography className={styles.genreFont}>
                         {movie.genre}
                       </Typography>
-                      <Typography>{movie.studioName}</Typography>
+                      <NativeSelect
+                        defaultValue={movie.studioName}
+                        inputProps={{
+                          name: "studio",
+                          id: "uncontrolled-native",
+                        }}
+                        onChange={(e) => {
+                          transferMovie(
+                            movie.id,
+                            movie.studioId,
+                            e.target.value
+                          );
+                        }}
+                      >
+                        {studios &&
+                          studios.map((studio) => (
+                            <option
+                              key={studio.id}
+                              className={styles.option}
+                              value={studio.id}
+                            >
+                              {studio.name}
+                            </option>
+                          ))}
+                      </NativeSelect>
                     </div>
                   </Card>
                 </Grid>
