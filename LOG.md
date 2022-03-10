@@ -54,3 +54,7 @@ I installed https://github.com/harrysolovay/rescripts in order to add CamelCase 
 
 - For filtering I decided to do it only front end side, since this tests is mainly focused on the front end. I could do it by sending to the getMovies endpoint some params like genre, price and name.. and then filter in the API. If you want I can do it for future improvements
 - Transfer is only a superficial transfering since I dont have a database and the test is mainly focused on the front end
+
+## Logging
+
+Using Morgan
