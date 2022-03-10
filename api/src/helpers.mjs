@@ -2,6 +2,7 @@ import {
   GENRE_STRING,
   sony,
   sonyImages,
+  studiosMap,
 } from "../constants/studio_constants.mjs";
 
 export const getMovie = (movieId, studios) => {
@@ -62,4 +63,28 @@ export const movieConstructor = (movie, studio) => {
   }
 
   return movie;
+};
+
+export const almostTransferMovie = ({
+  movieId,
+  movieStudioId,
+  transferStudioId,
+}) => {
+  if (!movieId) {
+    throw new Error("Movie id not found!");
+  }
+  if (!movieStudioId) {
+    throw new Error("Movie Studio Id not found!");
+  }
+  if (!transferStudioId) {
+    throw new Error("Transfer Studio Id not found");
+  }
+
+  const movie = studiosMap[movieStudioId].movies.filter(
+    (movie) => movie.id === movieId
+  );
+  const actualMovieIndex = studiosMap[movieStudioId].movies.indexOf(movie);
+  studiosMap[movieStudioId].movies.splice(actualMovieIndex, 1);
+  studiosMap[transferStudioId].movies.push(movie);
+  return studiosMap;
 };
