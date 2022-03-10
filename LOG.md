@@ -46,3 +46,6 @@ Changed position name for genre in order to me more descriptive for both UI and 
 I installed https://github.com/harrysolovay/rescripts in order to add CamelCase configs for using sass modules without ejecting
 
 ## Testing
+
+There are no tests in this redux version since I did not want to spend more time with tests. They are done in the other version
+in the branch `franco-perez`

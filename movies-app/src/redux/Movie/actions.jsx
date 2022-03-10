@@ -15,3 +15,18 @@ export const getMovies = () => async (dispatch) => {
       return false;
     });
 };
+
+export const transferMovie =
+  (movieId, movieStudioId, transferStudioId) => async (dispatch) => {
+    dispatch({ type: types.TRANSFER_MOVIE });
+    moviesService
+      .transferMovie(movieId, movieStudioId, transferStudioId)
+      .then((response) => {
+        dispatch({ type: types.TRANSFER_MOVIE_SUCCESS, payload: response });
+        return response;
+      })
+      .catch(() => {
+        dispatch({ type: types.TRANSFER_MOVIE_FAILURE });
+        return false;
+      });
+  };

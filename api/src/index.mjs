@@ -1,7 +1,11 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { getAllMoviesFromStudios } from "../src/helpers.mjs";
+import morgan from "morgan";
+import {
+  getAllMoviesFromStudios,
+  almostTransferMovie,
+} from "../src/helpers.mjs";
 import {
   sony,
   warner,
@@ -13,6 +17,9 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms")
+);
 
 app.get("/studios", function (req, res) {
   let disneyTemp = { ...disney };
@@ -36,9 +43,27 @@ app.get("/movieAge", function (req, res) {
   res.json(movieAge);
 });
 
-//TODO: 1 add the capability to sell the movie rights to another studio
-app.post("/transfer", function (req, res) {});
-
-// TODO: 2 Add logging capabilities into the movies-app
+app.post("/transfer", function (req, res) {
+  const { movieId, movieStudioId, transferStudioId } = req.body;
+  if (req.method === "POST") {
+    try {
+      const updatedStudiosMap = almostTransferMovie({
+        movieId,
+        movieStudioId,
+        transferStudioId,
+      });
+      const updatedMovies = getAllMoviesFromStudios(
+        Object.values(updatedStudiosMap),
+        {}
+      );
+      res.json({ updatedMovies });
+    } catch (error) {
+      res.statusCode(500).json({
+        status: "fail",
+        message: `Error on movie transfer from ${movieStudioId} to ${transferStudioId}`,
+      });
+    }
+  }
+});
 
 app.listen(3001);

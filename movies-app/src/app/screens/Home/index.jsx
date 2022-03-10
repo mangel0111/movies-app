@@ -39,6 +39,11 @@ function Home() {
     }
   });
 
+  const transferMovie = (movieId, movieStudioId, transferStudioId) =>
+    dispatch(
+      moviesActions.transferMovie(movieId, movieStudioId, transferStudioId)
+    );
+
   const onHandleSearch = (inputValue) => setFilter(inputValue.toLowerCase());
   const onHandleKeyDown = (e) =>
     e.key === ENTER_KEY_CODE && movies && onHandleSearch(e.target.value);
@@ -96,11 +101,13 @@ function Home() {
                           name: "studio",
                           id: "uncontrolled-native",
                         }}
-                        onChange={(e) =>
-                          console.log(
-                            `Change studio for movie ${movie.name} from ${movie.studioName} to ${e.target.value}`
-                          )
-                        }
+                        onChange={(e) => {
+                          transferMovie(
+                            movie.id,
+                            movie.studioId,
+                            e.target.value
+                          );
+                        }}
                       >
                         {studios &&
                           studios.map((studio) => (

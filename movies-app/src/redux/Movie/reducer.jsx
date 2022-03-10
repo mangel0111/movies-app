@@ -22,6 +22,19 @@ export default function reduce(state = initialState, action = {}) {
       return state.merge({
         moviesLoading: false,
       });
+    case types.TRANSFER_MOVIE:
+      return state.merge({
+        moviesLoading: true,
+      });
+    case types.TRANSFER_MOVIE_SUCCESS:
+      return state.merge({
+        movies: action.payload,
+        moviesLoading: false,
+      });
+    case types.TRANSFER_MOVIE_FAILURE:
+      return state.merge({
+        moviesLoading: false,
+      });
     default:
       return state;
   }
