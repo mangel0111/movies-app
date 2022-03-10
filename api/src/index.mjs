@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import morgan from "morgan";
 import {
   getAllMoviesFromStudios,
   almostTransferMovie,
@@ -16,6 +17,9 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms")
+);
 
 app.get("/studios", function (req, res) {
   let disneyTemp = { ...disney };
@@ -24,24 +28,14 @@ app.get("/studios", function (req, res) {
   delete warnerTemp.movies;
   let sonyTemp = { ...sony };
   delete sonyTemp.movies;
-  try {
-    res.json([disneyTemp, warnerTemp, sonyTemp]);
-  } catch (e) {
-    res.statusCode(500).json({
-      status: "fail",
-      message: "Failing when getting all studios",
-    });
-  }
+  res.json([disneyTemp, warnerTemp, sonyTemp]);
 });
 
 app.get("/movies", function (req, res) {
   try {
     res.json(getAllMoviesFromStudios([disney, warner, sony]));
   } catch (e) {
-    res.statusCode(500).json({
-      status: "fail",
-      message: "Failing when getting all movies",
-    });
+    res.statusCode(500);
   }
 });
 
