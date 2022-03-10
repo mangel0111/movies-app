@@ -46,3 +46,11 @@ Changed position name for genre in order to me more descriptive for both UI and 
 I installed https://github.com/harrysolovay/rescripts in order to add CamelCase configs for using sass modules without ejecting
 
 ## Testing
+
+- I added test ids in order to do tests step by step.
+- I added some mocks for the API
+
+## Decisions
+
+- For filtering I decided to do it only front end side, since this tests is mainly focused on the front end. I could do it by sending to the getMovies endpoint some params like genre, price and name.. and then filter in the API. If you want I can do it for future improvements
+- Transfer is only a superficial transfering since I dont have a database and the test is mainly focused on the front end
