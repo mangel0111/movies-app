@@ -1,13 +1,9 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Avatar, Card, Grid, Typography } from "@material-ui/core";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
-//TODO: 2 Move these calls into a proper api layer
-const domain = "http://localhost:3000";
-const defaultAvatar =
-  "https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg";
+import { defaultAvatar, fetchMovies, fetchStudios } from "./api/api";
 
 const App = () => {
   const [studios, setStudios] = useState([]);
@@ -16,22 +12,24 @@ const App = () => {
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down("sm"));
 
-  useEffect(() => {
-    fetch(`${domain}/studios`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((studios) => {
-        setStudios(studios);
-      });
-    fetch(`${domain}/movies`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((movies) => {
-        setMovies(movies);
-      });
+  const getStudios = useCallback(async () => {
+    const studios = await fetchStudios();
+    setStudios(studios);
   }, []);
+
+  const getMovies = useCallback(async () => {
+    const movies = await fetchMovies();
+    setMovies(movies);
+  }, []);
+
+  useEffect(() => {
+    try {
+      getStudios();
+      getMovies();
+    } catch (err) {
+      console.log(err);
+    }
+  }, [getStudios, getMovies]);
 
   return (
     <div className="App">
