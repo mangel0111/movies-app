@@ -76,3 +76,25 @@
   align-items: center;
   justify-content: left;
 }
+
+.MuiAvatar-root {
+  margin: 5px;
+}
+
+.MuiTypography-root {
+  display: inline-block;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.display-inline__style {
+  display: inline-block;
+}
+
+.menu-inputs__box {
+  display: flex;
+  padding: 10px;
+  gap: 1rem;
+}
