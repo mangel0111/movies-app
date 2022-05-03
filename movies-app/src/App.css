@@ -49,6 +49,7 @@
 
 .App-studios {
   flex-direction: column;
+  padding: 1rem;
 }
 
 .Position-font {
