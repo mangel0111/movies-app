@@ -89,72 +89,65 @@ const App = () => {
   return (
     <div className="App">
       <div className="App-studios App-flex">
-        <Stack direction="row" spacing={2}>
-          <TextField
-            id="genre-input"
-            label="Genre"
-            select
-            variant="outlined"
-            inputRef={genreRef}
-            onChange={(e) => handleSelectChange(e)}
-            value={selectValue}
-          >
-            <MenuItem key={"all"} value={"all"}>
-              All
-            </MenuItem>
-            {Object.keys(genres).map((genre) => (
-              <MenuItem key={genre} value={genres[genre]}>
-                {genre}
+        <div className="App-movies-filter">
+          <Stack direction="row" spacing={2}>
+            <TextField
+              id="genre-input"
+              label="Genre"
+              select
+              variant="outlined"
+              inputRef={genreRef}
+              onChange={(e) => handleSelectChange(e)}
+              value={selectValue}
+            >
+              <MenuItem key={"all"} value={"all"}>
+                All
               </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            id="title-input"
-            label="Title"
-            variant="outlined"
-            inputRef={titleRef}
-            onKeyUp={handleTextChange}
-          />
-          <TextField
-            id="price-input"
-            label="Price"
-            variant="outlined"
-            inputRef={priceRef}
-            onKeyUp={handleTextChange}
-          />
-          <Button variant="contained" onClick={handleSearch}>
-            Search
-          </Button>
-        </Stack>
-        <h3>Images:</h3>
+              {Object.keys(genres).map((genre) => (
+                <MenuItem key={genre} value={genres[genre]}>
+                  {genre}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              id="title-input"
+              label="Title"
+              variant="outlined"
+              inputRef={titleRef}
+              onKeyUp={handleTextChange}
+            />
+            <TextField
+              id="price-input"
+              label="Price"
+              variant="outlined"
+              inputRef={priceRef}
+              onKeyUp={handleTextChange}
+            />
+            <Button variant="contained" onClick={handleSearch}>
+              Search
+            </Button>
+          </Stack>
+        </div>
         <Grid container justify="center" alignItems="center">
           {movies.map((movie) => (
-            //TODO: 3 move styles into a separate js file and export this class using withStyles or similar or just to css file
             <Grid item xs={12} sm={6} lg={4} key={movie.id}>
               <Card className={sm ? "smallCard" : "regularCard"}>
-                <Avatar
-                  alt={movie.name}
-                  src={movie.img ? movie.img : defaultAvatar}
-                  style={{
-                    margin: 5,
-                    width: sm ? 60 : 280,
-                    height: sm ? 60 : 280,
-                  }}
-                />
+                <div className={sm ? "smallAvatar" : "regularAvatar"}>
+                  <Avatar
+                    alt={movie.name}
+                    src={movie.img ? movie.img : defaultAvatar}
+                  />
+                </div>
                 <div>
-                  <Typography style={{ display: "inline-block" }}>
-                    {movie.name + " "}
-                  </Typography>
-                  <Typography
-                    style={{ fontWeight: "bold", display: "inline-block" }}
-                  >
-                    {movie.position}
-                  </Typography>
+                  <Typography className="inline">{movie.name + " "}</Typography>
                 </div>
                 {studios.map(
                   (studio) =>
                     movie.studioId === studio.id && (
-                      <Typography key={`${movie.id}-${movie.studioId}`}>
+                      <Typography
+                        key={`${movie.id}-${movie.studioId}`}
+                        className="inline bold"
+                      >
                         {studio.name}
                       </Typography>
                     )

@@ -67,6 +67,17 @@
   justify-content: center;
 }
 
+.regularAvatar {
+  margin: 5px;
+  width: 280px;
+  height: 280px;
+}
+
+.regularAvatar .MuiAvatar-root.MuiAvatar-circle {
+  width: 100%;
+  height: 100%;
+}
+
 .smallCard {
   border: 1px solid gray;
   border-radius: 4px;
@@ -76,4 +87,22 @@
   flex-direction: row;
   align-items: center;
   justify-content: left;
+}
+
+.smallAvatar .MuiAvatar-root.MuiAvatar-circle {
+  margin: 5px;
+  width: 60px;
+  height: 60px;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.inline.bold {
+  font-weight: bold;
+}
+
+.App-movies-filter {
+  padding: 1rem;
 }
