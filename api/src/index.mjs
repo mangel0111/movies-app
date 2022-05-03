@@ -1,13 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser'
-import {getAllMoviesFromStudios} from '../src/helpers.mjs'
-import {sony, warner, disney, movieAge} from '../constants/studio_constants.mjs'
+import { getAllMoviesFromStudios } from '../src/helpers.mjs'
+import { disney, movieAge, sony, warner } from '../constants/studio_constants.mjs'
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.get('/studios', function (req, res) {
   let disneyTemp = {...disney}
@@ -35,10 +36,38 @@ app.get('/movieAge', function (req, res) {
   res.json(movieAge)
 });
 
-//TODO: 1 add the capability to sell the movie rights to another studio
-app.post('/transfer', function (req, res) {
+
+app.post('/transfer', urlencodedParser, function (req, res) {
+  // just return studio sold
+  const { studio } = req.body;
+  const studiosType = ['disney', 'movieAge', 'sony', 'warner'];
+  if ( studio && studiosType.includes(studio)) {
+    res.status(201).json(getAllMoviesFromStudios([eval(studio)]));
+  } else {
+    res.status(500).json({ message: 'any Error', status: 500});
+  }
 });
 
-// TODO: 2 Add logging capabilities into the movies-app
+
+// apply authorization just in this http request
+app.get('/disney', auth, function (req, res) {
+  try {
+    res.json(getAllMoviesFromStudios([disney]))
+  } catch (e) {
+    res.statusCode(500)
+  }
+});
+
+function auth(req, res, next) {
+  const MASTER_KEY = 'abc';
+  const header = req.headers['authorization'];
+  if (header) {
+    const bearer = header.split(' ');
+    const token = bearer[1];
+    token === MASTER_KEY ? next() : res.json({ message: 'You dont have access'});
+  } else {
+    res.json({ message: 'You dont have access'})
+  }
+}
 
 app.listen(3000)
