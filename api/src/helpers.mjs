@@ -1,4 +1,8 @@
-import { GENRE_ID, GENRE_STRING } from "../constants/studio_constants.mjs";
+import {
+  GENRE_ID,
+  GENRE_STRING,
+  studiosMap,
+} from "../constants/studio_constants.mjs";
 
 export const getMovie = (movieId, studios) => {
   let movie;
@@ -27,7 +31,7 @@ export const getAllMoviesFromStudios = (studios, filter) => {
 const filterMovies = (movies, filter) => {
   const { genre, title, price } = filter;
   let filteredMovies = movies;
-  if (genre !== 'all') {
+  if (genre !== "all") {
     filteredMovies = filteredMovies.filter((movie) => {
       return movie.genre === genre;
     });
@@ -74,4 +78,20 @@ export const movieConstructor = (movie, studio) => {
 
 export const getGenres = () => {
   return GENRE_ID;
+};
+
+export const transferMovie = (movieId, studioId) => {
+  let transferred = false;
+  const studios = Object.values(studiosMap);
+  studios.forEach((studio) => {
+    if (studio.id === studioId) return;
+    const movieIndex = studio.movies.findIndex((movie) => movie.id === movieId);
+    if (movieIndex >= 0) {
+      const movie = studio.movies[movieIndex];
+      studio.movies.splice(movieIndex, 1);
+      studiosMap[studioId].movies.push(movie);
+      transferred = true;
+    }
+  });
+  return transferred;
 };

@@ -1,7 +1,11 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { getAllMoviesFromStudios, getGenres } from "../src/helpers.mjs";
+import {
+  getAllMoviesFromStudios,
+  getGenres,
+  transferMovie,
+} from "../src/helpers.mjs";
 import {
   sony,
   warner,
@@ -54,7 +58,25 @@ app.post("/movies/search", function (req, res) {
 });
 
 //TODO: 1 add the capability to sell the movie rights to another studio
-app.post("/transfer", function (req, res) {});
+app.post("/transfer", function (req, res) {
+  const {
+    body: { movieId, studioId },
+  } = req;
+  try {
+    const transferred = transferMovie(movieId, studioId);
+    if (transferred) {
+      res.json({
+        message: "Transfer successful",
+      });
+    } else {
+      res.json({
+        message: "Transfer unsuccessful",
+      });
+    }
+  } catch (e) {
+    res.statusCode(500);
+  }
+});
 
 // TODO: 2 Add logging capabilities into the movies-app
 
