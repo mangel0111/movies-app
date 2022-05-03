@@ -78,7 +78,7 @@ export function App() {
       } else if (item[key] !== value) {
         continue;
       }
-      item ? singleton.push(item) : (singleton = []);
+      singleton.push(item);
     }
 
     if (singleton.length === Object.entries(acceptedItem).length) {

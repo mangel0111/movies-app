@@ -1,14 +1,15 @@
 import useMount from './useMount';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks/dom';
 
 describe('test hooks', () => {
   test('test mount hook', () => {
-    const fn = jest.fn();
-    const { result } = renderHook(() => useMount(fn));
-
-    act(() => {
-      console.log(result.container);
+    const countSpy = jest.spyOn(console, 'count');
+    renderHook(({ func, deps }) => useMount(func, deps), {
+      initialProps: {
+        func: jest.fn(),
+        deps: []
+      }
     });
-    // expect(result.current).toBe(1);
+    expect(countSpy).toBeCalledTimes(0);
   });
 });
