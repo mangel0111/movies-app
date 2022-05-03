@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import App from './App';
 
 describe('Test App cmp', () => {
@@ -28,12 +28,8 @@ describe('Test App cmp', () => {
 
   test('on change input', async () => {
     const { input } = setup();
-    fireEvent.keyDown(input, { target: { key: 'Enter', value: '11    ' } });
-    // const item = await screen.findByDisplayValue('11');
-    // screen.debug();
+    fireEvent.keyDown(input, { target: { key: 'Enter', value: '11' } });
 
     expect(input.value).toBe('11');
-    // const trim = input.value.trim();
-    // expect(trim).toBe('11');
   });
 });
