@@ -12,8 +12,18 @@ import {
   disney,
   movieAge,
 } from "../constants/studio_constants.mjs";
+import winston from "winston";
 
 const app = express();
+
+// TODO: 2 Add logging capabilities into the movies-app
+const logger = winston.createLogger({
+  level: "error",
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+  ],
+});
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -32,6 +42,7 @@ app.get("/movies", function (req, res) {
   try {
     res.json(getAllMoviesFromStudios([disney, warner, sony]));
   } catch (e) {
+    logger.error(e);
     res.statusCode(500);
   }
 });
@@ -44,6 +55,7 @@ app.get("/genres", function (req, res) {
   try {
     res.json(getGenres());
   } catch (e) {
+    logger.error(e);
     res.statusCode(500);
   }
 });
@@ -53,6 +65,7 @@ app.post("/movies/search", function (req, res) {
   try {
     res.json(getAllMoviesFromStudios([disney, warner, sony], filter));
   } catch (e) {
+    logger.error(e);
     res.statusCode(500);
   }
 });
@@ -74,10 +87,9 @@ app.post("/transfer", function (req, res) {
       });
     }
   } catch (e) {
+    logger.error(e);
     res.statusCode(500);
   }
 });
-
-// TODO: 2 Add logging capabilities into the movies-app
 
 app.listen(3000);
