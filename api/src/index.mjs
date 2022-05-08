@@ -79,11 +79,13 @@ app.post("/transfer", function (req, res) {
     const transferred = transferMovie(movieId, studioId);
     if (transferred) {
       res.json({
-        message: "Transfer successful",
+        movies: getAllMoviesFromStudios([disney, warner, sony]),
+        ok: true,
       });
     } else {
       res.json({
-        message: "Transfer unsuccessful",
+        movies: getAllMoviesFromStudios([disney, warner, sony]),
+        ok: false,
       });
     }
   } catch (e) {

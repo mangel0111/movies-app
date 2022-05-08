@@ -71,7 +71,7 @@ export const movieConstructor = (movie, studio) => {
   );
   //Remove non wanted properties
   // delete movie['price'];
-  delete movie["id"];
+  // delete movie["id"];
 
   return movie;
 };
