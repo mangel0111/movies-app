@@ -68,12 +68,11 @@ const App = () => {
     });
   };
 
-  const handleSelectChange = (e) => {
-    console.log('CHANGE', e.target.value);
-    setSelectValue(e.target.value);
+  const handleSelectChange = (value) => {
+    setSelectValue(value);
     setMovies(
       filterMovies(allMovies, {
-        genre: e.target.value,
+        genre: value,
         title: titleRef.current.value,
         price: priceRef.current.value,
       })
@@ -117,12 +116,12 @@ const App = () => {
           <Stack direction="row" spacing={2}>
             <TextField
               id="genre-input"
-              inputProps={{ "data-testid": "genre-input" }}
+              inputProps={{ "data-testid": "genre-input-test" }}
               label="Genre"
               select
               variant="outlined"
               inputRef={genreRef}
-              onChange={(e) => handleSelectChange(e)}
+              onChange={(e) => handleSelectChange(e.target.value)}
               value={selectValue}
             >
               <MenuItem key={"all"} value={"all"}>

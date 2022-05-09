@@ -1,5 +1,5 @@
 import React from "react";
-import { screen, fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import App from "./App";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
@@ -41,15 +41,9 @@ it("Renders the movies cards", async () => {
 });
 
 it("Renders the movies filtered by genre", async () => {
-  const { container } = render(<App />);
-  const genreInput = screen.getByTestId("genre-input");
-  // fireEvent.change(genreInput, { target: { value: 9 } });
-  await waitFor(
-    () => {
-      fireEvent.change(genreInput, { target: { value: "9" } });
-    },
-    { timeout: 1000 }
-  );
+  const { container, getByTestId } = render(<App />);
+  const genreInput = getByTestId("genre-input-test");
+  fireEvent.change(genreInput, { target: { value: "9" } });
   await waitFor(
     () => {
       expect(container.getElementsByClassName("movie-wrapper").length).toBe(3);
