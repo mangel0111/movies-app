@@ -1,91 +1,214 @@
-import './App.css'
-import React, {PureComponent} from 'react'
-import {Avatar, Card, Grid, Typography} from '@material-ui/core'
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Avatar, Card, CardActions, Grid, Typography } from "@material-ui/core";
+import { Button, MenuItem, Stack, TextField } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
-//TODO: 2 Move these calls into a proper api layer
-const domain = 'http://localhost:3000'
-const defaultAvatar = 'https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg'
+import "./App.css";
+import { SellModal } from "./components/SellModal";
 
-//TODO: 1 this is a really old class component refactor it into a modern functional component
-class App extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      studios: [],
-      movies: [],
-      avatarSize: 280,
-      cardStyle: 'regularCard'
+import { defaultAvatar, fetchAPI } from "./api/api";
+import { filterMovies } from "./utils";
+
+const App = () => {
+  const [studios, setStudios] = useState([]);
+  const [movies, setMovies] = useState([]);
+  const [allMovies, setAllMovies] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [selectValue, setSelectValue] = useState("all");
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const genreRef = useRef(null);
+  const titleRef = useRef(null);
+  const priceRef = useRef(null);
+
+  const theme = useTheme();
+  const sm = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const getGenres = useCallback(async () => {
+    const genres = await fetchAPI("genres");
+    // console.log("genres", genres);
+    setGenres(genres);
+  }, []);
+
+  const getStudios = useCallback(async () => {
+    const studios = await fetchAPI("studios");
+    // console.log("studios", studios);
+    setStudios(studios);
+  }, []);
+
+  const getMovies = useCallback(async () => {
+    const movies = await fetchAPI("movies");
+    // console.log("movies", movies);
+    setMovies(movies);
+    setAllMovies(movies);
+  }, []);
+
+  useEffect(() => {
+    try {
+      getStudios();
+      getMovies();
+      getGenres();
+    } catch (err) {
+      console.log(err);
     }
-    this.responsiveStyle = this.responsiveStyle.bind(this);
-  }
+  }, [getStudios, getMovies, getGenres]);
 
-  componentDidMount() {
-    window.addEventListener('resize', this.responsiveStyle)
-    fetch(`${domain}/studios`)
-      .then(response => {
-        return response.json();
-      })
-      .then(studios => {
-        this.setState({studios})
-      });
-    fetch(`${domain}/movies`)
-      .then(response => {
-        return response.json();
-      })
-      .then(movies => {
-        this.setState({movies})
-      });
-  }
+  const searchMovies = useCallback(async (filter) => {
+    const movies = await fetchAPI("movies/search", "POST", filter);
+    setMovies(movies);
+  }, []);
 
-  responsiveStyle() {
-    //TODO: produce a better resize strategy
-    if (window.innerWidth < 601) {
-      console.log(window.innerWidth)
-      this.setState({avatarSize: 60, cardStyle: 'smallCard'})
-    } else {
-      this.setState({avatarSize: 280, cardStyle: 'regularCard'})
+  const handleSearch = () => {
+    searchMovies({
+      genre: genreRef.current.value,
+      title: titleRef.current.value,
+      price: priceRef.current.value,
+    });
+  };
+
+  const handleSelectChange = (value) => {
+    setSelectValue(value);
+    setMovies(
+      filterMovies(allMovies, {
+        genre: value,
+        title: titleRef.current.value,
+        price: priceRef.current.value,
+      })
+    );
+  };
+
+  const handleTextChange = () => {
+    setMovies(
+      filterMovies(allMovies, {
+        genre: selectValue,
+        title: titleRef.current.value,
+        price: priceRef.current.value,
+      })
+    );
+  };
+
+  const handleSell = (movie) => {
+    setSelectedMovie(movie);
+    setOpen(true);
+  };
+
+  const confirmSell = async (studioId) => {
+    const movieId = selectedMovie.id;
+    try {
+      const { movies: newMovies } = await fetchAPI("transfer", "POST", {
+        movieId,
+        studioId,
+      });
+      setOpen(false);
+      setMovies(newMovies);
+      setAllMovies(newMovies);
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
-
-  render() {
-    const {movies, studios, avatarSize} = this.state
-
-    return (
-      <div className="App">
-        <div className="App-studios App-flex"> {
-          //TODO: 4 Filter the movies by genre, price and title
-        }
-          <h3>Images:</h3>
-          <Grid container justify="center" alignItems="center">
-            {movies.map(movie =>
-              //TODO: 3 move styles into a separate js file and export this class using withStyles or similar or just to css file
-              <Grid item xs={12} sm={6} lg={4}>
-                <Card className={this.state.cardStyle}>
-                  <Avatar alt={movie.name} src={movie.img ? movie.img : defaultAvatar}
-                          style={{margin: 5, width: avatarSize, height: avatarSize}}/>
-                  <div>
-                    <Typography style={{display: 'inline-block'}}>
-                      {movie.name + ' '}
-                      <Typography style={{fontWeight: 'bold', display: 'inline-block'}}>
-                        {movie.position}
-                      </Typography>
-                    </Typography>
-                  </div>
-                  <Typography>{
-                    // eslint-disable-next-line
-                    studios.map(studio => {
-                    if (movie.studioId === studio.id) {
-                      return studio.name
-                    }
-                  })}</Typography>
-                </Card>
-              </Grid>)}
-          </Grid>
+  return (
+    <div className="App">
+      <div className="App-studios App-flex">
+        <div className="App-movies-filter">
+          <Stack direction="row" spacing={2}>
+            <TextField
+              id="genre-input"
+              inputProps={{ "data-testid": "genre-input-test" }}
+              label="Genre"
+              select
+              variant="outlined"
+              inputRef={genreRef}
+              onChange={(e) => handleSelectChange(e.target.value)}
+              value={selectValue}
+            >
+              <MenuItem key={"all"} value={"all"}>
+                All
+              </MenuItem>
+              {Object.keys(genres).map((genre) => (
+                <MenuItem key={genre} value={genres[genre]}>
+                  {genre}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              id="title-input"
+              label="Title"
+              variant="outlined"
+              inputRef={titleRef}
+              onKeyUp={handleTextChange}
+            />
+            <TextField
+              id="price-input"
+              label="Price"
+              variant="outlined"
+              inputRef={priceRef}
+              onKeyUp={handleTextChange}
+            />
+            <Button variant="contained" onClick={handleSearch}>
+              Search
+            </Button>
+          </Stack>
         </div>
+        <Grid container justify="center" alignItems="center">
+          {movies.map((movie) => (
+            <Grid
+              key={movie.id}
+              className="movie-wrapper"
+              item
+              xs={12}
+              sm={6}
+              lg={4}
+            >
+              <Card className={sm ? "smallCard" : "regularCard"}>
+                <div className={sm ? "smallAvatar" : "regularAvatar"}>
+                  <Avatar
+                    alt={movie.name}
+                    src={movie.img ? movie.img : defaultAvatar}
+                  />
+                </div>
+                <div>
+                  <Typography className="inline">{movie.name + " "}</Typography>
+                </div>
+                {studios.map(
+                  (studio) =>
+                    movie.studioId === studio.id && (
+                      <Typography
+                        key={`${movie.id}-${movie.studioId}`}
+                        className="inline bold"
+                      >
+                        {studio.name}
+                      </Typography>
+                    )
+                )}
+                <CardActions>
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="contained"
+                    onClick={() => handleSell(movie)}
+                  >
+                    Sell
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+        {selectedMovie && studios && (
+          <SellModal
+            open={open}
+            closeModal={() => setOpen(false)}
+            confirm={confirmSell}
+            movie={selectedMovie}
+            studios={studios}
+          />
+        )}
       </div>
-    )
-  }
-}
+    </div>
+  );
+};
 
-export default App
+export default App;
