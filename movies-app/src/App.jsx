@@ -28,19 +28,19 @@ const App = () => {
 
   const getGenres = useCallback(async () => {
     const genres = await fetchAPI("genres");
-    console.log("genres", genres);
+    // console.log("genres", genres);
     setGenres(genres);
   }, []);
 
   const getStudios = useCallback(async () => {
     const studios = await fetchAPI("studios");
-    console.log("studios", studios);
+    // console.log("studios", studios);
     setStudios(studios);
   }, []);
 
   const getMovies = useCallback(async () => {
     const movies = await fetchAPI("movies");
-    console.log("movies", movies);
+    // console.log("movies", movies);
     setMovies(movies);
     setAllMovies(movies);
   }, []);
@@ -69,6 +69,7 @@ const App = () => {
   };
 
   const handleSelectChange = (e) => {
+    console.log('CHANGE', e.target.value);
     setSelectValue(e.target.value);
     setMovies(
       filterMovies(allMovies, {
@@ -116,6 +117,7 @@ const App = () => {
           <Stack direction="row" spacing={2}>
             <TextField
               id="genre-input"
+              inputProps={{ "data-testid": "genre-input" }}
               label="Genre"
               select
               variant="outlined"
@@ -153,7 +155,14 @@ const App = () => {
         </div>
         <Grid container justify="center" alignItems="center">
           {movies.map((movie) => (
-            <Grid item xs={12} sm={6} lg={4} key={movie.id}>
+            <Grid
+              key={movie.id}
+              className="movie-wrapper"
+              item
+              xs={12}
+              sm={6}
+              lg={4}
+            >
               <Card className={sm ? "smallCard" : "regularCard"}>
                 <div className={sm ? "smallAvatar" : "regularAvatar"}>
                   <Avatar
