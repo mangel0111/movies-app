@@ -1,22 +1,21 @@
 {
-  "name": "football-api",
+  "name": "movies-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend app with all movies informations",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --experimental-modules ./src/index.mjs"
   },
-  "author": "",
+  "author": "Marco Aguilera",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "bunyan": "^1.8.12",
-    "bunyan-format": "^0.2.1",
-    "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "body-parser": "1.19.0",
+    "cors": "2.8.5",
+    "express": "4.17.1",
+    "log4js": "6.4.6"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "nodemon": "1.19.1"
   }
 }
