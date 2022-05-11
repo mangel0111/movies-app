@@ -7,6 +7,7 @@ export const StyledAvatar = styled(Avatar)`
   &.MuiAvatar-root {
     width: 70px;
     height: 110px;
+    border-radius: 10px;
 
     @media (min-width: 761px) and (max-width: 1080px) {
       width: 130px;
