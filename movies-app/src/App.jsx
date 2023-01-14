@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react'
 import {Avatar, Card, Grid, Typography} from '@material-ui/core'
 
 //TODO: 2 Move these calls into a proper api layer
-const domain = 'http://localhost:3001'
+const domain = process.env.REACT_APP_BACKEND_URL;
 const defaultAvatar = 'https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg'
 
 //TODO: 1 this is a really old class component refactor it into a modern functional component

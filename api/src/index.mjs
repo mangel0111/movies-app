@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser'
+import dotenv from 'dotenv';
 import {getAllMoviesFromStudios} from '../src/helpers.mjs'
 import {sony, warner, disney, movieAge} from '../constants/studio_constants.mjs'
 
+dotenv.config();
 const app = express();
 
 app.use(cors());
@@ -41,4 +43,5 @@ app.post('/transfer', function (req, res) {
 
 // TODO: 2 Add logging capabilities into the movies-app
 
-app.listen(3001)
+const port = process.env.PORT || 3000;
+app.listen(port);
