@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv';
-import {getAllMoviesFromStudios} from '../src/helpers.mjs'
+import {getAllMoviesFromStudios, sleep} from '../src/helpers.mjs'
 import {sony, warner, disney, movieAge} from '../constants/studio_constants.mjs'
 
 dotenv.config();
@@ -27,7 +27,9 @@ app.get('/studios', function (req, res) {
 
 app.get('/movies', function (req, res) {
   try {
-    res.json(getAllMoviesFromStudios([disney, warner, sony]))
+    const movies = getAllMoviesFromStudios([disney, warner, sony]);
+    // await sleep(10000);  // add async above. this allowed me to test loading state in frontend
+    res.json(movies);
   } catch (e) {
     res.statusCode(500)
   }

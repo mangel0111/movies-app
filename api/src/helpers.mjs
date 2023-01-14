@@ -45,3 +45,8 @@ export const movieConstructor = (movie, studio) => {
   return movie;
 }
 
+export const sleep = (ms) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
