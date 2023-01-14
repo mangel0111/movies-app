@@ -60,9 +60,9 @@ class App extends PureComponent {
           <Grid container justifyContent="center" alignItems="center">
             {movies.map(movie =>
               //TODO: 3 move styles into a separate js file and export this class using withStyles or similar or just to css file
-              <Grid item xs={12} sm={6} lg={4}>
+              <Grid key={movie.name} item xs={12} sm={6} lg={4}>
                 <Card className={this.state.cardStyle}>
-                  <Avatar alt={movie.name} src={movie.img ? movie.img : defaultAvatar}
+                  <Avatar alt={movie.name} src={movie.img ? movie.img : defaultAvatar} imgProps={{ referrerPolicy: "no-referrer"}}
                           style={{margin: 5, width: avatarSize, height: avatarSize}}/>
                   <div>
                     <Typography style={{display: 'inline-block'}}>
