@@ -1,7 +1,7 @@
 import './Spinner.css';
 
 const Spinner = () => (
-  <div className="loader">
+  <div data-testid="spinner" className="loader">
     <div />
     <div />
     <div />

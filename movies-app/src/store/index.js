@@ -11,16 +11,20 @@ const rootReducer = combineReducers({
   studios: studiosReducer
 });
 
-const saga = createSagaMiddleware();
-const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware => getDefaultMiddleware({ thunk: false }).prepend(saga))
-});
-
 function* rootSaga() {
   yield all([moviesSaga(), studiosSaga()]);
 }
 
-saga.run(rootSaga);
+export const setupStore = (preloadedState) => {
+  const saga = createSagaMiddleware();
 
-export default store;
+  const store = configureStore({
+    reducer: rootReducer,
+    preloadedState,
+    middleware: (getDefaultMiddleware => getDefaultMiddleware({ thunk: false }).prepend(saga))
+  });
+
+  saga.run(rootSaga);
+
+  return store;
+};

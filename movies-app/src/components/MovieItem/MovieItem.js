@@ -20,7 +20,7 @@ const MovieItem = ({ movie }) => {
   const styles = useStyles();
 
   return (
-    <Grid item xs={12} sm={6} lg={4}>
+    <Grid data-testid="griditem" item xs={12} sm={6} lg={4}>
       <Card className="movieCard">
         <Avatar
           alt={movie.name}
