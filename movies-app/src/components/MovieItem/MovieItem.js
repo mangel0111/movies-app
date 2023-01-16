@@ -32,7 +32,7 @@ const MovieItem = ({ movie }) => {
         <div>
           <Typography className="movieName">
             {movie.name + ' '}
-            <span>Prueba</span>
+            <span></span>
           </Typography>
         </div>
         <Typography>{movie.studio}</Typography>

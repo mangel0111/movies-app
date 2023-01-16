@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv';
 import {getAllMoviesFromStudios, sleep} from '../src/helpers.mjs'
-import {sony, warner, disney, movieAge} from '../constants/studio_constants.mjs'
+import {sony, warner, disney, movieAge, GENRE_ID} from '../constants/studio_constants.mjs'
 
 dotenv.config();
 const app = express();
@@ -35,6 +35,17 @@ app.get('/movies', function (req, res) {
   }
 });
 
+app.get('/genres', function (req, res) {
+  try {
+    const genres = Object.keys(GENRE_ID)
+      .map(key => ({ id: GENRE_ID[key], value: key }))
+      .sort((a, b) => a.value > b.value ? 1 : -1);
+    res.json(genres);
+  } catch (e) {
+    res.statusCode(500)
+  }
+});
+
 app.get('/movieAge', function (req, res) {
   res.json(movieAge)
 });
@@ -46,4 +57,6 @@ app.post('/transfer', function (req, res) {
 // TODO: 2 Add logging capabilities into the movies-app
 
 const port = process.env.PORT || 3000;
-app.listen(port);
+app.listen(port, () => {
+  console.log('SERVER READY');
+});

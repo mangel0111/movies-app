@@ -4,11 +4,15 @@ import { setupServer } from 'msw/node';
 import App from './App';
 import { reduxRender } from './test/test-utils';
 
+jest.mock("./components/MovieFilter", () => () => {
+  return <span>MovieFilter</span>;
+});
+
 const movies = [
-  ['Movie 1', 6, 'https://www.google.com/image1.jpg', '1'],
-  ['Movie 2', 4, 'https://www.google.com/image2.jpg', '1'],
-  ['Movie 3', 6, 'https://www.google.com/image3.jpg', '2'],
-].map(([name, genre, img, studioId]) => ({ name, genre, img, studioId }));
+  [1, 'Movie 1', 6, 'https://www.google.com/image1.jpg', '1'],
+  [2, 'Movie 2', 4, 'https://www.google.com/image2.jpg', '1'],
+  [3, 'Movie 3', 6, 'https://www.google.com/image3.jpg', '2'],
+].map(([id, name, genre, img, studioId]) => ({ id, name, genre, img, studioId }));
 
 const studios = [
   ['1', 'Disney Studios'],

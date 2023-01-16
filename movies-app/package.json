@@ -18,7 +18,8 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "babel-preset-es2015": "^6.24.1",
-    "msw": "^0.49.2"
+    "msw": "^0.49.2",
+    "react-error-overlay": "^6.0.9"
   },
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
@@ -36,6 +37,9 @@
       "react-hooks/exhaustive-deps": 0
     }
   },
+  "jest": {
+    "moduleNameMapper": { "\\.(css|sass)$": "identity-obj-proxy" }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -47,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   }
 }

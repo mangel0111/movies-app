@@ -2,17 +2,20 @@ import createSagaMiddleware from "@redux-saga/core"
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import moviesReducer from "./movies/reducer";
 import studiosReducer from "./studios/reducer";
+import genresReducer from "./genres/reducer";
 import moviesSaga from "./movies/saga";
 import studiosSaga from "./studios/saga";
+import genresSaga from "./genres/saga";
 import { all } from "redux-saga/effects";
 
 const rootReducer = combineReducers({
   movies: moviesReducer,
-  studios: studiosReducer
+  studios: studiosReducer,
+  genres: genresReducer,
 });
 
 function* rootSaga() {
-  yield all([moviesSaga(), studiosSaga()]);
+  yield all([moviesSaga(), studiosSaga(), genresSaga()]);
 }
 
 export const setupStore = (preloadedState) => {

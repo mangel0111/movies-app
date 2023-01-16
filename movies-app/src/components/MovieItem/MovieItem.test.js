@@ -11,12 +11,19 @@ describe ('MovieItem', () => {
   it('should render component', async () => {
     render(<MovieItem movie={movie} />);
 
-    const img = await screen.findByAltText('Movie Name');
-    const pName = await screen.findByText('Movie Name');
-    const pStudio = await screen.findByText('Warner Bros');
+    const img = screen.queryByAltText('Movie Name');
+    const pName = screen.queryByText('Movie Name');
+    const pStudio = screen.queryByText('Warner Bros');
 
-    expect(img).toBeDefined();
-    expect(pName).toBeDefined();
-    expect(pStudio).toBeDefined();
+    expect(img).not.toBeNull();
+    expect(pName).not.toBeNull();
+    expect(pStudio).not.toBeNull();
+  });
+
+  it('should have img with noreferrer policy', () => {
+    render(<MovieItem movie={movie} />);
+
+    const img = screen.queryByAltText('Movie Name');
+    expect(img).toHaveAttribute('referrerPolicy', 'no-referrer');
   });
 });
