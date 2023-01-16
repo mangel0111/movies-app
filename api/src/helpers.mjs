@@ -1,5 +1,4 @@
-import {GENRE_STRING} from '../constants/studio_constants.mjs'
-
+import { sonyImages } from '../constants/studio_constants.mjs';
 
 export const getMovie = (movieId, studios) => {
   let movie;

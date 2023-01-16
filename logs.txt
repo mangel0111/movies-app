@@ -38,3 +38,8 @@ Solution: with npm the same happened, but I found some solutions on internet: ei
 
 [14] Left an explanation in test code (MovieFilter.test.js) about functionality for Select component from MaterialUI, and how to work on testing that.
 
+--- Backend TODOs ---
+
+[15] Some trial and error until leaving Winston with a config I liked. This includes some adjustments after I added error handling, to make it more useful (Symbol.for('message') in format for example).
+
+

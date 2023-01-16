@@ -13,7 +13,11 @@ winston.addColors(colors);
 const baseFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
   winston.format.printf(
-    (info) => `${info.timestamp} ${info.level}: ${info.message}`,
+    (info) => {
+      return info.message
+        ? `${info.timestamp} ${info.level}: ${info.message}`
+        : info[Symbol.for('message')];
+    },
   ),
 );
 
@@ -23,7 +27,10 @@ const colorizedFormat = winston.format.combine(
 );
 
 const transports = [
-  new winston.transports.Console({ format: colorizedFormat }),
+  new winston.transports.Console({
+    format: colorizedFormat,
+    handleExceptions: true,
+  }),
   new winston.transports.File({
     filename: 'logs/errors.log',
     level: 'error',

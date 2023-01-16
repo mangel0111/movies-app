@@ -4,61 +4,44 @@ import bodyParser from 'body-parser'
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import {getAllMoviesFromStudios, sleep} from '../src/helpers.mjs'
-import {sony, warner, disney, movieAge, GENRE_ID} from '../constants/studio_constants.mjs'
+import 'express-async-errors';
+
 import logger from './util/logger.mjs';
+import { getMovieAge, getMovies, transferMovie } from '../controllers/movies.mjs';
+import { getStudios } from '../controllers/studios.mjs';
+import { getGenres } from '../controllers/genres.mjs';
 
 dotenv.config();
 const app = express();
 
 app.use(cors());
-app.use(helmet()); // helmet adds many response headers to improve security (Vulnerabilities fix. Source: https://helmetjs.github.io/)
-app.use(morgan('combined', { stream: logger.stream }));
 app.use(bodyParser.json());
+// helmet adds many response headers to improve security (could help on 7. Vulnerabilities fixes). Source: https://helmetjs.github.io/)
+app.use(helmet());
+app.use(morgan('combined', { stream: logger.stream }));
 
-app.get('/studios', function (req, res) {
-  let disneyTemp = {...disney}
-  delete disneyTemp.movies
-  let warnerTemp = {...warner}
-  delete warnerTemp.movies
-  let sonyTemp = {...sony}
-  delete sonyTemp.movies
-  res.json([
-    disneyTemp,
-    warnerTemp,
-    sonyTemp
-  ])
-});
+app.get('/studios', getStudios);
+app.get('/movies', getMovies);
+app.get('/genres', getGenres);
+app.get('/movieAge', getMovieAge);
+app.post('/transfer', transferMovie);
 
-app.get('/movies', function (req, res) {
-  try {
-    const movies = getAllMoviesFromStudios([disney, warner, sony]);
-    // await sleep(10000);  // add async above. this allowed me to test loading state in frontend
-    res.json(movies);
-  } catch (e) {
-    res.statusCode(500)
+// Error handler middleware
+app.use((error, req, res, _next) => {
+  let statusCode = 500;
+  let message = 'Unexpected error. Please contact your system administrator.';
+  if ('statusCode' in error) { // it is AppError
+    statusCode = error.statusCode;
+    message = error.message;
   }
-});
 
-app.get('/genres', function (req, res) {
-  try {
-    const genres = Object.keys(GENRE_ID)
-      .map(key => ({ id: GENRE_ID[key], value: key }))
-      .sort((a, b) => a.value > b.value ? 1 : -1);
-    res.json(genres);
-  } catch (e) {
-    res.statusCode(500)
-  }
-});
+  const body = Object.keys(req.body).length ? `\nBody: ${JSON.stringify(req.body)}` : '';
+  const query = Object.keys(req.query).length ? `\nQuery: ${JSON.stringify(req.query)}` : '';
+  const params = Object.keys(req.params).length ? `\nParams: ${JSON.stringify(req.params)}` : '';
 
-app.get('/movieAge', function (req, res) {
-  res.json(movieAge)
-});
-
-//TODO: 1 add the capability to sell the movie rights to another studio
-app.post('/transfer', function (req, res) {
-
-
+  const logMessage = `${statusCode} - ${error.stack}${body}${query}${params}`;
+  logger.error(logMessage);
+  res.status(statusCode).json({ message });
 });
 
 const port = process.env.PORT || 3000;
