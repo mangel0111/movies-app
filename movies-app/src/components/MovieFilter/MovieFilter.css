@@ -18,3 +18,11 @@
 .movieFilter .MuiSelect-select, .genre {
   text-transform: capitalize;
 }
+
+.prices {
+  display: flex;
+}
+
+.prices > div {
+  margin: 0 5px;
+}

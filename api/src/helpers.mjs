@@ -31,10 +31,17 @@ export const movieConstructor = (movie, studio) => {
       Object.getOwnPropertyDescriptor(movie, 'url'));
     delete movie['url'];
   }
+  // Note from DavidRamos: this code is not doing anything useful as I see, it's mixing an index for genres with movie prices.
   //Map position id to string
-  else if (typeof movie.position === "number") {
-    movie['position'] = GENRE_STRING[movie.price];
+  // else if (typeof movie.position === "number") {
+  //   movie['position'] = GENRE_STRING[movie.price];
+  // }
+
+  // This step below adds missing images for sony:
+  if (!movie.img && sonyImages[movie.id]) {
+    movie.img = sonyImages[movie.id];
   }
+
   //Add studioId from parent object
   Object.defineProperty(movie, 'studioId',
     Object.getOwnPropertyDescriptor(studio, 'id'));

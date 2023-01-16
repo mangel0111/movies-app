@@ -32,9 +32,7 @@ app.get('/studios', function (req, res) {
 
 app.get('/movies', function (req, res) {
   try {
-    console.log(JSON.stringify(disney.movies[1]));
     const movies = getAllMoviesFromStudios([disney, warner, sony]);
-    console.log(JSON.stringify(disney.movies[1]));
     // await sleep(10000);  // add async above. this allowed me to test loading state in frontend
     res.json(movies);
   } catch (e) {
@@ -59,6 +57,7 @@ app.get('/movieAge', function (req, res) {
 
 //TODO: 1 add the capability to sell the movie rights to another studio
 app.post('/transfer', function (req, res) {
+
 
 });
 
