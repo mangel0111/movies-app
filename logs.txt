@@ -42,9 +42,13 @@ Solution: with npm the same happened, but I found some solutions on internet: ei
 
 [15] Some trial and error until leaving Winston with a config I liked. This includes some adjustments after I added error handling, to make it more useful (Symbol.for('message') in format for example).
 
--- Frontend Transfer Movie ---
+--- Frontend Transfer Movie ---
 
 [16] I'm open for discussion about usage of redux-saga for POST request, went through different options to handle modal state combined with this request. Going through redux-saga generated some issues with the modal (I would like to talk about this). I finished going through a more normal path.
 
 [17] Installed the last material-ui version (now named @mui/material), to have access to Alert component and icons. Verified components rendered as they should.
+
+--- Last Unit Tests ---
+
+[18] Realized that I would need to export a function getStudios() instead of using imported objects directly, such that I could mock that function implementation for each unit test (without modifying original studios and also without interferring between tests).
 
