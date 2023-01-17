@@ -6,7 +6,7 @@ describe ('Spinner', () => {
     render(<Spinner />);
 
     const parentDiv = await screen.findByTestId('spinner');
-    expect(parentDiv).toBeDefined();
+    expect(parentDiv).toBeTruthy();
     expect(parentDiv.children).toHaveLength(4);
   });
 });

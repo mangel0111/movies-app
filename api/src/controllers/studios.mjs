@@ -1,6 +1,7 @@
-import { disney, warner, sony } from "../constants/studio_constants.mjs";
+import { getStudios as getStudiosHelper } from "../helpers.mjs";
 
 export const getStudios = (req, res) => {
+  const [disney, warner, sony] = getStudiosHelper();
   let disneyTemp = {...disney}
   delete disneyTemp.movies
   let warnerTemp = {...warner}

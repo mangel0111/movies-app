@@ -1,4 +1,4 @@
-import { GENRE_ID } from "../constants/studio_constants.mjs";
+import { GENRE_ID } from "../../constants/studio_constants.mjs";
 
 export const getGenres = (req, res) => {
   const genres = Object.keys(GENRE_ID)

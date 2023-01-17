@@ -7,17 +7,19 @@ const movie = {
   img: 'https://miro.medium.com/max/256/1*caPdcEFzPoRrmrTryveacQ.jpeg'
 };
 
+jest.mock("./TransferModalButton", () => () => <p>TransferModalButton</p>);
+
 describe ('MovieItem', () => {
-  it('should render component', async () => {
+  it('should render component', () => {
     render(<MovieItem movie={movie} />);
 
     const img = screen.queryByAltText('Movie Name');
     const pName = screen.queryByText('Movie Name');
     const pStudio = screen.queryByText('Warner Bros');
 
-    expect(img).not.toBeNull();
-    expect(pName).not.toBeNull();
-    expect(pStudio).not.toBeNull();
+    expect(img).toBeTruthy();
+    expect(pName).toBeTruthy();
+    expect(pStudio).toBeTruthy();
   });
 
   it('should have img with noreferrer policy', () => {

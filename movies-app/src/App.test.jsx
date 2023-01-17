@@ -4,9 +4,7 @@ import { setupServer } from 'msw/node';
 import App from './App';
 import { reduxRender } from './test/test-utils';
 
-jest.mock("./components/MovieFilter", () => () => {
-  return <span>MovieFilter</span>;
-});
+jest.mock("./components/MovieFilter", () => () => <p>MovieFilter</p>);
 
 const movies = [
   [1, 'Movie 1', 6, 'https://www.google.com/image1.jpg', '1'],
@@ -41,13 +39,13 @@ describe ('App', () => {
     server.close();
   });
 
-  it('should render loading on first render' , async () => {
+  it('should render loading on first render' , () => {
     reduxRender(<App />);
 
     const loader = screen.getByTestId('spinner');
     const imagesTitle = screen.queryByText('Images:');
 
-    expect(loader).toBeDefined();
+    expect(loader).toBeTruthy();
     expect(imagesTitle).toBeNull();
   });
 
@@ -59,7 +57,7 @@ describe ('App', () => {
     const loader = screen.queryByTestId('spinner');
     const items = screen.queryAllByTestId('griditem');
 
-    expect(imagesTitle).toBeDefined();
+    expect(imagesTitle).toBeTruthy();
     expect(loader).toBeNull();
     expect(items).toHaveLength(3);
   });

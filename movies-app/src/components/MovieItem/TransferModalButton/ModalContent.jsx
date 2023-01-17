@@ -20,6 +20,7 @@ const ModalContent = ({ movie, onClose }) => {
     await postTransferMovie(body); // the interceptor handles any error
     dispatch(fetchMoviesRequest());
     dispatch(fetchStudiosRequest());
+
     onClose();
   };
 

@@ -1,61 +1,21 @@
 import './MovieFilter.css';
-import { TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGenresRequest } from '../../store/genres/reducer';
 import Spinner from '../../components/Spinner';
+import MovieFilterContent from './MovieFilterContent';
 
 const MovieFilter = ({ filter, setFilter }) => {
-  const { genres, loading } = useSelector((state) => state.genres);
+  const { loading } = useSelector((state) => state.genres);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchGenresRequest())
   }, []);
 
-  const onNumberChange = (key) => (e) => {
-    const value = e.target.value ? parseInt(e.target.value) : undefined;
-    setFilter(prev => ({ ...prev, [key]: value }));
-  };
-
-  const onNameChange = (e) => setFilter(prev => ({ ...prev, name: e.target.value }));
-
   if (loading) return <Spinner />;
 
-  return (
-    <Fragment>
-      <h3>Filters:</h3>
-      <div className="movieFilter">
-        <div>
-          <FormControl fullWidth>
-            <InputLabel id="selGenreLabel">Genre</InputLabel>
-            <Select
-              id="selGenre"
-              data-testid="selGenre"
-              labelId="selGenreLabel"
-              value={filter.genreId || ''}
-              label="Genre"
-              onChange={onNumberChange('genreId')}
-              displayEmpty
-            >
-              <MenuItem value={''}><em>All</em></MenuItem>
-
-              {genres.map(genre => (
-                <MenuItem className="genre" key={genre.id} value={genre.id}>{genre.value}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-        <div>
-          <TextField label="Name" fullWidth onChange={onNameChange} value={filter.name || ''} />
-        </div>
-        <div className="prices">
-          <TextField fullWidth label="Min Price" value={filter.minPrice || ''} onChange={onNumberChange('minPrice')} />
-          <TextField fullWidth label="Max Price" value={filter.maxPrice || ''} onChange={onNumberChange('maxPrice')} />
-        </div>
-      </div>
-    </Fragment>
-  );
-}
+  return <MovieFilterContent filter={filter} setFilter={setFilter} />;
+};
 
 export default MovieFilter;

@@ -1,21 +1,23 @@
-import { sonyImages } from '../constants/studio_constants.mjs';
+import { sonyImages, disney, warner, sony } from '../constants/studio_constants.mjs';
 
-export const getMovie = (movieId, studios) => {
+// I modified this one to reuse function below
+export const getMovie = (movieId) => {
+  const studios = getStudios();
   let movie;
   let studio = studios.find(t => {
-    movie = t.movies.find(p => p.id === movieId)
-    return movie
-  })
+    movie = t.movies.find(p => p.id === movieId);
+    return movie;
+  });
   if (movie && studio) {
-    return {movie, studioId: studio.id}
+    return {movie, studioId: studio.id};
   }
 
-  return false
+  return false;
 };
 
-export const getAllMoviesFromStudios = (studios) => {
+export const getAllMoviesFromStudios = () => {
   let allMovies = [];
-  studios.forEach(singleStudio => {
+  getStudios().forEach(singleStudio => {
     singleStudio.movies.map(movie => {
       allMovies.push(movieConstructor(movie, singleStudio))
     })
@@ -47,6 +49,9 @@ export const movieConstructor = (movie, studio) => {
 
   return movie;
 }
+
+// exporting this function allows reusability and also easier unit testing
+export const getStudios = () => [disney, warner, sony];
 
 export const sleep = (ms) => {
   return new Promise((resolve) => {

@@ -7,9 +7,9 @@ import morgan from 'morgan';
 import 'express-async-errors';
 
 import logger from './util/logger.mjs';
-import { getMovieAge, getMovies, transferMovie } from '../controllers/movies.mjs';
-import { getStudios } from '../controllers/studios.mjs';
-import { getGenres } from '../controllers/genres.mjs';
+import { getMovieAge, getMovies, transferMovie } from './controllers/movies.mjs';
+import { getStudios } from './controllers/studios.mjs';
+import { getGenres } from './controllers/genres.mjs';
 
 dotenv.config();
 const app = express();
