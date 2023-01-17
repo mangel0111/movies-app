@@ -13,6 +13,9 @@ export const genresSlice = createSlice({
     fetchGenresSuccess: (state, action) => {
       state.genres = action.payload;
       state.loading = false;
+    },
+    fetchGenresError: (state, action) => {
+      state.loading = false;
     }
   }
 });

@@ -1,10 +1,14 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 import api from '../api';
-import { fetchMoviesSuccess } from './reducer';
+import { fetchMoviesSuccess, fetchMoviesError } from './reducer';
 
 function* fetchMovies() {
-  const { data } = yield call(() => api.get('movies'));
-  yield put(fetchMoviesSuccess(data));
+  try {
+    const { data } = yield call(() => api.get('movies'));
+    yield put(fetchMoviesSuccess(data));
+  } catch (error) {
+    yield put(fetchMoviesError());
+  }
 }
 
 function* moviesSaga() {

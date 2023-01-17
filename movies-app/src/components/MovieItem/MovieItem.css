@@ -10,15 +10,24 @@
   justify-content: left;
 }
 
+.modal-button-container {
+  height: 40px;
+  margin-left: auto;
+}
+
 @media (min-width: 600px) {
   .movieCard {
     flex-direction: column;
     justify-content: center;
   }
+
+  .modal-button-container {
+    margin: 5px;
+  }
 }
 
 .movieName {
-  display: inline-block;
+  padding: 5px;
 }
 
 .movieName span {

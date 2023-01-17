@@ -1,11 +1,12 @@
 import './MovieFilter.css';
-import { TextField, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGenresRequest } from '../../store/genres/reducer';
+import Spinner from '../../components/Spinner';
 
 const MovieFilter = ({ filter, setFilter }) => {
-  const { genres } = useSelector((state) => state.genres);
+  const { genres, loading } = useSelector((state) => state.genres);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,6 +19,8 @@ const MovieFilter = ({ filter, setFilter }) => {
   };
 
   const onNameChange = (e) => setFilter(prev => ({ ...prev, name: e.target.value }));
+
+  if (loading) return <Spinner />;
 
   return (
     <Fragment>

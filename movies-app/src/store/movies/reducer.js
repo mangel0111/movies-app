@@ -13,6 +13,9 @@ export const moviesSlice = createSlice({
     fetchMoviesSuccess: (state, action) => {
       state.movies = action.payload;
       state.loading = false;
+    },
+    fetchMoviesError: (state) => {
+      state.loading = false;
     }
   }
 });

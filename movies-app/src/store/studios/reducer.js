@@ -13,6 +13,9 @@ export const studiosSlice = createSlice({
     fetchStudiosSuccess: (state, action) => {
       state.studios = action.payload;
       state.loading = false;
+    },
+    fetchStudiosError: (state) => {
+      state.loading = false;
     }
   }
 });

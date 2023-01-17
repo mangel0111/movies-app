@@ -1,10 +1,14 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 import api from '../api';
-import { fetchGenresSuccess } from './reducer';
+import { fetchGenresError, fetchGenresSuccess } from './reducer';
 
 function* fetchGenres() {
-  const { data } = yield call(() => api.get('genres'));
-  yield put(fetchGenresSuccess(data));
+  try {
+    const { data } = yield call(() => api.get('genres'));
+    yield put(fetchGenresSuccess(data));
+  } catch (error) {
+    yield put(fetchGenresError());
+  }
 }
 
 function* genresSaga() {
