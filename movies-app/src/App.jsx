@@ -1,91 +1,43 @@
 import './App.css'
-import React, {PureComponent} from 'react'
-import {Avatar, Card, Grid, Typography} from '@material-ui/core'
+import React, { Fragment, useEffect, useState } from 'react'
+import { Grid } from '@mui/material';
+import MovieItem from './components/MovieItem/MovieItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMoviesRequest, filterMovies } from './store/movies/reducer';
+import { fetchStudiosRequest } from './store/studios/reducer';
+import Spinner from './components/Spinner';
+import MovieFilter from './components/MovieFilter';
+import Alert from './components/Alert/Alert';
 
-//TODO: 2 Move these calls into a proper api layer
-const domain = 'http://localhost:3000'
-const defaultAvatar = 'https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg'
+const App = () => {
+  const { movies, loading: moviesLoading } = useSelector((state) => state.movies);
+  const { studios, loading: studiosLoading } = useSelector((state) => state.studios);
+  const [filter, setFilter] = useState({});
+  const dispatch = useDispatch();
 
-//TODO: 1 this is a really old class component refactor it into a modern functional component
-class App extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      studios: [],
-      movies: [],
-      avatarSize: 280,
-      cardStyle: 'regularCard'
-    }
-    this.responsiveStyle = this.responsiveStyle.bind(this);
-  }
+  useEffect(() => {
+    dispatch(fetchMoviesRequest());
+    dispatch(fetchStudiosRequest());
+  }, []);
 
-  componentDidMount() {
-    window.addEventListener('resize', this.responsiveStyle)
-    fetch(`${domain}/studios`)
-      .then(response => {
-        return response.json();
-      })
-      .then(studios => {
-        this.setState({studios})
-      });
-    fetch(`${domain}/movies`)
-      .then(response => {
-        return response.json();
-      })
-      .then(movies => {
-        this.setState({movies})
-      });
-  }
+  if (moviesLoading || studiosLoading) return <Spinner />;
 
-  responsiveStyle() {
-    //TODO: produce a better resize strategy
-    if (window.innerWidth < 601) {
-      console.log(window.innerWidth)
-      this.setState({avatarSize: 60, cardStyle: 'smallCard'})
-    } else {
-      this.setState({avatarSize: 280, cardStyle: 'regularCard'})
-    }
-  }
+  const moviesList = filterMovies(movies, studios, filter);
 
-
-  render() {
-    const {movies, studios, avatarSize} = this.state
-
-    return (
+  return (
+    <Fragment>
+      <Alert />
       <div className="App">
-        <div className="App-studios App-flex"> {
-          //TODO: 4 Filter the movies by genre, price and title
-        }
+        <div className="App-studios App-flex">
+          <MovieFilter filter={filter} setFilter={setFilter} />
           <h3>Images:</h3>
-          <Grid container justify="center" alignItems="center">
-            {movies.map(movie =>
-              //TODO: 3 move styles into a separate js file and export this class using withStyles or similar or just to css file
-              <Grid item xs={12} sm={6} lg={4}>
-                <Card className={this.state.cardStyle}>
-                  <Avatar alt={movie.name} src={movie.img ? movie.img : defaultAvatar}
-                          style={{margin: 5, width: avatarSize, height: avatarSize}}/>
-                  <div>
-                    <Typography style={{display: 'inline-block'}}>
-                      {movie.name + ' '}
-                      <Typography style={{fontWeight: 'bold', display: 'inline-block'}}>
-                        {movie.position}
-                      </Typography>
-                    </Typography>
-                  </div>
-                  <Typography>{
-                    // eslint-disable-next-line
-                    studios.map(studio => {
-                    if (movie.studioId === studio.id) {
-                      return studio.name
-                    }
-                  })}</Typography>
-                </Card>
-              </Grid>)}
+          <Grid container justifyContent="center" alignItems="center">
+            {moviesList.map(movie => <MovieItem key={movie.id} movie={movie} />)}
           </Grid>
         </div>
       </div>
-    )
-  }
-}
+    </Fragment>
+  );
+};
 
-export default App
+export default App;

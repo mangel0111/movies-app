@@ -1,0 +1,54 @@
+##### Log of issues and their solutions #####
+
+[1] Went on with using yarn instead of npm after finding yarn.lock files in each case. But the install modified it (and if I use the --immutable flag, it throws an error. Reference: https://yarnpkg.com/cli/install), and then on yarn start it threw an error:
+Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './lib/tokenize' is not defined by "exports"
+Solution: with npm the same happened, but I found some solutions on internet: either downgrading node (I had 18.12), or removing yarn.lock and retrying install. The last one worked (until error [2] below), so I preferred this one. My PR contains a package-lock.json file as result, which I think is justified being the previous one references old dependencies that crash with current stable node version. Also, I had to add a flag about openssl to the start script, since react-scripts was throwing another error "digital envelope routines::unsupported".
+
+[2] Realized index.html was incorrectly placed, moved it to public/. Soon after also realized the root div id didn't match with the one used to initialize the React application. Changed to "app" instead of "root" to solve it, and also match existing css.
+
+[3] Renamed justify to justifyContent, previous one is deprecated and threw an error.
+
+[4] Changed server PORT to 3001, and url in frontend to match.
+
+--- At this point, the page displays in the expected way, considering issues mentioned in README.md (like some images not loading) ---
+
+[5] The image issue was the referrerpolicy, tested by reviewing network calls, headers (found the difference on Referer header, compared to opening image in a tab), checking in postman. After checking MaterialUI documentation I added that to the Avatar component through imgProps. There is one more 404 error with an image but that one is valid (the image was removed from its origin).
+
+[6] The backend package-lock.json also was old (lockFileVersion 1, coming from npm < 7.x), and it was changing a lot after installing one more package. Decided to also generate a new one here, same way as in frontend. After this, I created .env and .env.example files to configure env variables.
+
+--- Started TODO refactors, decided to go with RTK and redux-saga to follow practices used by the company. ---
+
+[7] Added media queries to handle some styles, but I saw MaterialUI was overriding my Avatar styles in .css, so I changed to use useStyles from that library instead on that case.
+
+--- Started unit testing ---
+
+[8] For tests to work I had to configure babel.config.js, and also jest.config.js with some config related to supporting css imported files.
+
+[9] Had some issues with fetch and jest "fetch is not defined", changed to axios (used that one more frequently before), and also had an issue there regarding axios version (https://github.com/axios/axios/issues/5026). Downgrading to 0.27.2 worked. It's not the first time I saw that axios 1.x had many issues and lots of people suggested downgrading.
+
+[10] Added jest.setup.js and @testing-library/jest-dom so that I could use methods like .toHaveAttribute(). Later on I detected these were used when running tests separately (I used a extension "Jest Runner"), but not when running through CRA, so I had to investigate how to setup this properly for both cases.
+
+--- TODO 4 development (filters and its unit testing) ---
+
+[11] Had to investigate aspects of Material UI Select component, displayEmpty was needed.
+
+[12] Solved a little issue for CRA 4 on hot reloading: https://stackoverflow.com/questions/70357360/process-is-not-defined-on-hot-reload
+
+[13] queryByLabelText didn't work very well with MaterialUI TextFields, had to choose a different query method. I also used screen.debug to review rendered result and check the best options for querying.
+
+[14] Left an explanation in test code (MovieFilter.test.js) about functionality for Select component from MaterialUI, and how to work on testing that.
+
+--- Backend TODOs ---
+
+[15] Some trial and error until leaving Winston with a config I liked. This includes some adjustments after I added error handling, to make it more useful (Symbol.for('message') in format for example).
+
+--- Frontend Transfer Movie ---
+
+[16] I'm open for discussion about usage of redux-saga for POST request, went through different options to handle modal state combined with this request. Going through redux-saga generated some issues with the modal (I would like to talk about this). I finished going through a more normal path.
+
+[17] Installed the last material-ui version (now named @mui/material), to have access to Alert component and icons. Verified components rendered as they should.
+
+--- Last Unit Tests ---
+
+[18] Realized that I would need to export a function getStudios() instead of using imported objects directly, such that I could mock that function implementation for each unit test (without modifying original studios and also without interferring between tests).
+
