@@ -9,27 +9,31 @@ import * as studiosModule from '../../../store/studios/reducer';
 import { reduxRender } from '../../../test/test-utils';
 import ModalContent from './ModalContent';
 
-const movie = {
-  id: '1',
+const movie: moviesModule.MovieExt = {
+  id: 1,
   name: 'Avatar',
   price: 300,
   studio: 'Disney Studios',
-  studioId: '1',
+  studioId: 1,
+  genre: 1,
+  img: '',
 };
 const onClose = jest.fn();
 
-const studios = [
-  ['1', 'Disney Studios', 400],
-  ['2', 'Warner Bros', 500],
-  ['3', 'Sony Pictures', 500],
-].map(([id, name, money]) => ({ id, name, money }));
+const studios = (
+  [
+    [1, 'Disney Studios', 400],
+    [2, 'Warner Bros', 500],
+    [3, 'Sony Pictures', 500],
+  ] as [number, string, number][]
+).map(([id, name, money]) => ({ id, name, money }));
 
 const studiosState = { loading: false, studios };
 
 const handlers = [
   rest.get('*/movies', (req, res, ctx) => res(ctx.json([]))),
   rest.get('*/studios', (req, res, ctx) => res(ctx.json(studios))),
-  rest.post('*/transfer', (req, res, ctx) => res(ctx.json())),
+  rest.post('*/transfer', (req, res, ctx) => res(ctx.json({}))),
 ];
 
 const server = setupServer(...handlers);

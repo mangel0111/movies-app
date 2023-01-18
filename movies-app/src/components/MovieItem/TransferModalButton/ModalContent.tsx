@@ -1,20 +1,29 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
-import { Fragment, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Typography,
+} from '@mui/material';
+import { FormEvent, Fragment, useState } from 'react';
 
-import { fetchMoviesRequest } from '../../../store/movies/reducer';
+import { useAppDispatch, useAppSelector } from '../../../main';
+import { fetchMoviesRequest, MovieExt } from '../../../store/movies/reducer';
 import { postTransferMovie } from '../../../store/movies/services';
 import { fetchStudiosRequest } from '../../../store/studios/reducer';
 
-const ModalContent = ({ movie, onClose }) => {
-  const dispatch = useDispatch();
-  const { studios } = useSelector((state) => state.studios);
+type Props = { movie: MovieExt; onClose: () => void };
+const ModalContent: React.FC<Props> = ({ movie, onClose }) => {
+  const dispatch = useAppDispatch();
+  const { studios } = useAppSelector((state) => state.studios);
   const studiosAllowed = studios.filter(
     (studio) => studio.id !== movie.studioId && studio.money > movie.price,
   );
   const [buyerId, setBuyerId] = useState(studiosAllowed[0].id);
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const body = { movieId: movie.id, studioToId: buyerId };
 
@@ -25,7 +34,7 @@ const ModalContent = ({ movie, onClose }) => {
     onClose();
   };
 
-  const onStudioChange = (e) => {
+  const onStudioChange = (e: SelectChangeEvent) => {
     const id = e.target.value;
     setBuyerId(id);
   };

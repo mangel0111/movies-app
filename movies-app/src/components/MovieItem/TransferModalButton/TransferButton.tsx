@@ -3,7 +3,8 @@ import { Button, IconButton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-const TransferButton = ({ onClick }) => {
+type Props = { onClick: () => void };
+const TransferButton: React.FC<Props> = ({ onClick }) => {
   const theme = useTheme();
   const isAbove600 = useMediaQuery(theme.breakpoints.up('sm'));
 

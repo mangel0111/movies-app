@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { IMessage } from './interfaces';
+
+const initialState: IMessage = { message: null, severity: null };
 export const messagesSlice = createSlice({
   name: 'messages',
-  initialState: {
-    message: null,
-    severity: null,
-  },
+  initialState,
   reducers: {
     sendSuccess: (state, action) => {
       state.message = action.payload;

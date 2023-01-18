@@ -1,5 +1,6 @@
 import api from '../api';
 
-export const postTransferMovie = async (body) => {
+type PostTransferMovie = { movieId: number; studioToId: number };
+export const postTransferMovie = async (body: PostTransferMovie) => {
   return await api.post('transfer', body);
 };

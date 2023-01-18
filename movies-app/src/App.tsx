@@ -1,21 +1,21 @@
 import './App.css';
 
 import { Grid } from '@mui/material';
-import React, { Fragment, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Fragment, useEffect, useState } from 'react';
 
-import Alert from './components/Alert/Alert';
+import Alert from './components/Alert';
 import MovieFilter from './components/MovieFilter';
 import MovieItem from './components/MovieItem/MovieItem';
 import Spinner from './components/Spinner';
+import { useAppDispatch, useAppSelector } from './main';
 import { fetchMoviesRequest, filterMovies } from './store/movies/reducer';
 import { fetchStudiosRequest } from './store/studios/reducer';
 
 const App = () => {
-  const { movies, loading: moviesLoading } = useSelector((state) => state.movies);
-  const { studios, loading: studiosLoading } = useSelector((state) => state.studios);
+  const { movies, loading: moviesLoading } = useAppSelector((state) => state.movies);
+  const { studios, loading: studiosLoading } = useAppSelector((state) => state.studios);
   const [filter, setFilter] = useState({});
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchMoviesRequest());

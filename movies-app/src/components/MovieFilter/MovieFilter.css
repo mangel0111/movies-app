@@ -18,17 +18,16 @@
     column-gap: 20px;
   }
 
-  .movieFilter > div:not(:last-child)  {
+  .movieFilter > div:not(:last-child) {
     margin-bottom: 0;
   }
 }
 
-.movieFilter .MuiSelect-select, .genre {
+.movieFilter .MuiSelect-select,
+.genre {
   text-transform: capitalize;
 }
 
 .prices {
   display: flex;
 }
-
-

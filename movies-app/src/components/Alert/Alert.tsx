@@ -1,10 +1,11 @@
 import './Alert.css';
 
 import { Alert as MuiAlert } from '@mui/material';
-import { useSelector } from 'react-redux';
+
+import { useAppSelector } from '../../main';
 
 const Alert = () => {
-  const { severity, message } = useSelector((state) => state.messages);
+  const { severity, message } = useAppSelector((state) => state.messages);
 
   if (!message) return null;
 

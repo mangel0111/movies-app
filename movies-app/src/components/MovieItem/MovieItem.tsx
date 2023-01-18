@@ -1,54 +1,35 @@
 import './MovieItem.css';
 
 import { Avatar, Card, Grid, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import tw from 'twin.macro';
 
+import { MovieExt } from '../../store/movies/reducer';
 import TransferModalButton from './TransferModalButton';
 
 const defaultAvatar =
   'https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg';
 
-// using this here to avoid using !important in css file (MaterialUI overwrites styles without that)
-const useStyles = makeStyles({
-  avatar: {
-    margin: 5,
-    height: 60,
-    width: 60,
-    '@media (min-width: 600px)': {
-      height: 280,
-      width: 280,
-    },
-  },
-});
+const StyledAvatar = tw(Avatar)`m-[5px] h-[60px] w-[60px] sm:h-[280px] sm:w-[280px]`;
 
-// Note from DavidRamos: I'm assuming price higher than 100000 is out of market
-
-const MovieItem = ({ movie }) => {
-  const styles = useStyles();
-
-  return (
-    <Grid data-testid="griditem" item xs={12} sm={6} lg={4}>
-      <Card className="movieCard">
-        <Avatar
-          alt={movie.name}
-          className={styles.avatar}
-          src={movie.img}
-          imgProps={{ referrerPolicy: 'no-referrer' }}>
-          <img className="notFoundImage" alt="Not found" src={defaultAvatar} />
-        </Avatar>
-        <div className="movieName">
-          <Typography>
-            {movie.name + ' '}
-            <span>{movie.price > 100000 ? '' : `$${movie.price}`}</span>
-          </Typography>
-        </div>
-        <Typography>{movie.studio}</Typography>
-        <div className="modal-button-container">
-          <TransferModalButton movie={movie} />
-        </div>
-      </Card>
-    </Grid>
-  );
-};
+type Props = { movie: MovieExt };
+const MovieItem: React.FC<Props> = ({ movie }) => (
+  <Grid data-testid="griditem" item xs={12} sm={6} lg={4}>
+    <Card className="movieCard">
+      <StyledAvatar alt={movie.name} src={movie.img} imgProps={{ referrerPolicy: 'no-referrer' }}>
+        <img className="notFoundImage" alt="Not found" src={defaultAvatar} />
+      </StyledAvatar>
+      <div className="movieName">
+        <Typography>
+          {movie.name + ' '}
+          <span>{movie.price > 100000 ? '' : `$${movie.price}`}</span>
+        </Typography>
+      </div>
+      <Typography>{movie.studio}</Typography>
+      <div className="modal-button-container">
+        <TransferModalButton movie={movie} />
+      </div>
+    </Card>
+  </Grid>
+);
 
 export default MovieItem;

@@ -1,11 +1,16 @@
 import { render, screen } from '@testing-library/react';
 
+import { MovieExt } from '../../store/movies/reducer';
 import MovieItem from './MovieItem';
 
-const movie = {
+const movie: MovieExt = {
+  id: 1,
   name: 'Movie Name',
+  price: 300,
   studio: 'Warner Bros',
-  img: 'https://miro.medium.com/max/256/1*caPdcEFzPoRrmrTryveacQ.jpeg',
+  studioId: 1,
+  genre: 1,
+  img: '',
 };
 
 jest.mock('./TransferModalButton', () => () => <p>TransferModalButton</p>);

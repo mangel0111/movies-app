@@ -1,18 +1,36 @@
 import './MovieFilter.css';
 
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import { Fragment } from 'react';
-import { useSelector } from 'react-redux';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextField,
+} from '@mui/material';
+import { ChangeEvent, Fragment } from 'react';
 
-const MovieFilterContent = ({ filter, setFilter }) => {
-  const { genres } = useSelector((state) => state.genres);
+import { useAppSelector } from '../../main';
+import { Filter } from '../../store/movies/reducer';
 
-  const onNumberChange = (key) => (e) => {
+type Props = { filter: Filter; setFilter: React.Dispatch<React.SetStateAction<Filter>> };
+const MovieFilterContent: React.FC<Props> = ({ filter, setFilter }) => {
+  const { genres } = useAppSelector((state) => state.genres);
+
+  const onPriceChange = (key: keyof Filter) => (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value ? parseInt(e.target.value) : undefined;
-    setFilter((prev) => ({ ...prev, [key]: value }));
+    setFilter((prev: Filter) => ({ ...prev, [key]: value }));
   };
 
-  const onNameChange = (e) => setFilter((prev) => ({ ...prev, name: e.target.value }));
+  const onGenreChange = (e: SelectChangeEvent) => {
+    const value = e.target.value ? parseInt(e.target.value) : undefined;
+    setFilter((prev: Filter) => ({ ...prev, genreId: value }));
+  };
+
+  const onNameChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setFilter((prev) => ({ ...prev, name: e.target.value }));
+
+  console.log(filter);
 
   return (
     <Fragment>
@@ -25,9 +43,9 @@ const MovieFilterContent = ({ filter, setFilter }) => {
               id="selGenre"
               data-testid="selGenre"
               labelId="selGenreLabel"
-              value={filter.genreId || ''}
+              value={filter.genreId?.toString() || ''}
               label="Genre"
-              onChange={onNumberChange('genreId')}
+              onChange={onGenreChange}
               displayEmpty>
               <MenuItem value={''}>
                 <em>All</em>
@@ -49,13 +67,13 @@ const MovieFilterContent = ({ filter, setFilter }) => {
             fullWidth
             label="Min Price"
             value={filter.minPrice || ''}
-            onChange={onNumberChange('minPrice')}
+            onChange={onPriceChange('minPrice')}
           />
           <TextField
             fullWidth
             label="Max Price"
             value={filter.maxPrice || ''}
-            onChange={onNumberChange('maxPrice')}
+            onChange={onPriceChange('maxPrice')}
           />
         </div>
       </div>

@@ -1,10 +1,11 @@
 import axios from 'axios';
 
+import { AppDispatch } from '../main';
 import { sendError, sendSuccess } from './messages/reducer';
 
-const api = axios.create({ baseURL: process.env.REACT_APP_BACKEND_URL });
+const api = axios.create({ baseURL: import.meta.env.VITE_BACKEND_URL });
 
-export const createResponseInterceptors = (dispatch) => {
+export const createResponseInterceptors = (dispatch: AppDispatch) => {
   api.interceptors.response.use(
     (resp) => {
       const message = resp.data?.message;

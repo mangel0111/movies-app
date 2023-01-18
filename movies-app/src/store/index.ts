@@ -1,5 +1,5 @@
 import createSagaMiddleware from '@redux-saga/core';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
 import { all } from 'redux-saga/effects';
 
 import genresReducer from './genres/reducer';
@@ -22,7 +22,7 @@ function* rootSaga() {
   yield all([moviesSaga(), studiosSaga(), genresSaga(), messagesSaga()]);
 }
 
-export const setupStore = (preloadedState) => {
+export const setupStore = <T>(preloadedState?: PreloadedState<T>) => {
   const saga = createSagaMiddleware();
 
   const store = configureStore({

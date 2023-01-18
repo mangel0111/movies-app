@@ -6,13 +6,12 @@
     "dev": "vite",
     "build": "vite build",
     "start": "npm run dev",
-    "test": "jest",
-    "test:watch": "jest --watchAll",
-    "lint": "eslint . --ext .ts,.tsx,.js,jsx",
-    "lint:fix": "eslint . --ext .ts,.tsx,.js,jsx --fix",
+    "test": "vitest",
+    "lint:fix": "eslint . --ext .ts --fix --ignore-path ./.gitignore",
+    "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,ts,css,md,json}\" ",
+    "lint": "npm run lint:format && npm run lint:fix",
     "typecheck": "tsc --noEmit",
-    "prettier": "prettier --write \"**/*.+(json|yml|css|md|mdx)\"",
-    "validate": "./scripts/validate"
+    "prettier": "prettier --write \"**/*.+(json|yml|css|md|mdx)\""
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
