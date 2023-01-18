@@ -1,5 +1,5 @@
-import { transferMovie } from './movies.mjs';
-import { getStudios } from '../helpers.mjs';
+import { transferMovie } from './movies';
+import { getStudios } from '../helpers';
 
 const studiosBase = [
   {
@@ -36,8 +36,8 @@ const createStudiosCopy = () => {
   return [{...disney}, {...warner}, {...sony}];
 };
 
-jest.mock('../helpers.mjs', () => {
-  const original = jest.requireActual('../helpers.mjs');
+jest.mock('../helpers', () => {
+  const original = jest.requireActual('../helpers');
   debugger;
   return {
     __esModule: true,

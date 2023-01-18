@@ -1,4 +1,4 @@
-import { getStudios as getStudiosHelper } from "../helpers.mjs";
+import { getStudios as getStudiosHelper } from "../helpers";
 
 export const getStudios = (req, res) => {
   const [disney, warner, sony] = getStudiosHelper();

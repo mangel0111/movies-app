@@ -1,4 +1,4 @@
-import { sonyImages, disney, warner, sony } from '../constants/studio_constants.mjs';
+import { sonyImages, disney, warner, sony } from '../constants/studio_constants';
 
 // I modified this one to reuse function below
 export const getMovie = (movieId) => {

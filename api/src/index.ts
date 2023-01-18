@@ -6,10 +6,10 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import 'express-async-errors';
 
-import logger from './util/logger.mjs';
-import { getMovieAge, getMovies, transferMovie } from './controllers/movies.mjs';
-import { getStudios } from './controllers/studios.mjs';
-import { getGenres } from './controllers/genres.mjs';
+import logger from './util/logger';
+import { getMovieAge, getMovies, transferMovie } from './controllers/movies';
+import { getStudios } from './controllers/studios';
+import { getGenres } from './controllers/genres';
 
 dotenv.config();
 const app = express();

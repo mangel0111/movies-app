@@ -1,7 +1,7 @@
-import { getAllMoviesFromStudios, getMovie, sleep } from "../helpers.mjs";
-import { movieAge } from "../../constants/studio_constants.mjs";
-import AppError from '../util/AppError.mjs';
-import { getStudios } from "../helpers.mjs";
+import { getAllMoviesFromStudios, getMovie, sleep } from "../helpers";
+import { movieAge } from "../../constants/studio_constants";
+import AppError from '../util/AppError';
+import { getStudios } from "../helpers";
 
 export const getMovies = (req, res) => {
   const movies = getAllMoviesFromStudios();
