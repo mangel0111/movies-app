@@ -39,7 +39,7 @@ app.use((error: Error | AppError, req: Request, res: Response, _next: NextFuncti
   const params = Object.keys(req.params).length ? `\nParams: ${JSON.stringify(req.params)}` : '';
 
   const logMessage = `${statusCode} - ${error.stack}${body}${query}${params}`;
-  console.log(logMessage); // replace with logger
+  logger.error(logMessage); // replace with logger
   res.status(statusCode).json({ message });
 });
 

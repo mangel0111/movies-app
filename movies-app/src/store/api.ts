@@ -1,9 +1,10 @@
 import axios from 'axios';
 
+import config from '../config';
 import { AppDispatch } from '../main';
 import { sendError, sendSuccess } from './messages/reducer';
 
-const api = axios.create({ baseURL: import.meta.env.VITE_BACKEND_URL });
+const api = axios.create({ baseURL: config.BACKEND_URL });
 
 export const createResponseInterceptors = (dispatch: AppDispatch) => {
   api.interceptors.response.use(

@@ -21,7 +21,6 @@ export const transferMovie: RequestHandler = (req, res) => {
   if (studioId === studioToId) {
     throw new AppError('Buyer and seller studios cannot be the same.', 400);
   }
-  console.log(studioTo.name, studioTo.money);
   if (movie.price > studioTo.money) {
     throw new AppError('Not enough money for transfer.', 400);
   }

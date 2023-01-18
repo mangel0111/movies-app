@@ -30,8 +30,6 @@ const MovieFilterContent: React.FC<Props> = ({ filter, setFilter }) => {
   const onNameChange = (e: ChangeEvent<HTMLInputElement>) =>
     setFilter((prev) => ({ ...prev, name: e.target.value }));
 
-  console.log(filter);
-
   return (
     <Fragment>
       <h3>Filters:</h3>
