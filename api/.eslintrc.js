@@ -2,7 +2,7 @@ module.exports = {
   env: {
     node: true,
     es2022: true,
-    jest: true,
+    'vitest-globals/env': true,
   },
   root: true,
   plugins: ['@typescript-eslint', 'import', 'simple-import-sort', 'prettier'],

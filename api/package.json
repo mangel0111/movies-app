@@ -9,12 +9,14 @@
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,ts,css,md,json}\" ",
     "lint": "npm run lint:format && npm run lint:fix",
     "start": "nodemon app.ts",
-    "start-server": "node app.ts"
+    "start-server": "node app.ts",
+    "test": "vitest --"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/cors": "^2.8.13",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.15",
+    "@types/morgan": "^1.9.4",
     "@types/node": "^18.11.11",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "@typescript-eslint/parser": "^5.48.0",
@@ -34,6 +37,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^8.0.0",
+    "eslint-plugin-vitest-globals": "^1.2.0",
     "nodemon": "^2.0.20",
     "prettier": "^2.8.1",
     "ts-node": "^10.9.1",

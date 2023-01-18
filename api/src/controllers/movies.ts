@@ -1,15 +1,15 @@
 import { getAllMoviesFromStudios, getMovie, sleep } from '../helpers';
-import { movieAge } from '../../constants/studio_constants';
 import AppError from '../util/AppError';
 import { getStudios } from '../helpers';
+import { RequestHandler } from 'express';
 
-export const getMovies = (req, res) => {
+export const getMovies: RequestHandler = (req, res) => {
   const movies = getAllMoviesFromStudios();
   // await sleep(10000);  // add async above. this allowed me to test loading state in frontend
   res.json(movies);
 };
 
-export const transferMovie = (req, res) => {
+export const transferMovie: RequestHandler = (req, res) => {
   const { movieId, studioToId } = req.body;
   const { movie, studioId } = getMovie(movieId);
   const studios = getStudios();
@@ -31,8 +31,4 @@ export const transferMovie = (req, res) => {
   studioTo.money -= movie.price;
   studioTo.movies.push(movie);
   res.status(200).json({ message: 'Movie transferred!' });
-};
-
-export const getMovieAge = (req, res) => {
-  res.json(movieAge);
 };

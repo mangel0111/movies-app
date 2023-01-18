@@ -1,4 +1,6 @@
-import winston from 'winston';
+import { Request, Response } from 'express';
+import { Options } from 'morgan';
+import winston, { createLogger } from 'winston';
 
 const levels = { error: 0, warn: 1, info: 2, http: 3, debug: 4 };
 
@@ -13,9 +15,11 @@ winston.addColors(colors);
 const baseFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
   winston.format.printf((info) => {
-    return info.message
-      ? `${info.timestamp} ${info.level}: ${info.message}`
-      : info[Symbol.for('message')];
+    if (info.message) {
+      return `${info.timestamp} ${info.level}: ${info.message}`;
+    }
+    const symMessage = Symbol('message') as any;
+    return info[symMessage] as string;
   }),
 );
 
@@ -35,16 +39,18 @@ const transports = [
   new winston.transports.File({ filename: 'logs/all.log' }),
 ];
 
-const logger = new winston.createLogger({
+const logger = createLogger({
   level: level(),
   format: baseFormat,
   levels,
   transports,
 });
 
-logger.stream = {
-  write: (message) => {
-    logger.info(message);
+export const morganOptions: Options<Request, Response> = {
+  stream: {
+    write: function (message: string) {
+      logger.info(message.trim());
+    },
   },
 };
 

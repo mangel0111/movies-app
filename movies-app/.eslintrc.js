@@ -3,6 +3,7 @@ module.exports = {
   env: {
     browser: true,
     es2022: true,
+    'vitest-globals/env': true,
   },
   root: true,
   plugins: [

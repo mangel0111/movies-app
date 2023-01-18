@@ -1,6 +1,8 @@
+import { RequestHandler } from 'express';
 import { getStudios as getStudiosHelper } from '../helpers';
 
-export const getStudios = (req, res) => {
+export const getStudios: RequestHandler = (req, res) => {
+  debugger;
   const [disney, warner, sony] = getStudiosHelper();
   const disneyTemp = { ...disney };
   delete disneyTemp.movies;
