@@ -1,4 +1,5 @@
-import { takeEvery, delay, put } from 'redux-saga/effects';
+import { delay, put, takeEvery } from 'redux-saga/effects';
+
 import { clearMessage } from './reducer';
 
 function* clearAfter5Secs() {

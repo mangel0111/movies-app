@@ -1,7 +1,7 @@
-import { getAllMoviesFromStudios, getMovie, sleep } from "../helpers";
-import { movieAge } from "../../constants/studio_constants";
+import { getAllMoviesFromStudios, getMovie, sleep } from '../helpers';
+import { movieAge } from '../../constants/studio_constants';
 import AppError from '../util/AppError';
-import { getStudios } from "../helpers";
+import { getStudios } from '../helpers';
 
 export const getMovies = (req, res) => {
   const movies = getAllMoviesFromStudios();
@@ -13,8 +13,8 @@ export const transferMovie = (req, res) => {
   const { movieId, studioToId } = req.body;
   const { movie, studioId } = getMovie(movieId);
   const studios = getStudios();
-  const studioFrom = studios.find(studio => studio.id === studioId);
-  const studioTo = studios.find(studio => studio.id === studioToId);
+  const studioFrom = studios.find((studio) => studio.id === studioId);
+  const studioTo = studios.find((studio) => studio.id === studioToId);
 
   if (!movie) throw new AppError('Movie not found.', 404);
   if (!studioTo) throw new AppError('Studio not found.', 404);
@@ -27,7 +27,7 @@ export const transferMovie = (req, res) => {
   }
 
   studioFrom.money += movie.price;
-  studioFrom.movies = studioFrom.movies.filter(studioMovie => studioMovie.id !== movie.id);
+  studioFrom.movies = studioFrom.movies.filter((studioMovie) => studioMovie.id !== movie.id);
   studioTo.money -= movie.price;
   studioTo.movies.push(movie);
   res.status(200).json({ message: 'Movie transferred!' });

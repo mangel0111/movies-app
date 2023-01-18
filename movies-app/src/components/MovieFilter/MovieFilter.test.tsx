@@ -1,12 +1,11 @@
-import { screen } from "@testing-library/react";
+import { screen } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { reduxRender } from "../../test/test-utils";
-import MovieFilter from "./MovieFilter";
 
-const handlers = [
-  rest.get('*/genres', (req, res, ctx) => res(ctx.json([])))
-];
+import { reduxRender } from '../../test/test-utils';
+import MovieFilter from './MovieFilter';
+
+const handlers = [rest.get('*/genres', (req, res, ctx) => res(ctx.json([])))];
 
 const server = setupServer(...handlers);
 
@@ -15,7 +14,7 @@ const setFilterFn = jest.fn();
 
 jest.mock('./MovieFilterContent', () => () => <p>MovieFilterContent</p>);
 
-describe ('MovieFilter', () => {
+describe('MovieFilter', () => {
   beforeAll(() => {
     server.listen();
   });

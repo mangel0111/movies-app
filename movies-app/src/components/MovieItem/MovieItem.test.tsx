@@ -1,15 +1,16 @@
-import { render, screen } from "@testing-library/react";
-import MovieItem from "./MovieItem";
+import { render, screen } from '@testing-library/react';
+
+import MovieItem from './MovieItem';
 
 const movie = {
   name: 'Movie Name',
   studio: 'Warner Bros',
-  img: 'https://miro.medium.com/max/256/1*caPdcEFzPoRrmrTryveacQ.jpeg'
+  img: 'https://miro.medium.com/max/256/1*caPdcEFzPoRrmrTryveacQ.jpeg',
 };
 
-jest.mock("./TransferModalButton", () => () => <p>TransferModalButton</p>);
+jest.mock('./TransferModalButton', () => () => <p>TransferModalButton</p>);
 
-describe ('MovieItem', () => {
+describe('MovieItem', () => {
   it('should render component', () => {
     render(<MovieItem movie={movie} />);
 

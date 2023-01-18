@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const messagesSlice = createSlice({
   name: 'messages',
@@ -15,13 +15,12 @@ export const messagesSlice = createSlice({
       if (state.message) return; // display just once
       state.message = action.payload;
       state.severity = 'error';
-
     },
     clearMessage: (state) => {
       state.message = null;
       state.severity = null;
-    }
-  }
+    },
+  },
 });
 
 export const { sendSuccess, sendError, clearMessage } = messagesSlice.actions;

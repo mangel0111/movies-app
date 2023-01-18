@@ -1,19 +1,20 @@
-import { screen, within, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { screen, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { reduxRender } from "../../../test/test-utils";
-import ModalContent from "./ModalContent";
-import * as services from '../../../store/movies/services';
+
 import * as moviesModule from '../../../store/movies/reducer';
+import * as services from '../../../store/movies/services';
 import * as studiosModule from '../../../store/studios/reducer';
+import { reduxRender } from '../../../test/test-utils';
+import ModalContent from './ModalContent';
 
 const movie = {
   id: '1',
   name: 'Avatar',
   price: 300,
   studio: 'Disney Studios',
-  studioId: '1'
+  studioId: '1',
 };
 const onClose = jest.fn();
 
@@ -33,8 +34,7 @@ const handlers = [
 
 const server = setupServer(...handlers);
 
-
-describe ('TransferModalButton -> ModalContent', () => {
+describe('TransferModalButton -> ModalContent', () => {
   beforeAll(() => {
     server.listen();
   });
@@ -48,9 +48,9 @@ describe ('TransferModalButton -> ModalContent', () => {
   });
 
   it('should render component', () => {
-    reduxRender(<ModalContent movie={movie} onClose={onClose} />,
-      { preloadedState: { studios: studiosState } }
-    );
+    reduxRender(<ModalContent movie={movie} onClose={onClose} />, {
+      preloadedState: { studios: studiosState },
+    });
 
     const header = screen.queryByText('Transfer Movie');
     const movieText = screen.queryByText('Movie to transfer: Avatar');
@@ -64,9 +64,9 @@ describe ('TransferModalButton -> ModalContent', () => {
   });
 
   it('should have 2 studios allowed to buy', async () => {
-    reduxRender(<ModalContent movie={movie} onClose={onClose} />,
-      { preloadedState: { studios: studiosState } }
-    );
+    reduxRender(<ModalContent movie={movie} onClose={onClose} />, {
+      preloadedState: { studios: studiosState },
+    });
 
     const selBuyer = screen.getByTestId('selBuyer');
     const clickableList = within(selBuyer).getByRole('button');
@@ -76,12 +76,11 @@ describe ('TransferModalButton -> ModalContent', () => {
     expect(listboxpopup.children).toHaveLength(2);
   });
 
-
   it('should call onClose when clicking close button', async () => {
     const onCustomClose = jest.fn();
-    reduxRender(<ModalContent movie={movie} onClose={onCustomClose} />,
-      { preloadedState: { studios: studiosState } }
-    );
+    reduxRender(<ModalContent movie={movie} onClose={onCustomClose} />, {
+      preloadedState: { studios: studiosState },
+    });
 
     const closeButton = screen.getByText('Close');
     userEvent.click(closeButton);
@@ -95,10 +94,9 @@ describe ('TransferModalButton -> ModalContent', () => {
     const spyFetchMovies = jest.spyOn(moviesModule, 'fetchMoviesRequest');
     const spyFetchStudios = jest.spyOn(studiosModule, 'fetchStudiosRequest');
 
-    reduxRender(
-      <ModalContent movie={movie} onClose={onCustomClose} />,
-      { preloadedState: { studios: studiosState } }
-    );
+    reduxRender(<ModalContent movie={movie} onClose={onCustomClose} />, {
+      preloadedState: { studios: studiosState },
+    });
 
     const transferButton = screen.getByText('Transfer');
     userEvent.click(transferButton);
@@ -114,9 +112,9 @@ describe ('TransferModalButton -> ModalContent', () => {
   });
 
   it('should change to studio 3 on item click', async () => {
-    reduxRender(<ModalContent movie={movie} onClose={onClose} />,
-      { preloadedState: { studios: studiosState } }
-    );
+    reduxRender(<ModalContent movie={movie} onClose={onClose} />, {
+      preloadedState: { studios: studiosState },
+    });
 
     const selBuyer = screen.getByTestId('selBuyer');
     const currentSelected = within(selBuyer).getByRole('button');

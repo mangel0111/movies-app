@@ -1,15 +1,16 @@
-import { useState, Fragment } from 'react';
-import { Typography, Select, MenuItem, FormControl, InputLabel, Button } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postTransferMovie } from '../../../store/movies/services';
+
 import { fetchMoviesRequest } from '../../../store/movies/reducer';
+import { postTransferMovie } from '../../../store/movies/services';
 import { fetchStudiosRequest } from '../../../store/studios/reducer';
 
 const ModalContent = ({ movie, onClose }) => {
   const dispatch = useDispatch();
   const { studios } = useSelector((state) => state.studios);
-  const studiosAllowed = studios.filter(studio =>
-    studio.id !== movie.studioId && studio.money > movie.price
+  const studiosAllowed = studios.filter(
+    (studio) => studio.id !== movie.studioId && studio.money > movie.price,
   );
   const [buyerId, setBuyerId] = useState(studiosAllowed[0].id);
 
@@ -45,9 +46,8 @@ const ModalContent = ({ movie, onClose }) => {
               labelId="selBuyerLabel"
               value={buyerId}
               label="Buyer Studio"
-              onChange={onStudioChange}
-            >
-              {studiosAllowed.map(studio => (
+              onChange={onStudioChange}>
+              {studiosAllowed.map((studio) => (
                 <MenuItem key={studio.id} value={studio.id}>
                   {studio.name} - Money: ${studio.money}
                 </MenuItem>
@@ -56,8 +56,12 @@ const ModalContent = ({ movie, onClose }) => {
           </FormControl>
         </div>
         <div className="transfer-buttons">
-          <Button color="secondary" variant="contained" onClick={onClose}>Close</Button>
-          <Button color="primary" variant="contained" type="submit">Transfer</Button>
+          <Button color="secondary" variant="contained" onClick={onClose}>
+            Close
+          </Button>
+          <Button color="primary" variant="contained" type="submit">
+            Transfer
+          </Button>
         </div>
       </form>
     </Fragment>

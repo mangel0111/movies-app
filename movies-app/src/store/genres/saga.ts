@@ -1,4 +1,5 @@
-import { takeEvery, put, call } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
+
 import api from '../api';
 import { fetchGenresError, fetchGenresSuccess } from './reducer';
 

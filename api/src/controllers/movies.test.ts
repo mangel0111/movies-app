@@ -9,7 +9,7 @@ const studiosBase = [
     movies: [
       { id: '11', name: 'Nightmare before christmas', price: 600 },
       { id: '12', name: 'Aladdin', price: 10000000000 },
-    ]
+    ],
   },
   {
     id: '2',
@@ -18,7 +18,7 @@ const studiosBase = [
     movies: [
       { id: '21', name: 'The conjuring', price: 1000000000 },
       { id: '22', name: 'Space Jame', price: 500 },
-    ]
+    ],
   },
   {
     id: '3',
@@ -27,18 +27,17 @@ const studiosBase = [
     movies: [
       { id: '31', name: 'Slender man', price: 700 },
       { id: '32', name: 'Spider-man into the spider-verse', price: 450 },
-    ]
-  }
+    ],
+  },
 ];
 
 const createStudiosCopy = () => {
   const [disney, warner, sony] = studiosBase;
-  return [{...disney}, {...warner}, {...sony}];
+  return [{ ...disney }, { ...warner }, { ...sony }];
 };
 
 jest.mock('../helpers', () => {
   const original = jest.requireActual('../helpers');
-  debugger;
   return {
     __esModule: true,
     ...original,
@@ -57,13 +56,13 @@ describe('Movies', () => {
 
     transferMovie(req, res);
 
-    const studio1 = studios.find(st => st.id === '1');
-    const studio3 = studios.find(st => st.id === '3');
+    const studio1 = studios.find((st) => st.id === '1');
+    const studio3 = studios.find((st) => st.id === '3');
     expect(studio1.money).toBe(1600);
     expect(studio3.money).toBe(300);
     expect(studio1.movies).toHaveLength(1);
     expect(studio3.movies).toHaveLength(3);
-    expect(studio3.movies.find(movie => movie.id === '11')).toBeTruthy();
+    expect(studio3.movies.find((movie) => movie.id === '11')).toBeTruthy();
   });
 
   it('should throw error if movie not found', () => {
@@ -102,7 +101,7 @@ describe('Movies', () => {
     }).toThrow('Buyer and seller studios cannot be the same.');
   });
 
-  it('should throw error if buyer doesn\'t have enough money', () => {
+  it("should throw error if buyer doesn't have enough money", () => {
     const studios = createStudiosCopy();
     getStudios.mockImplementation(() => studios);
 

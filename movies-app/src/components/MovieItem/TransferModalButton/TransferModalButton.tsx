@@ -1,9 +1,11 @@
 import './TransferModalButton.css';
+
+import { Box, Modal } from '@mui/material';
 import { Fragment, useState } from 'react';
-import { Modal, Box } from '@mui/material';
 import { useSelector } from 'react-redux';
-import TransferButton from './TransferButton';
+
 import ModalContent from './ModalContent';
+import TransferButton from './TransferButton';
 
 const TransferModalButton = ({ movie }) => {
   const { studios } = useSelector((state) => state.studios);
@@ -17,7 +19,7 @@ const TransferModalButton = ({ movie }) => {
     setOpen(false);
   };
 
-  const canBeBought = studios.some(studio => studio.money >= movie.price);
+  const canBeBought = studios.some((studio) => studio.money >= movie.price);
   if (!canBeBought) return null;
 
   return (

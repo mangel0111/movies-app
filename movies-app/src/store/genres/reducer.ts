@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const genresSlice = createSlice({
   name: 'genres',
@@ -14,10 +14,10 @@ export const genresSlice = createSlice({
       state.genres = action.payload;
       state.loading = false;
     },
-    fetchGenresError: (state, action) => {
+    fetchGenresError: (state) => {
       state.loading = false;
-    }
-  }
+    },
+  },
 });
 
 export const { fetchGenresRequest, fetchGenresError, fetchGenresSuccess } = genresSlice.actions;

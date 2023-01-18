@@ -1,10 +1,11 @@
 import { screen } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
+
 import App from './App';
 import { reduxRender } from './test/test-utils';
 
-jest.mock("./components/MovieFilter", () => () => <p>MovieFilter</p>);
+jest.mock('./components/MovieFilter', () => () => <p>MovieFilter</p>);
 
 const movies = [
   [1, 'Movie 1', 6, 'https://www.google.com/image1.jpg', '1'],
@@ -15,18 +16,18 @@ const movies = [
 const studios = [
   ['1', 'Disney Studios'],
   ['2', 'Warner Bros'],
-  ['3', 'Sony Pictures']
+  ['3', 'Sony Pictures'],
 ].map(([id, name]) => ({ id, name }));
 
 // handlers to intercept endpoint calls done in App component
 const handlers = [
   rest.get('*/movies', (req, res, ctx) => res(ctx.json(movies))),
-  rest.get('*/studios', (req, res, ctx) => res(ctx.json(studios)))
+  rest.get('*/studios', (req, res, ctx) => res(ctx.json(studios))),
 ];
 
 const server = setupServer(...handlers);
 
-describe ('App', () => {
+describe('App', () => {
   beforeAll(() => {
     server.listen();
   });
@@ -39,7 +40,7 @@ describe ('App', () => {
     server.close();
   });
 
-  it('should render loading on first render' , () => {
+  it('should render loading on first render', () => {
     reduxRender(<App />);
 
     const loader = screen.getByTestId('spinner');
@@ -49,7 +50,7 @@ describe ('App', () => {
     expect(imagesTitle).toBeNull();
   });
 
-  it('should render movies list after fetching data' , async () => {
+  it('should render movies list after fetching data', async () => {
     reduxRender(<App />);
 
     // this one awaits until the element is visible, by that moment data is already fetched (not loading)

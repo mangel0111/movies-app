@@ -1,9 +1,12 @@
 import './MovieItem.css';
-import {Avatar, Card, Grid, Typography} from '@mui/material';
+
+import { Avatar, Card, Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+
 import TransferModalButton from './TransferModalButton';
 
-const defaultAvatar = 'https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg';
+const defaultAvatar =
+  'https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg';
 
 // using this here to avoid using !important in css file (MaterialUI overwrites styles without that)
 const useStyles = makeStyles({
@@ -14,8 +17,8 @@ const useStyles = makeStyles({
     '@media (min-width: 600px)': {
       height: 280,
       width: 280,
-    }
-  }
+    },
+  },
 });
 
 // Note from DavidRamos: I'm assuming price higher than 100000 is out of market
@@ -30,8 +33,8 @@ const MovieItem = ({ movie }) => {
           alt={movie.name}
           className={styles.avatar}
           src={movie.img}
-          imgProps={{ referrerPolicy: "no-referrer"}}>
-            <img className="notFoundImage" alt="Not found" src={defaultAvatar} />
+          imgProps={{ referrerPolicy: 'no-referrer' }}>
+          <img className="notFoundImage" alt="Not found" src={defaultAvatar} />
         </Avatar>
         <div className="movieName">
           <Typography>
@@ -46,6 +49,6 @@ const MovieItem = ({ movie }) => {
       </Card>
     </Grid>
   );
-}
+};
 
 export default MovieItem;

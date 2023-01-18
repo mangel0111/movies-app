@@ -1,6 +1,7 @@
-import { takeEvery, put, call } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
+
 import api from '../api';
-import { fetchMoviesSuccess, fetchMoviesError } from './reducer';
+import { fetchMoviesError, fetchMoviesSuccess } from './reducer';
 
 function* fetchMovies() {
   try {

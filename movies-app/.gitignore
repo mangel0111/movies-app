@@ -1,4 +1,7 @@
 node_modules
-.yarn
+.DS_Store
+dist
+dist-ssr
+*.local
 .env
 coverage

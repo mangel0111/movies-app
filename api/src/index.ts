@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import bodyParser from 'body-parser'
+import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -30,7 +30,8 @@ app.post('/transfer', transferMovie);
 app.use((error, req, res, _next) => {
   let statusCode = 500;
   let message = 'Unexpected error. Please contact your system administrator.';
-  if ('statusCode' in error) { // it is AppError
+  if ('statusCode' in error) {
+    // it is AppError
     statusCode = error.statusCode;
     message = error.message;
   }

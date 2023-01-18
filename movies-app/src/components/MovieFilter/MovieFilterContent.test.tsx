@@ -1,15 +1,19 @@
-import { screen, render } from "@testing-library/react";
-import user from "@testing-library/user-event";
-import MovieFilterContent from "./MovieFilterContent";
+import { render, screen } from '@testing-library/react';
+import user from '@testing-library/user-event';
 
-jest.mock("react-redux", () => {
-  const genres = [[1, 'Adventures'], [2, 'Animation'], [3, 'Heroes']]
-    .map(([id, value]) => ({ id, value }));
+import MovieFilterContent from './MovieFilterContent';
 
-  return { useSelector: () => ({ genres })};
+jest.mock('react-redux', () => {
+  const genres = [
+    [1, 'Adventures'],
+    [2, 'Animation'],
+    [3, 'Heroes'],
+  ].map(([id, value]) => ({ id, value }));
+
+  return { useSelector: () => ({ genres }) };
 });
 
-describe ('MovieFilterContent', () => {
+describe('MovieFilterContent', () => {
   it('should render TextFields with values from filter', () => {
     const filter = { minPrice: 100, maxPrice: 500, name: 'av' };
     const setFilterFn = jest.fn();

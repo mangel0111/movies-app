@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const studiosSlice = createSlice({
   name: 'studios',
@@ -16,8 +16,8 @@ export const studiosSlice = createSlice({
     },
     fetchStudiosError: (state) => {
       state.loading = false;
-    }
-  }
+    },
+  },
 });
 
 export const { fetchStudiosRequest, fetchStudiosError, fetchStudiosSuccess } = studiosSlice.actions;

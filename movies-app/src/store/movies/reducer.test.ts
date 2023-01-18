@@ -1,4 +1,4 @@
-import { filterMovies } from "./reducer";
+import { filterMovies } from './reducer';
 
 const movies = [
   [1, 'Armageddon 1', 6, '1', 300],
@@ -12,10 +12,10 @@ const movies = [
 
 const studios = [
   ['1', 'Disney Studios'],
-  ['2', 'Warner Bros']
+  ['2', 'Warner Bros'],
 ].map(([id, name]) => ({ id, name }));
 
-it ('should apply filters and retrieve matching movies with their studio names', () => {
+it('should apply filters and retrieve matching movies with their studio names', () => {
   const filter = { name: 'ar', minPrice: 350, maxPrice: 450, genreId: 6 };
 
   const moviesList = filterMovies(movies, studios, filter);

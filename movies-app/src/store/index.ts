@@ -1,14 +1,15 @@
-import createSagaMiddleware from "@redux-saga/core"
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import moviesReducer from "./movies/reducer";
-import studiosReducer from "./studios/reducer";
-import genresReducer from "./genres/reducer";
-import messagesReducer from "./messages/reducer";
-import moviesSaga from "./movies/saga";
-import studiosSaga from "./studios/saga";
-import genresSaga from "./genres/saga";
-import messagesSaga from "./messages/saga";
-import { all } from "redux-saga/effects";
+import createSagaMiddleware from '@redux-saga/core';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { all } from 'redux-saga/effects';
+
+import genresReducer from './genres/reducer';
+import genresSaga from './genres/saga';
+import messagesReducer from './messages/reducer';
+import messagesSaga from './messages/saga';
+import moviesReducer from './movies/reducer';
+import moviesSaga from './movies/saga';
+import studiosReducer from './studios/reducer';
+import studiosSaga from './studios/saga';
 
 const rootReducer = combineReducers({
   movies: moviesReducer,
@@ -27,7 +28,7 @@ export const setupStore = (preloadedState) => {
   const store = configureStore({
     reducer: rootReducer,
     preloadedState,
-    middleware: (getDefaultMiddleware => getDefaultMiddleware({ thunk: false }).prepend(saga))
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: false }).prepend(saga),
   });
 
   saga.run(rootSaga);
