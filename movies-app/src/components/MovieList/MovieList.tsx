@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import React, { useEffect } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../main';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { Filter } from '../../store/movies/reducer';
 import { fetchMoviesRequest, filterMovies } from '../../store/movies/reducer';
 import { fetchStudiosRequest } from '../../store/studios/reducer';

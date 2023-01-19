@@ -3,7 +3,7 @@ import './TransferModalButton.css';
 import { Box, Modal } from '@mui/material';
 import { Fragment, useState } from 'react';
 
-import { useAppSelector } from '../../../main';
+import { useAppSelector } from '../../../store';
 import { MovieExt } from '../../../store/movies/reducer';
 import ModalContent from './ModalContent';
 import TransferButton from './TransferButton';

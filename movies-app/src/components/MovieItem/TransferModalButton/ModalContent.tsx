@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { FormEvent, Fragment, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../main';
+import { useAppDispatch, useAppSelector } from '../../../store';
 import { fetchMoviesRequest, MovieExt } from '../../../store/movies/reducer';
 import { postTransferMovie } from '../../../store/movies/services';
 import { fetchStudiosRequest } from '../../../store/studios/reducer';

@@ -3,7 +3,7 @@ import './MovieFilter.css';
 import { useEffect } from 'react';
 
 import Spinner from '../../components/Spinner';
-import { useAppDispatch, useAppSelector } from '../../main';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchGenresRequest } from '../../store/genres/reducer';
 import { Filter } from '../../store/movies/reducer';
 import MovieFilterContent from './MovieFilterContent';

@@ -10,10 +10,10 @@ const movie: MovieExt = {
   studio: 'Warner Bros',
   studioId: 1,
   genre: 1,
-  img: '',
+  img: 'https://cdn.mos.cms.futurecdn.net/qfFFFhnM8LwZnjpTECN3oB.jpg',
 };
 
-jest.mock('./TransferModalButton', () => () => <p>TransferModalButton</p>);
+vi.mock('./TransferModalButton', () => ({ default: () => <p>TransferModalButton</p> }));
 
 describe('MovieItem', () => {
   it('should render component', () => {

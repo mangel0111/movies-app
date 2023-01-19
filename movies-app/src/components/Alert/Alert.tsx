@@ -2,7 +2,7 @@ import './Alert.css';
 
 import { Alert as MuiAlert } from '@mui/material';
 
-import { useAppSelector } from '../../main';
+import { useAppSelector } from '../../store';
 
 const Alert = () => {
   const { severity, message } = useAppSelector((state) => state.messages);

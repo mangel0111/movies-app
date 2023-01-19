@@ -18,7 +18,7 @@ const movie: moviesModule.MovieExt = {
   genre: 1,
   img: '',
 };
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 const studios = (
   [
@@ -74,36 +74,36 @@ describe('TransferModalButton -> ModalContent', () => {
 
     const selBuyer = screen.getByTestId('selBuyer');
     const clickableList = within(selBuyer).getByRole('button');
-    userEvent.click(clickableList);
+    await userEvent.click(clickableList);
 
     const listboxpopup = await screen.findByRole('listbox'); // searching in popup being opened
     expect(listboxpopup.children).toHaveLength(2);
   });
 
   it('should call onClose when clicking close button', async () => {
-    const onCustomClose = jest.fn();
+    const onCustomClose = vi.fn();
     reduxRender(<ModalContent movie={movie} onClose={onCustomClose} />, {
       preloadedState: { studios: studiosState },
     });
 
     const closeButton = screen.getByText('Close');
-    userEvent.click(closeButton);
+    await userEvent.click(closeButton);
 
     expect(onCustomClose).toHaveBeenCalled();
   });
 
   it('should post, call actions and close on submit', async () => {
-    const onCustomClose = jest.fn();
-    const spyTransferMovie = jest.spyOn(services, 'postTransferMovie');
-    const spyFetchMovies = jest.spyOn(moviesModule, 'fetchMoviesRequest');
-    const spyFetchStudios = jest.spyOn(studiosModule, 'fetchStudiosRequest');
+    const onCustomClose = vi.fn();
+    const spyTransferMovie = vi.spyOn(services, 'postTransferMovie');
+    const spyFetchMovies = vi.spyOn(moviesModule, 'fetchMoviesRequest');
+    const spyFetchStudios = vi.spyOn(studiosModule, 'fetchStudiosRequest');
 
     reduxRender(<ModalContent movie={movie} onClose={onCustomClose} />, {
       preloadedState: { studios: studiosState },
     });
 
     const transferButton = screen.getByText('Transfer');
-    userEvent.click(transferButton);
+    await userEvent.click(transferButton);
 
     // Close is the last method invoked, if we wait for this assertion, then we can check other methods
     await waitFor(() => expect(onCustomClose).toBeCalled());
@@ -112,7 +112,7 @@ describe('TransferModalButton -> ModalContent', () => {
     expect(spyFetchStudios).toBeCalled();
 
     // studioId is '2' because that's the first allowed studio in the list, selected by default
-    expect(spyTransferMovie).toBeCalledWith({ movieId: '1', studioToId: '2' });
+    expect(spyTransferMovie).toBeCalledWith({ movieId: 1, studioToId: 2 });
   });
 
   it('should change to studio 3 on item click', async () => {
@@ -123,12 +123,12 @@ describe('TransferModalButton -> ModalContent', () => {
     const selBuyer = screen.getByTestId('selBuyer');
     const currentSelected = within(selBuyer).getByRole('button');
     expect(currentSelected).toHaveTextContent('Warner Bros - Money: $500');
-    userEvent.click(currentSelected);
+    await userEvent.click(currentSelected);
 
     const itemText = 'Sony Pictures - Money: $500';
 
     const studio3Item = await screen.findByText(itemText);
-    userEvent.click(studio3Item);
+    await userEvent.click(studio3Item);
 
     const newValueSelected = within(selBuyer).getByRole('button');
     expect(newValueSelected).toHaveTextContent(itemText);

@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { ChangeEvent, Fragment } from 'react';
 
-import { useAppSelector } from '../../main';
+import { useAppSelector } from '../../store';
 import { Filter } from '../../store/movies/reducer';
 
 type Props = { filter: Filter; setFilter: React.Dispatch<React.SetStateAction<Filter>> };

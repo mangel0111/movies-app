@@ -1,5 +1,6 @@
 import createSagaMiddleware from '@redux-saga/core';
 import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { all } from 'redux-saga/effects';
 
 import genresReducer from './genres/reducer';
@@ -35,3 +36,10 @@ export const setupStore = <T>(preloadedState?: PreloadedState<T>) => {
 
   return store;
 };
+
+type StoreType = ReturnType<typeof setupStore>;
+export type RootState = ReturnType<StoreType['getState']>;
+export type AppDispatch = StoreType['dispatch'];
+
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

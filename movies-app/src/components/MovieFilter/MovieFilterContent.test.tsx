@@ -3,20 +3,20 @@ import user from '@testing-library/user-event';
 
 import MovieFilterContent from './MovieFilterContent';
 
-jest.mock('react-redux', () => {
+vi.mock('../../store', () => {
   const genres = [
     [1, 'Adventures'],
     [2, 'Animation'],
     [3, 'Heroes'],
   ].map(([id, value]) => ({ id, value }));
 
-  return { useSelector: () => ({ genres }) };
+  return { useAppSelector: () => ({ genres }) };
 });
 
 describe('MovieFilterContent', () => {
   it('should render TextFields with values from filter', () => {
     const filter = { minPrice: 100, maxPrice: 500, name: 'av' };
-    const setFilterFn = jest.fn();
+    const setFilterFn = vi.fn();
 
     render(<MovieFilterContent filter={filter} setFilter={setFilterFn} />);
 
@@ -41,7 +41,7 @@ describe('MovieFilterContent', () => {
        EDIT: I preferred to fix MovieFilter tests by separating components (loading state made things harder),
        now with MovieFilterContent I don't have the previous mentioned issue, genres is available from start
     */
-    render(<MovieFilterContent filter={{}} setFilter={jest.fn()} />);
+    render(<MovieFilterContent filter={{}} setFilter={vi.fn()} />);
 
     const selGenre = screen.getByRole('button');
     user.click(selGenre);
@@ -52,7 +52,7 @@ describe('MovieFilterContent', () => {
 
   it('should call setFilter when changing name, with typed value', (done) => {
     const filter = { name: 'av' };
-    const setFilterFn = jest.fn((changedStateFn) => {
+    const setFilterFn = vi.fn((changedStateFn) => {
       const newFilter = changedStateFn();
       expect(newFilter.name).toBe('ave');
       done();
@@ -66,7 +66,7 @@ describe('MovieFilterContent', () => {
 
   it('should call setFilter when changing min price, with typed value', (done) => {
     const filter = { minPrice: 1 };
-    const setFilterFn = jest.fn((changedStateFn) => {
+    const setFilterFn = vi.fn((changedStateFn) => {
       const newFilter = changedStateFn();
       expect(newFilter.minPrice).toBe(10);
       done();
@@ -80,7 +80,7 @@ describe('MovieFilterContent', () => {
 
   it('should call setFilter when changing max price, with typed value', (done) => {
     const filter = { maxPrice: 1 };
-    const setFilterFn = jest.fn((changedStateFn) => {
+    const setFilterFn = vi.fn((changedStateFn) => {
       const newFilter = changedStateFn();
       expect(newFilter.maxPrice).toBe(10);
       done();
@@ -94,7 +94,7 @@ describe('MovieFilterContent', () => {
 
   it('should call setFilter when choosing genre, with its id', (done) => {
     const filter = {};
-    const setFilterFn = jest.fn((changedStateFn) => {
+    const setFilterFn = vi.fn((changedStateFn) => {
       const newFilter = changedStateFn();
 
       // assertion here

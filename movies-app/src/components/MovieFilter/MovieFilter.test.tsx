@@ -10,9 +10,9 @@ const handlers = [rest.get('*/genres', (req, res, ctx) => res(ctx.json([])))];
 const server = setupServer(...handlers);
 
 const filter = { minPrice: 100, maxPrice: 500, name: 'av' };
-const setFilterFn = jest.fn();
+const setFilterFn = vi.fn();
 
-jest.mock('./MovieFilterContent', () => () => <p>MovieFilterContent</p>);
+vi.mock('./MovieFilterContent', () => ({ default: () => <p>MovieFilterContent</p> }));
 
 describe('MovieFilter', () => {
   beforeAll(() => {
@@ -38,7 +38,7 @@ describe('MovieFilter', () => {
   });
 
   it('should render content after loading', async () => {
-    reduxRender(<MovieFilter filter={{}} setFilter={jest.fn()} />);
+    reduxRender(<MovieFilter filter={{}} setFilter={vi.fn()} />);
 
     const content = await screen.findByText('MovieFilterContent');
     const loader = screen.queryByTestId('spinner');

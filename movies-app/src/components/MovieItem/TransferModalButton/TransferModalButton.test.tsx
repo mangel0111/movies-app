@@ -4,9 +4,9 @@ import userEvent from '@testing-library/user-event';
 import { MovieExt } from '../../../store/movies/reducer';
 import TransferModalButton from './TransferModalButton';
 
-jest.mock('./ModalContent', () => () => <p>ModalContent</p>);
+vi.mock('./ModalContent', () => ({ default: () => <p>ModalContent</p> }));
 
-jest.mock('react-redux', () => {
+vi.mock('../../../store', () => {
   const studios = (
     [
       [1, 'Disney Studios', 400],
@@ -14,7 +14,7 @@ jest.mock('react-redux', () => {
     ] as [number, string, number][]
   ).map(([id, name, money]) => ({ id, name, money, shortName: '', logo: '' }));
 
-  return { useSelector: () => ({ studios }) };
+  return { useAppSelector: () => ({ studios }) };
 });
 
 const movieMock = { name: '', genre: 1, img: '', studioId: 1, studio: '' };
@@ -42,7 +42,7 @@ describe('TransferModalButton', () => {
     render(<TransferModalButton movie={movie} />);
 
     const button = screen.queryByRole('button');
-    userEvent.click(button);
+    await userEvent.click(button);
 
     const modal = await screen.findByText('ModalContent');
     expect(modal).toBeTruthy();
