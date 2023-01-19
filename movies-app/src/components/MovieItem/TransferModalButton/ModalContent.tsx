@@ -8,11 +8,15 @@ import {
   Typography,
 } from '@mui/material';
 import { FormEvent, Fragment, useState } from 'react';
+import tw from 'twin.macro';
 
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { fetchMoviesRequest, MovieExt } from '../../../store/movies/reducer';
 import { postTransferMovie } from '../../../store/movies/services';
 import { fetchStudiosRequest } from '../../../store/studios/reducer';
+
+const DivButtons = tw.div`flex justify-end`;
+const ModalButton = tw(Button)`mx-2.5`;
 
 type Props = { movie: MovieExt; onClose: () => void };
 const ModalContent: React.FC<Props> = ({ movie, onClose }) => {
@@ -46,7 +50,7 @@ const ModalContent: React.FC<Props> = ({ movie, onClose }) => {
         <Typography>Movie to transfer: {movie.name}</Typography>
         <Typography>Seller: {movie.studio}</Typography>
         <Typography>Price: ${movie.price}</Typography>
-        <div className="buyer-container">
+        <div tw="my-4">
           <FormControl fullWidth>
             <InputLabel id="selBuyerLabel">Buyer Studio</InputLabel>
             <Select
@@ -64,14 +68,14 @@ const ModalContent: React.FC<Props> = ({ movie, onClose }) => {
             </Select>
           </FormControl>
         </div>
-        <div className="transfer-buttons">
-          <Button color="secondary" variant="contained" onClick={onClose}>
+        <DivButtons>
+          <ModalButton color="secondary" variant="contained" onClick={onClose}>
             Close
-          </Button>
-          <Button color="primary" variant="contained" type="submit">
+          </ModalButton>
+          <ModalButton color="primary" variant="contained" type="submit">
             Transfer
-          </Button>
-        </div>
+          </ModalButton>
+        </DivButtons>
       </form>
     </Fragment>
   );

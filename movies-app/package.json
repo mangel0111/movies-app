@@ -41,6 +41,7 @@
     "@vitest/ui": "^0.27.2",
     "autoprefixer": "^10.4.13",
     "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-twin": "^1.1.0",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-typescript": "^3.5.3",

@@ -16,6 +16,7 @@ export default defineConfig({
     react({
       babel: {
         plugins: [
+          ['babel-plugin-twin', { exclude: ['\x00commonjsHelpers.js'] }],
           'babel-plugin-macros',
           [
             '@emotion/babel-plugin-jsx-pragmatic',

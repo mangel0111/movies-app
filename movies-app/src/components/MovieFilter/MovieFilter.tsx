@@ -1,5 +1,3 @@
-import './MovieFilter.css';
-
 import { useEffect } from 'react';
 
 import Spinner from '../../components/Spinner';

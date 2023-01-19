@@ -1,5 +1,3 @@
-import './MovieItem.css';
-
 import { Avatar, Card, Grid, Typography } from '@mui/material';
 import tw from 'twin.macro';
 
@@ -11,24 +9,31 @@ const defaultAvatar =
 
 const StyledAvatar = tw(Avatar)`m-[5px] h-[60px] w-[60px] sm:h-[280px] sm:w-[280px]`;
 
+const StyledCard = tw(Card)`border border-gray-500 rounded m-0.5 p-[5px]
+  flex flex-row items-center justify-start sm:flex-col sm:justify-center`;
+
+const DivButton = tw.div`h-10 ml-auto sm:m-[5px]`;
+
+const ImgNotFound = tw.img`w-full h-full object-cover`;
+
 type Props = { movie: MovieExt };
 const MovieItem: React.FC<Props> = ({ movie }) => (
   <Grid data-testid="griditem" item xs={12} sm={6} lg={4}>
-    <Card className="movieCard">
+    <StyledCard>
       <StyledAvatar alt={movie.name} src={movie.img} imgProps={{ referrerPolicy: 'no-referrer' }}>
-        <img className="notFoundImage" alt="Not found" src={defaultAvatar} />
+        <ImgNotFound alt="Not found" src={defaultAvatar} />
       </StyledAvatar>
-      <div className="movieName">
+      <div tw="p-[5px]">
         <Typography>
           {movie.name + ' '}
-          <span>{movie.price > 100000 ? '' : `$${movie.price}`}</span>
+          <span tw="font-bold">{movie.price > 100000 ? '' : `$${movie.price}`}</span>
         </Typography>
       </div>
       <Typography>{movie.studio}</Typography>
-      <div className="modal-button-container">
+      <DivButton>
         <TransferModalButton movie={movie} />
-      </div>
-    </Card>
+      </DivButton>
+    </StyledCard>
   </Grid>
 );
 

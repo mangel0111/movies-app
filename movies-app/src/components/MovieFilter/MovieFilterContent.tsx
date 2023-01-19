@@ -1,5 +1,3 @@
-import './MovieFilter.css';
-
 import {
   FormControl,
   InputLabel,
@@ -9,9 +7,17 @@ import {
   TextField,
 } from '@mui/material';
 import { ChangeEvent, Fragment } from 'react';
+import tw from 'twin.macro';
 
 import { useAppSelector } from '../../store';
 import { Filter } from '../../store/movies/reducer';
+
+const DivFilter = tw.div`grid grid-cols-1 mx-2.5 p-2.5
+  border border-gray-500 rounded-md sm:grid-cols-3 sm:gap-5`;
+
+const FilterField = tw.div`mb-2.5 last:mb-0 sm:mb-0`;
+
+const StyledItem = tw(MenuItem)`capitalize`;
 
 type Props = { filter: Filter; setFilter: React.Dispatch<React.SetStateAction<Filter>> };
 const MovieFilterContent: React.FC<Props> = ({ filter, setFilter }) => {
@@ -33,8 +39,8 @@ const MovieFilterContent: React.FC<Props> = ({ filter, setFilter }) => {
   return (
     <Fragment>
       <h3>Filters:</h3>
-      <div className="movieFilter">
-        <div>
+      <DivFilter>
+        <FilterField>
           <FormControl fullWidth>
             <InputLabel id="selGenreLabel">Genre</InputLabel>
             <Select
@@ -50,17 +56,17 @@ const MovieFilterContent: React.FC<Props> = ({ filter, setFilter }) => {
               </MenuItem>
 
               {genres.map((genre) => (
-                <MenuItem className="genre" key={genre.id} value={genre.id}>
+                <StyledItem key={genre.id} value={genre.id}>
                   {genre.value}
-                </MenuItem>
+                </StyledItem>
               ))}
             </Select>
           </FormControl>
-        </div>
-        <div>
+        </FilterField>
+        <FilterField>
           <TextField label="Name" fullWidth onChange={onNameChange} value={filter.name || ''} />
-        </div>
-        <div className="prices">
+        </FilterField>
+        <FilterField tw="flex">
           <TextField
             fullWidth
             label="Min Price"
@@ -73,8 +79,8 @@ const MovieFilterContent: React.FC<Props> = ({ filter, setFilter }) => {
             value={filter.maxPrice || ''}
             onChange={onPriceChange('maxPrice')}
           />
-        </div>
-      </div>
+        </FilterField>
+      </DivFilter>
     </Fragment>
   );
 };
