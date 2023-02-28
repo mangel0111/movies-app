@@ -1,0 +1,3 @@
+- the frontend does not start, some files are in the wrong directory
+- backend and frontend are running on the same port
+- fe: root element does not exists in html file
