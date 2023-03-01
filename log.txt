@@ -1,0 +1,2 @@
+1. index.html wasn't found at movies-app (react) after installing dependencies and trying yarn start. I moved the index.html file from src folder to a new public folder, to follow react-scripts standard. Also changed the main div's name from 'app' to 'root', to match with index.js selector.
+2. When opening "localhost:3000" I received a "cannot get" error. This was happening because react-app and api where listening to the same port, and I was trying to access '/' path of the api. I changed the port for API to 3001.
