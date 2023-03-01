@@ -1,7 +1,8 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import { Grid, Typography } from "@mui/material";
-import { getMovies, getStudios } from "../../api/movies";
+import { Grid } from "@mui/material";
+import getMovies from "../../api/movies";
+import getStudios from "../../api/studios";
 import MovieCard from "../MovieCard";
 import MovieFilters from "../MovieFilters";
 import useMovieFilters from "../../hooks/useMovieFilters";
@@ -25,8 +26,12 @@ function App() {
   return (
     <div className="App">
       <div className="App-studios App-flex">
-        <Typography variant={"h3"}>Images:</Typography>
-        <MovieFilters filters={filters} onChangeFilter={onChangeFilter} />
+        <h3>Images:</h3>
+        <MovieFilters
+          filters={filters}
+          onChangeFilter={onChangeFilter}
+          genreOptions={['1']}
+        />
         <Grid container justify="center" alignItems="center">
           {displayMovies.map((movie) => (
             <MovieCard

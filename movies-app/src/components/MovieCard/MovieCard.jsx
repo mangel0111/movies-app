@@ -4,7 +4,7 @@ import { defaultAvatar } from "../../api/resources";
 
 function MovieCard({ movie, studio }) {
   return (
-    <Grid key={movie.name} item xs={12} sm={6} lg={4}>
+    <Grid item key={movie.name} xs={12} sm={6} lg={4}>
       <Card className={'mv-card'}>
         <Avatar
           className={'mv-avatar'}
@@ -15,6 +15,7 @@ function MovieCard({ movie, studio }) {
         <div>
           <Typography style={{ display: "inline-block" }}>
             {movie.name + " "}
+            <span>{movie.price}</span>
           </Typography>
         </div>
         <Typography>{studio}</Typography>

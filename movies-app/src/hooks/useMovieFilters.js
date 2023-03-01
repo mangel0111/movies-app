@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 function useMovieFilters(movies) {
   const [filters, setFilters] = useState({
     title: "",
-    genre: "",
+    genre: undefined,
     price: "",
   });
 

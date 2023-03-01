@@ -1,6 +1,6 @@
 import { Grid, Autocomplete, TextField } from "@mui/material";
 
-function MovieFilters({ filters, onChangeFilter }) {
+function MovieFilters({ filters, onChangeFilter, genreOptions }) {
   return (
     <Grid
       container
@@ -21,9 +21,11 @@ function MovieFilters({ filters, onChangeFilter }) {
 
       <Grid item>
         <Autocomplete
+          value={filters.genre}
+          onChange={(_, newValue) => onChangeFilter("genre", newValue)}
           disablePortal
           id="filter-genre"
-          options={[]}
+          options={genreOptions || []}
           size={"small"}
           sx={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="Genre" />}

@@ -1,5 +1,6 @@
-const BASE_URL = 'http://localhost:4000';
+import { BASE_URL } from "./resources.js";
 
-export const getMovies = () => fetch(`${BASE_URL}/movies`).then(response => response.json())
+const getMovies = () =>
+  fetch(`${BASE_URL}/movies`).then((response) => response.json());
 
-export const getStudios = () => fetch(`${BASE_URL}/studios`).then(response => response.json())
+export default getMovies;
