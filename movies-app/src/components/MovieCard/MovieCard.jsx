@@ -1,5 +1,5 @@
 import "./MovieCard.css";
-import { Avatar, Card, Grid, Typography } from "@material-ui/core";
+import { Avatar, Card, Grid, Typography } from "@mui/material";
 import { defaultAvatar } from "../../api/resources";
 
 function MovieCard({ movie, studio }) {

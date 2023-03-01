@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@mui/material";
 import { getMovies, getStudios } from "../../api/movies";
 import MovieCard from "../MovieCard";
 import MovieFilters from "../MovieFilters";
