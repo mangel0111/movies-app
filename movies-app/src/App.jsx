@@ -62,8 +62,9 @@ class App extends PureComponent {
               //TODO: 3 move styles into a separate js file and export this class using withStyles or similar or just to css file
               <Grid item xs={12} sm={6} lg={4}>
                 <Card className={this.state.cardStyle}>
-                  <Avatar alt={movie.name} src={movie.img ? movie.img : defaultAvatar}
-                          style={{margin: 5, width: avatarSize, height: avatarSize}}/>
+                  <Avatar alt={movie.name} src={movie.imgUrl ? movie.imgUrl : defaultAvatar}
+                          style={{margin: 5, width: avatarSize, height: avatarSize}}
+                          imgProps={{referrerPolicy:"no-referrer"}}/>
                   <div>
                     <Typography style={{display: 'inline-block'}}>
                       {movie.name + ' '}

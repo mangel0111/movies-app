@@ -74,28 +74,28 @@ export const disney = {
       id: '11',
       name: 'Nightmare before christmas',
       genre: GENRE_ID.horror,
-      img: 'https://www.dimanoinmano.it/img/638590/full/libri-per-ragazzi/infanzia/nightmare-before-christmas.jpg',
+      imgUrl: 'https://www.dimanoinmano.it/img/638590/full/libri-per-ragazzi/infanzia/nightmare-before-christmas.jpg',
       price: 600,
     },
     {
       id: '12',
       name: 'Aladdin',
       genre: GENRE_ID.animation,
-      url: 'https://www.lainformacion.com/files/article_default_content/uploads/2018/11/23/5bf84292d23b5.jpeg',
+      imgUrl: 'https://www.ecartelera.com/carteles/5900/5941/001.jpg',
       price: 10000000000,
     },
     {
       id: '13',
       name: 'The avengers',
       genre: GENRE_ID.heroes,
-      url: 'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/2/2b/The_Avengers_Poster.png/revision/latest?cb=20150610135853&path-prefix=es',
+      imgUrl: 'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/2/2b/The_Avengers_Poster.png/revision/latest?cb=20150610135853&path-prefix=es',
       price: 300,
     },
     {
       id: '14',
       name: 'John Carter',
       genre: GENRE_ID.adventures,
-      url: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/John_carter_poster.jpg/220px-John_carter_poster.jpg',
+      imgUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/John_carter_poster.jpg/220px-John_carter_poster.jpg',
       price: 400,
     },
   ]
@@ -112,28 +112,28 @@ export const warner = {
       id: '21',
       name: 'The conjuring',
       genre: GENRE_ID.horror,
-      img: 'https://m.media-amazon.com/images/M/MV5BMTM3NjA1NDMyMV5BMl5BanBnXkFtZTcwMDQzNDMzOQ@@._V1_.jpg',
+      imgUrl: 'https://m.media-amazon.com/images/M/MV5BMTM3NjA1NDMyMV5BMl5BanBnXkFtZTcwMDQzNDMzOQ@@._V1_.jpg',
       price: 1000000000,
     },
     {
       id: '22',
       name: 'Space Jame',
       genre: GENRE_ID.animation,
-      img: 'https://static.wikia.nocookie.net/warnerbros/images/d/d0/SpaceJam.jpg/revision/latest/scale-to-width-down/350?cb=20120727135751&path-prefix=es',
+      imgUrl: 'https://static.wikia.nocookie.net/warnerbros/images/d/d0/SpaceJam.jpg/revision/latest/scale-to-width-down/350?cb=20120727135751&path-prefix=es',
       price: 500,
     },
     {
       id: '23',
       name: 'The dark knight rises',
       genre: GENRE_ID.heroes,
-      url: 'https://pics.filmaffinity.com/The_Dark_Knight_Rises-149544881-large.jpg',
+      imgUrl: 'https://pics.filmaffinity.com/The_Dark_Knight_Rises-149544881-large.jpg',
       price: 400,
     },
     {
       id: '24',
       name: 'Fantastic beasts and where to find them',
       genre: GENRE_ID.adventures,
-      img: 'https://i.pinimg.com/originals/11/95/b8/1195b802fe9108f0458830054ba1fd57.jpg',
+      imgUrl: 'https://i.pinimg.com/originals/11/95/b8/1195b802fe9108f0458830054ba1fd57.jpg',
       price: 500,
     },
   ]
@@ -150,36 +150,32 @@ export const sony = {
       id: '31',
       name: 'Slender man',
       genre: GENRE_ID.horror,
+      imgUrl: 'https://m.media-amazon.com/images/M/MV5BMjE0MzcwMDAyNl5BMl5BanBnXkFtZTgwMzc4ODg0NDM@._V1_UY1200_CR90,0,630,1200_AL_.jpg',
       price: 700,
     },
     {
       id: '32',
       name: 'Spider-man into the spider-verse',
       genre: GENRE_ID.animation,
+      imgUrl: 'https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg',
       price: 450,
     },
     {
       id: '33',
       name: 'Spider-man',
       genre: GENRE_ID.heroes,
+      imgUrl: 'https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_FMjpg_UX1000_.jpg',
       price: 500,
     },
     {
       id: '34',
       name: 'Last action hero',
       genre: GENRE_ID.adventures,
+      imgUrl: 'https://static.wikia.nocookie.net/ideas/images/0/0e/Last_action_hero_ver2.jpg/revision/latest/top-crop/width/360/height/450?cb=20180121010346',
       price: 10000000000000,
     },
   ]
 }
-
-export const sonyImages = {
-  31: 'https://m.media-amazon.com/images/M/MV5BMjE0MzcwMDAyNl5BMl5BanBnXkFtZTgwMzc4ODg0NDM@._V1_UY1200_CR90,0,630,1200_AL_.jpg',
-  32: 'https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg',
-  33: 'https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_FMjpg_UX1000_.jpg',
-  34: 'https://static.wikia.nocookie.net/ideas/images/0/0e/Last_action_hero_ver2.jpg/revision/latest/top-crop/width/360/height/450?cb=20180121010346',
-}
-
 
 export const studiosMap = {
   1: disney,

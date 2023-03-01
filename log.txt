@@ -1,2 +1,5 @@
 1. index.html wasn't found at movies-app (react) after installing dependencies and trying yarn start. I moved the index.html file from src folder to a new public folder, to follow react-scripts standard. Also changed the main div's name from 'app' to 'root', to match with index.js selector.
 2. When opening "localhost:3000" I received a "cannot get" error. This was happening because react-app and api where listening to the same port, and I was trying to access '/' path of the api. I changed the port for API to 3001.
+3. For Batman's picture (returning 403) and disney images (except Aladdin's) I needed to add a "referrerPolicy=noReferrer". Since we don't own the server and we won't have legal issues for this app.
+4. For Aladdin's picture, since it really doesn't exists anymore, I just looked for another image and replaced it at api constants (in a more realistic scenario we should update the database).
+5. For Sony pictures, I decided to normalize the data of our "database", since we don't have any restriction. Same for "img" atribute, normalized to "imgUrl" as a more descriptive name.
