@@ -1,9 +1,8 @@
 import './App.css'
 import React, {useState, useEffect} from 'react'
 import {Avatar, Card, Grid, Typography} from '@material-ui/core'
+import api from './api';
  
-//TODO: 2 Move these calls into a proper api layer
-const domain = 'http://localhost:3001'
 const defaultAvatar = 'https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg'
  
 const App = () => {
@@ -18,12 +17,10 @@ const App = () => {
   }, []);
 
   const fetchData = async () => {
-    const studiosResponse = await fetch(`${domain}/studios`);
-    const studiosData = await studiosResponse.json();
+    const studiosData = await api.getStudios();
     setStudios(studiosData);
 
-    const moviesResponse = await fetch(`${domain}/movies`);
-    const moviesData = await moviesResponse.json();
+    const moviesData = await api.getMovies();
     setMovies(moviesData);
   };
  
