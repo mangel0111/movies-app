@@ -3,3 +3,5 @@
 3. For Batman's picture (returning 403) and disney images (except Aladdin's) I needed to add a "referrerPolicy=noReferrer". Since we don't own the server and we won't have legal issues for this app.
 4. For Aladdin's picture, since it really doesn't exists anymore, I just looked for another image and replaced it at api constants (in a more realistic scenario we should update the database).
 5. For Sony pictures, I decided to normalize the data of our "database", since we don't have any restriction. Same for "img" atribute, normalized to "imgUrl" as a more descriptive name.
+6. For App refactor to functional component, memoization via PureComponent was not justified, so I decided not to wrap component with React.memo.
+7. Found a warning because of a map without key. Defined movie.name as key. If we can have repeated names we can expose movie id and use it.

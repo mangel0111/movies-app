@@ -1,92 +1,81 @@
 import './App.css'
-import React, {PureComponent} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Avatar, Card, Grid, Typography} from '@material-ui/core'
-
+ 
 //TODO: 2 Move these calls into a proper api layer
 const domain = 'http://localhost:3001'
 const defaultAvatar = 'https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg'
+ 
+const App = () => {
+  const [studios, setStudios] = useState([]);
+  const [movies, setMovies] = useState([]);
+  const [avatarSize, setAvatarSize] = useState(280);
+  const [cardStyle, setCardStyle] = useState('regularCard');
+ 
+  useEffect(() => {
+    window.addEventListener('resize', responsiveStyle);
+    fetchData().catch(console.error);
+  }, []);
 
-//TODO: 1 this is a really old class component refactor it into a modern functional component
-class App extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      studios: [],
-      movies: [],
-      avatarSize: 280,
-      cardStyle: 'regularCard'
-    }
-    this.responsiveStyle = this.responsiveStyle.bind(this);
-  }
+  const fetchData = async () => {
+    const studiosResponse = await fetch(`${domain}/studios`);
+    const studiosData = await studiosResponse.json();
+    setStudios(studiosData);
 
-  componentDidMount() {
-    window.addEventListener('resize', this.responsiveStyle)
-    fetch(`${domain}/studios`)
-      .then(response => {
-        return response.json();
-      })
-      .then(studios => {
-        this.setState({studios})
-      });
-    fetch(`${domain}/movies`)
-      .then(response => {
-        return response.json();
-      })
-      .then(movies => {
-        this.setState({movies})
-      });
-  }
-
-  responsiveStyle() {
+    const moviesResponse = await fetch(`${domain}/movies`);
+    const moviesData = await moviesResponse.json();
+    setMovies(moviesData);
+  };
+ 
+  const responsiveStyle = () => {
     //TODO: produce a better resize strategy
     if (window.innerWidth < 601) {
-      console.log(window.innerWidth)
-      this.setState({avatarSize: 60, cardStyle: 'smallCard'})
+      setAvatarSize(60);
+      setCardStyle('smallCard');
     } else {
-      this.setState({avatarSize: 280, cardStyle: 'regularCard'})
+      setAvatarSize(280);
+      setCardStyle('regularCard');
     }
-  }
-
-
-  render() {
-    const {movies, studios, avatarSize} = this.state
-
-    return (
-      <div className="App">
-        <div className="App-studios App-flex"> {
+  };
+ 
+  return (
+    <div className="App">
+      <div className="App-studios App-flex">{
           //TODO: 4 Filter the movies by genre, price and title
         }
-          <h3>Images:</h3>
-          <Grid container justify="center" alignItems="center">
-            {movies.map(movie =>
-              //TODO: 3 move styles into a separate js file and export this class using withStyles or similar or just to css file
-              <Grid item xs={12} sm={6} lg={4}>
-                <Card className={this.state.cardStyle}>
-                  <Avatar alt={movie.name} src={movie.imgUrl ? movie.imgUrl : defaultAvatar}
-                          style={{margin: 5, width: avatarSize, height: avatarSize}}
-                          imgProps={{referrerPolicy:"no-referrer"}}/>
-                  <div>
-                    <Typography style={{display: 'inline-block'}}>
-                      {movie.name + ' '}
-                      <Typography style={{fontWeight: 'bold', display: 'inline-block'}}>
-                        {movie.position}
-                      </Typography>
+        <h3>Images:</h3>
+        <Grid container justify="center" alignItems="center">
+          {movies.map(movie => (
+            //TODO: 3 move styles into a separate js file and export this class using withStyles or similar or just to css file
+            <Grid item xs={12} sm={6} lg={4} key={movie.name}>
+              <Card className={cardStyle}>
+                <Avatar alt={movie.name} src={movie.imgUrl ?? defaultAvatar}
+                        style={{margin: 5, width: avatarSize, height: avatarSize}}
+                        imgProps={{referrerPolicy:"no-referrer"}}/>
+                <div>
+                  <Typography style={{display: 'inline-block'}}>
+                    {movie.name + ' '}
+                    <Typography style={{fontWeight: 'bold', display: 'inline-block'}}>
+                      {movie.position}
                     </Typography>
-                  </div>
-                  <Typography>{
-                    // eslint-disable-next-line
-                    studios.map(studio => {
+                  </Typography>
+                </div>
+                <Typography>{
+                  // eslint-disable-next-line
+                  studios.map(studio => {
                     if (movie.studioId === studio.id) {
                       return studio.name
                     }
-                  })}</Typography>
-                </Card>
-              </Grid>)}
-          </Grid>
-        </div>
+                    return null;
+                  })
+                }</Typography>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       </div>
-    )
-  }
+    </div>
+  )
 }
-
-export default App
+ 
+export default App;
