@@ -3,23 +3,29 @@ import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import getMovies from "../../api/movies";
 import getStudios from "../../api/studios";
+import getGenre from "../../api/genre";
 import MovieCard from "../MovieCard";
 import MovieFilters from "../MovieFilters";
 import useMovieFilters from "../../hooks/useMovieFilters";
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const [studios, setStudios] = useState({});
+  const [genre, setGenre] = useState([]);
+  const [studios, setStudios] = useState([]);
+  const [studiosMap, setStudiosMap] = useState({});
   const { filters, onChangeFilter, displayMovies } = useMovieFilters(movies);
 
   useEffect(() => {
     getStudios().then((response) => {
-      const studiosMap = {};
+      const studiosMapBuilder = {};
       response.forEach((studio) => {
-        studiosMap[studio.id] = studio.name;
+        studiosMapBuilder[studio.id] = studio.name;
       });
-      setStudios(studiosMap);
+      setStudios(response);
+      setStudiosMap(studiosMapBuilder);
     });
+
+    getGenre().then((response) => setGenre(response));
     getMovies().then((response) => setMovies(response));
   }, []);
 
@@ -30,14 +36,14 @@ function App() {
         <MovieFilters
           filters={filters}
           onChangeFilter={onChangeFilter}
-          genreOptions={['1']}
+          genreOptions={genre}
         />
         <Grid container justify="center" alignItems="center">
           {displayMovies.map((movie) => (
             <MovieCard
               key={movie.name}
-              movie={movie}
-              studio={studios[movie.studioId]}
+              movie={{ ...movie, studio: studiosMap[movie.studioId] }}
+              studios={studios}
             />
           ))}
         </Grid>

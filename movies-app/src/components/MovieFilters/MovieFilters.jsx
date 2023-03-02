@@ -22,6 +22,7 @@ function MovieFilters({ filters, onChangeFilter, genreOptions }) {
       <Grid item>
         <Autocomplete
           value={filters.genre}
+          getOptionLabel={(option) => option.name}
           onChange={(_, newValue) => onChangeFilter("genre", newValue)}
           disablePortal
           id="filter-genre"
@@ -35,10 +36,21 @@ function MovieFilters({ filters, onChangeFilter, genreOptions }) {
       <Grid item>
         <TextField
           type="number"
-          label="Price"
+          label="Price Min"
           size={"small"}
-          value={filters.price}
-          onChange={(e) => onChangeFilter("price", e.target.value)}
+          value={filters.price.min}
+          onChange={(e) =>
+            onChangeFilter("price", { ...filters.price, min: e.target.value })
+          }
+        />
+        <TextField
+          type="number"
+          label="Price Max"
+          size={"small"}
+          value={filters.price.max}
+          onChange={(e) =>
+            onChangeFilter("price", { ...filters.price, max: e.target.value })
+          }
         />
       </Grid>
     </Grid>

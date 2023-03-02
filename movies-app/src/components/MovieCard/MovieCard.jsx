@@ -1,8 +1,9 @@
 import "./MovieCard.css";
 import { Avatar, Card, Grid, Typography } from "@mui/material";
 import { defaultAvatar } from "../../api/resources";
+import SellMovieModal from "../SellMovieModal"
 
-function MovieCard({ movie, studio }) {
+function MovieCard({ movie, studios }) {
   return (
     <Grid item key={movie.name} xs={12} sm={6} lg={4}>
       <Card className={'mv-card'}>
@@ -15,10 +16,10 @@ function MovieCard({ movie, studio }) {
         <div>
           <Typography style={{ display: "inline-block" }}>
             {movie.name + " "}
-            <span>{movie.price}</span>
           </Typography>
         </div>
-        <Typography>{studio}</Typography>
+        <Typography>{movie.studio}</Typography>
+        <SellMovieModal movie={movie} studios={studios} />
       </Card>
     </Grid>
   );

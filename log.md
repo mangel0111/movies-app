@@ -50,3 +50,14 @@
 
 - Since this is a new app I decided to upgrade all packages to their latest version and enable strict mode
 
+- Wrote basic tests for all components and got into a lot of problems
+  trying to not break the best practice rules highlighted by the linter.
+    Could not get arround the not use render inside act because the solution
+    triggered another warning, so in the end decided to leave it since it was
+    shown in an example in the react docs so it should not be that bad
+    
+- I just finished the sell component and im now im not sure not having used
+  redux was a clever option, this component has many state values and has to read
+  the studios from the App component. Will definitely improve this at least using the context
+
+- Im also not very confortable with how the Alert component turned out.
