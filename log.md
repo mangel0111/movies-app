@@ -56,8 +56,11 @@
     triggered another warning, so in the end decided to leave it since it was
     shown in an example in the react docs so it should not be that bad
     
-- I just finished the sell component and im now im not sure not having used
-  redux was a clever option, this component has many state values and has to read
-  the studios from the App component. Will definitely improve this at least using the context
+- I just finished the sell component and im not happy with how things went and 
+  at this point I have done almost nothing to the backend so I will move there
+  and see if I have some time to improve this in the future
+    Notes for improvement: definitely use the context, so you dont have to drill
+    props to re-fetch the movies nor drill the studios list
+    Could also work for improving the Alert component, there is no need to have
+    one alert for each movie
 
-- Im also not very confortable with how the Alert component turned out.

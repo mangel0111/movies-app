@@ -8,7 +8,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import SellIcon from '@mui/icons-material/Sell';
+import SellIcon from "@mui/icons-material/Sell";
+import { sellMovie } from "../../api/movies";
 
 const style = {
   position: "absolute",
@@ -24,16 +25,29 @@ const style = {
 
 const DEFAULT_ALERT = { message: undefined, severity: "success" };
 
-function SellMovieModal({ movie, studios }) {
+function SellMovieModal({ movie, studios, handleSubmit }) {
   const [alert, setAlert] = useState({ ...DEFAULT_ALERT });
   const [isOpen, setIsOpen] = useState(false);
   const [selectedStudio, setSelectedStudio] = useState(null);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(movie, selectedStudio);
-    setAlert({ message: "Sale succesfully completed", severity: "success" });
-    setIsOpen(false);
+    sellMovie(movie.id, selectedStudio.id)
+      .then(() => {
+        setAlert({
+          message: "Sale succesfully completed",
+          severity: "success",
+        });
+        setIsOpen(false);
+        handleSubmit();
+      })
+      .catch((e) => {
+        setAlert({
+          message: e.message,
+          severity: "error",
+        });
+        setIsOpen(false);
+      });
   };
 
   return (
@@ -43,7 +57,9 @@ function SellMovieModal({ movie, studios }) {
         autoHideDuration={4000}
         onClose={() => setAlert((prev) => ({ ...prev, message: undefined }))}
       >
-        <Alert variant='filled' severity={alert.severity}>{alert.message}</Alert>
+        <Alert variant="filled" severity={alert.severity}>
+          {alert.message}
+        </Alert>
       </Snackbar>
 
       <Button

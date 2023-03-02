@@ -29,6 +29,10 @@ function App() {
     getMovies().then((response) => setMovies(response));
   }, []);
 
+  const handleSellMovie = () => {
+    getMovies().then((response) => setMovies(response));
+  }
+
   return (
     <div className="App">
       <div className="App-studios App-flex">
@@ -44,6 +48,7 @@ function App() {
               key={movie.name}
               movie={{ ...movie, studio: studiosMap[movie.studioId] }}
               studios={studios}
+              handleSellMovie={handleSellMovie}
             />
           ))}
         </Grid>

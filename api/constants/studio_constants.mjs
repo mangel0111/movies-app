@@ -172,6 +172,12 @@ export const sony = {
   ],
 };
 
+export const allStudios = [
+  disney,
+  warner,
+  sony
+]
+
 export const sonyImages = {
   31: "https://m.media-amazon.com/images/M/MV5BMjE0MzcwMDAyNl5BMl5BanBnXkFtZTgwMzc4ODg0NDM@._V1_UY1200_CR90,0,630,1200_AL_.jpg",
   32: "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg",

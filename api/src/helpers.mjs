@@ -43,8 +43,6 @@ export const movieConstructor = (movie, studio) => {
     "studioId",
     Object.getOwnPropertyDescriptor(studio, "id")
   );
-  //Remove non wanted properties
-  delete movie["id"];
 
   return movie;
 };
