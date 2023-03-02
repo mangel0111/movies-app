@@ -5,7 +5,7 @@ export const useStyles = makeStyles(() => ({
         margin: 5, 
         width: 280, 
         height: 280,
-        ['@media(max-width: 601px)'] : {
+        '@media(max-width: 601px)': {
             width: 60,
             height: 60,
           }
@@ -19,7 +19,7 @@ export const useStyles = makeStyles(() => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent:' center',
-        ['@media(max-width: 601px)'] : {
+        '@media(max-width: 601px)': {
             border: '1px solid gray',
             borderRadius: '4px',
             margin: '2px',

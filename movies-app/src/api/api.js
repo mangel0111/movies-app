@@ -1,9 +1,12 @@
-const domain = 'http://localhost:3001';
+import { buildQueryParams } from './utils';
 
-const getMovies = async () => {
-    const moviesResponse = await fetch(`${domain}/movies`);
+const domain = 'http://localhost:3001'; //should use an env variable
+
+const getMovies = async (filters = {}) => {
+    const queryParams = buildQueryParams(filters);
+    const moviesResponse = await fetch(`${domain}/movies?${queryParams}`);
     const moviesData = await moviesResponse.json();
-    return moviesData
+    return moviesData;
 };
 
 const getStudios = async () => {
@@ -12,7 +15,14 @@ const getStudios = async () => {
     return studiosData;
 };
 
+const getGenres = async () => {
+    const genresResponse = await fetch(`${domain}/genres`);
+    const genresData = await genresResponse.json();
+    return genresData;
+};
+
 export default {
     getMovies,
-    getStudios
+    getStudios,
+    getGenres
 }

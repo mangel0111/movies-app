@@ -1,6 +1,3 @@
-import {GENRE_STRING} from '../constants/studio_constants.mjs'
-
-
 export const getMovie = (movieId, studios) => {
   let movie;
   let studio = studios.find(t => {
@@ -14,11 +11,26 @@ export const getMovie = (movieId, studios) => {
   return false
 };
 
-export const getAllMoviesFromStudios = (studios) => {
+//we can use lodash instead
+const isObjectEmpty = (objectName) => {
+  return Object.keys(objectName).length === 0
+}
+
+const matchesFilters = (movie, {genre, title, minPrice, maxPrice}) => {
+  return (!genre || movie.genre === +genre) &&
+      (!title || movie.name.toLowerCase().includes(title.toLowerCase())) &&
+      (!minPrice || movie.price >= +minPrice) &&
+      (!maxPrice || movie.price <= +maxPrice);
+}
+
+export const getMoviesFromStudios = (studios, filters = {}) => {
   let allMovies = [];
+  const shouldFilter = !isObjectEmpty(filters);
   studios.forEach(singleStudio => {
-    singleStudio.movies.map(movie => {
-      allMovies.push(movieConstructor(movie, singleStudio))
+    singleStudio.movies.forEach(movie => {
+      if(!shouldFilter || matchesFilters(movie, filters)){
+        allMovies.push(movieConstructor(movie, singleStudio))
+      }
     })
   });
   return allMovies;
@@ -26,12 +38,10 @@ export const getAllMoviesFromStudios = (studios) => {
 
 export const movieConstructor = (movie, studio) => {
   //Add studioId from parent object
-  Object.defineProperty(movie, 'studioId',
-    Object.getOwnPropertyDescriptor(studio, 'id'));
+  const withStudioId = {...movie, studioId: studio.id};
   //Remove non wanted properties
-  delete movie['price'];
-  delete movie['id'];
+  const {id, price, ...restMovie} = withStudioId;
 
-  return movie;
+  return restMovie;
 }
 
