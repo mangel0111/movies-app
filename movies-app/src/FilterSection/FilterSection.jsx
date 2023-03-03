@@ -5,15 +5,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import api from '../api';
 
-const FilterSection = ({setFilterValues, filterValues}) => {
+const FilterSection = ({setFilterValues}) => {
 
     const [genres, setGenres] = useState([]);
     const styles = useStyles();
-    const [filters, setFilters] = useState(filterValues);
-
-    useEffect(() =>{
-        setFilters(filterValues)
-    }, [filterValues]);
+    const [filters, setFilters] = useState({});
 
     const handleChange = (event, key) => {
         setFilters((prevState) => ({...prevState, [key]: event.target.value}));
@@ -49,7 +45,7 @@ const FilterSection = ({setFilterValues, filterValues}) => {
                 <MenuItem key={"all"} value={''}>
                     All
                 </MenuItem>
-                {genres.map(genre => 
+                {genres?.map(genre => 
                 <MenuItem key={genre.key} value={genre.key}>{genre.text}</MenuItem>
                 )}
             </TextField>
@@ -61,7 +57,7 @@ const FilterSection = ({setFilterValues, filterValues}) => {
                 inputProps={{ 'data-testid': 'title-filter' }}
                 variant="outlined"
                 onChange={(e) => handleChange(e, 'title')}
-                value={filters?.title}    
+                value={filters?.title || ''}    
             />
 
             <TextField 
@@ -71,7 +67,7 @@ const FilterSection = ({setFilterValues, filterValues}) => {
                 variant="outlined"
                 inputProps={{ type: 'number', 'data-testid': 'min-price-filter' }}
                 onChange={(e) => handleChange(e, 'minPrice')}
-                value={filters?.minPrice}
+                value={filters?.minPrice || ''}
             />
 
             <TextField 
@@ -81,7 +77,7 @@ const FilterSection = ({setFilterValues, filterValues}) => {
                 variant="outlined"
                 inputProps={{ type: 'number', 'data-testid': 'max-price-filter' }}
                 onChange={(e) => handleChange(e, 'maxPrice')}
-                value={filters?.maxPrice}
+                value={filters?.maxPrice || ''}
             />
             <Button 
                 id="filterButton"

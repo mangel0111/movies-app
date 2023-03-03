@@ -65,7 +65,7 @@ app.post('/transfer', function (req, res) {
     const {remainingMovies, removedMovie} = removeMovieFromStudio(movieStudio, movieId);
     studioTo.movies.push(removedMovie);
     movieStudio.movies = remainingMovies;
-    res.json(getMoviesFromStudios(studios))
+    res.json({ message: 'Book successfully transfered'})
   } catch (e) {
     res.status(500).json({ message: "Error in invocation of API: /transfer" });
   }
