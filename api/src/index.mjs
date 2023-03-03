@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
 import bodyParser from 'body-parser'
 import {
   getMoviesFromStudios,
@@ -13,6 +14,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(morgan('common'));
 
 app.get('/studios', function (req, res) {
   let disneyTemp = {...disney}
@@ -32,7 +34,7 @@ app.get('/movies', function (req, res) {
   try {
     res.json(getMoviesFromStudios([disney, warner, sony], req.query))
   } catch (e) {
-    res.statusCode = 500;
+    res.status(500).json({ message: "Error in invocation of API: /movies" });
   }
 });
 
@@ -48,7 +50,7 @@ app.get('/genres', function(req, res) {
     }));
     res.json(genres)
   } catch (e) {
-    res.statusCode = 500;
+    res.status(500).json({ message: "Error in invocation of API: /genres" });
   }
 })
 
@@ -65,10 +67,8 @@ app.post('/transfer', function (req, res) {
     movieStudio.movies = remainingMovies;
     res.json(getMoviesFromStudios(studios))
   } catch (e) {
-    res.statusCode = 500;
+    res.status(500).json({ message: "Error in invocation of API: /transfer" });
   }
 });
-
-// TODO: 2 Add logging capabilities into the movies-app
 
 app.listen(3001)
