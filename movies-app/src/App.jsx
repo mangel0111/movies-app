@@ -55,9 +55,9 @@ const App = () => {
                 <div>
                   <Typography className={styles.movieName}>
                     {movie.name + ' '}
-                    <Typography className={styles.moviePosition}>
+                    <span className={styles.moviePosition}>
                       {movie.position}
-                    </Typography>
+                    </span>
                   </Typography>
                 </div>
                 <Typography>{

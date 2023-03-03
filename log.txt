@@ -11,3 +11,6 @@
 11. Added a little logic to show a No results text if filtering with no results. The proper solution would be adding a status controller and a nice spinner when loading.
 12. A direct price filter was first added. But then it was changed to a min and max, since it's more reasonable. We can discuss it's value since we're not showing the price to the user.
 13. Decided to use tree shaking to import material ui components.
+14. Had a hard time defining how to access Material UI texfields (especially genre selector). Included a testId to every filter component. Analyzed genre selector to reproduce user usage.
+15. Defined just one integration test of app to cover everything following testing library guidance "Write tests. Not too many. Mostly integration".
+16. Would've better to use msw instead of common js.mock

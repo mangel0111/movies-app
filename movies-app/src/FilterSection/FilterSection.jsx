@@ -38,8 +38,10 @@ const FilterSection = ({setFilterValues}) => {
         <div className={styles.filterSection}>
             <TextField
                 id="genre-filter"
+                name="genre-filter"
                 label="Genre"
                 className={styles.filterItem}
+                inputProps={{ 'data-testid': 'genre-filter' }}
                 select
                 variant="outlined"
                 onChange={(e) => handleChange(e, 'genre')}
@@ -57,6 +59,7 @@ const FilterSection = ({setFilterValues}) => {
                 id="title-filter"
                 label="Title"
                 className={styles.filterItem}
+                inputProps={{ 'data-testid': 'title-filter' }}
                 variant="outlined"
                 onChange={(e) => handleChange(e, 'title')}
                 value={filters.title}    
@@ -67,7 +70,7 @@ const FilterSection = ({setFilterValues}) => {
                 label="Min Price"
                 className={styles.filterItem}
                 variant="outlined"
-                inputProps={{ type: 'number' }}
+                inputProps={{ type: 'number', 'data-testid': 'min-price-filter' }}
                 onChange={(e) => handleChange(e, 'minPrice')}
                 value={filters.price}
             />
@@ -77,7 +80,7 @@ const FilterSection = ({setFilterValues}) => {
                 label="Max Price"
                 className={styles.filterItem}
                 variant="outlined"
-                inputProps={{ type: 'number' }}
+                inputProps={{ type: 'number', 'data-testid': 'max-price-filter' }}
                 onChange={(e) => handleChange(e, 'maxPrice')}
                 value={filters.price}
             />
