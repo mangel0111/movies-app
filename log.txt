@@ -13,4 +13,5 @@
 13. Decided to use tree shaking to import material ui components.
 14. Had a hard time defining how to access Material UI texfields (especially genre selector). Included a testId to every filter component. Analyzed genre selector to reproduce user usage.
 15. Defined just one integration test of app to cover everything following testing library guidance "Write tests. Not too many. Mostly integration".
-16. Would've better to use msw instead of common js.mock
+16. Would've better to use msw instead of common js.mock.
+17. Need to add proper error handling.

@@ -1,7 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser'
-import {getMoviesFromStudios} from '../src/helpers.mjs'
+import {
+  getMoviesFromStudios,
+  getMovieStudio,
+  getStudio,
+  removeMovieFromStudio
+} from '../src/helpers.mjs'
 import {sony, warner, disney, movieAge, GENRE_STRING} from '../constants/studio_constants.mjs'
 
 const app = express();
@@ -47,8 +52,21 @@ app.get('/genres', function(req, res) {
   }
 })
 
-//TODO: 1 add the capability to sell the movie rights to another studio
 app.post('/transfer', function (req, res) {
+  try {
+    const { movieId, studioId } = req.body;
+    const studios = [disney, warner, sony];
+    const movieStudio = getMovieStudio(movieId, studios);
+    if(movieStudio.id === studioId) 
+    throw new Error("Buyer and seller can't be the same");
+    const studioTo = getStudio(studioId, studios);
+    const {remainingMovies, removedMovie} = removeMovieFromStudio(movieStudio, movieId);
+    studioTo.movies.push(removedMovie);
+    movieStudio.movies = remainingMovies;
+    res.json(getMoviesFromStudios(studios))
+  } catch (e) {
+    res.statusCode = 500;
+  }
 });
 
 // TODO: 2 Add logging capabilities into the movies-app

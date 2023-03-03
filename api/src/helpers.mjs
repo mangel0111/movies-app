@@ -40,8 +40,30 @@ export const movieConstructor = (movie, studio) => {
   //Add studioId from parent object
   const withStudioId = {...movie, studioId: studio.id};
   //Remove non wanted properties
-  const {id, price, ...restMovie} = withStudioId;
+  const {price, ...restMovie} = withStudioId;
 
   return restMovie;
-}
+};
 
+export const getMovieStudio = (movieId, studios) => (
+  studios.find(studio => 
+    studio.movies.some(movie => movie.id === movieId)
+  )
+);
+
+export const getStudio = (studioId, studios) => (
+  studios.find(studio => 
+    studio.id === studioId
+  )
+);
+
+export const removeMovieFromStudio = (studio, movieId) =>{
+  return studio.movies.reduce((acc, movie) => {
+    if (movie.id !== movieId) {
+      acc.remainingMovies.push(movie)
+    }else{
+      acc.removedMovie = movie
+    }
+    return acc;
+  }, {remainingMovies:[], removedMovie:null});
+}
