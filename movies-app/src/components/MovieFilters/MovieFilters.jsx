@@ -38,7 +38,7 @@ function MovieFilters({ filters, onChangeFilter, genreOptions }) {
           type="number"
           label="Price Min"
           size={"small"}
-          value={filters.price.min}
+          value={filters.price?.min}
           onChange={(e) =>
             onChangeFilter("price", { ...filters.price, min: e.target.value })
           }
@@ -47,7 +47,7 @@ function MovieFilters({ filters, onChangeFilter, genreOptions }) {
           type="number"
           label="Price Max"
           size={"small"}
-          value={filters.price.max}
+          value={filters.price?.max}
           onChange={(e) =>
             onChangeFilter("price", { ...filters.price, max: e.target.value })
           }
