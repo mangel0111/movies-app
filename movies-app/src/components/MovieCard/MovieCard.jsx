@@ -1,7 +1,7 @@
 import "./MovieCard.css";
-import { Avatar, Card, Grid, Typography } from "@mui/material";
+import { Avatar, Card, Grid, Typography, Button } from "@mui/material";
 import { defaultAvatar } from "../../api/resources";
-import SellMovieModal from "../SellMovieModal";
+import SellIcon from "@mui/icons-material/Sell";
 
 function MovieCard({ movie, studios, handleSellMovie }) {
   return (
@@ -18,12 +18,14 @@ function MovieCard({ movie, studios, handleSellMovie }) {
             {movie.name + " "}
           </Typography>
         </div>
-        <Typography>{movie.studio}</Typography>
-        <SellMovieModal
-          movie={movie}
-          studios={studios}
-          handleSubmit={handleSellMovie}
-        />
+        <Typography>{studios[movie.studioId]}</Typography>
+        <Button
+          variant={"contained"}
+          startIcon={<SellIcon />}
+          onClick={handleSellMovie}
+        >
+          ${movie?.price} | Sell
+        </Button>
       </Card>
     </Grid>
   );

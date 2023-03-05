@@ -6,10 +6,6 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
-import SellIcon from "@mui/icons-material/Sell";
-import { sellMovie } from "../../api/movies";
 
 const style = {
   position: "absolute",
@@ -23,55 +19,19 @@ const style = {
   p: 4,
 };
 
-const DEFAULT_ALERT = { message: undefined, severity: "success" };
-
-function SellMovieModal({ movie, studios, handleSubmit }) {
-  const [alert, setAlert] = useState({ ...DEFAULT_ALERT });
-  const [isOpen, setIsOpen] = useState(false);
+function SellMovieModal({ isOpen, closeModal, movie, studios, onSubmit }) {
   const [selectedStudio, setSelectedStudio] = useState(null);
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    sellMovie(movie.id, selectedStudio.id)
-      .then(() => {
-        setAlert({
-          message: "Sale succesfully completed",
-          severity: "success",
-        });
-        setIsOpen(false);
-        handleSubmit();
-      })
-      .catch((e) => {
-        setAlert({
-          message: e.message,
-          severity: "error",
-        });
-        setIsOpen(false);
-      });
+    onSubmit(movie.id, selectedStudio);
   };
 
   return (
     <>
-      <Snackbar
-        open={!!alert.message}
-        autoHideDuration={4000}
-        onClose={() => setAlert((prev) => ({ ...prev, message: undefined }))}
-      >
-        <Alert variant="filled" severity={alert.severity}>
-          {alert.message}
-        </Alert>
-      </Snackbar>
-
-      <Button
-        variant={"contained"}
-        startIcon={<SellIcon />}
-        onClick={() => setIsOpen(true)}
-      >
-        ${movie?.price} | Sell
-      </Button>
       <Modal
         open={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={closeModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -105,13 +65,13 @@ function SellMovieModal({ movie, studios, handleSubmit }) {
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => setIsOpen(false)}
+              onClick={closeModal}
             >
               Cancell
             </Button>
             <Button
               disabled={selectedStudio === null}
-              onClick={onSubmit}
+              onClick={handleSubmit}
               variant="contained"
             >
               Sell

@@ -64,3 +64,5 @@
     Could also work for improving the Alert component, there is no need to have
     one alert for each movie
 
+- Refactored the components to remove most prop drilling by using custom hooks
+  Now alert and modal components render only once and not for each movie.
