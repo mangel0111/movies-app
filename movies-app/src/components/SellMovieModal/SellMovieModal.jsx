@@ -55,6 +55,9 @@ function SellMovieModal({ isOpen, closeModal, movie, studios, onSubmit }) {
             getOptionLabel={(option) => option?.name}
             options={studios}
             renderInput={(params) => <TextField {...params} label="Studio" />}
+            isOptionEqualToValue={(option, value) =>
+              option.id === value.id && option.name === value.name
+            }
           />
 
           <Stack
@@ -62,11 +65,7 @@ function SellMovieModal({ isOpen, closeModal, movie, studios, onSubmit }) {
             spacing={4}
             sx={{ justifyContent: "right", mt: 2 }}
           >
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={closeModal}
-            >
+            <Button variant="contained" color="secondary" onClick={closeModal}>
               Cancell
             </Button>
             <Button
