@@ -1,8 +1,12 @@
 import './index.css'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
-import React from 'react'
-import {render} from 'react-dom'
+import MoviesBoard from "./components/MoviesBoard";
 
-import App from './App.jsx'
-
-render(<App/>, document.getElementById('root'))
+const root = createRoot(document.getElementById("root"));
+root.render(
+  <StrictMode>
+    <MoviesBoard />
+  </StrictMode>
+);
