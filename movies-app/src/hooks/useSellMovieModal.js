@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { sellMovie } from "../api/movies";
 
 const DEFAULT_ALERT = { msg: undefined, type: "success" };
@@ -7,9 +7,10 @@ function useSellMovieModal(onSuccess, onFailure) {
   const [isOpen, setIsOpen] = useState(false);
   const [notification, setNotification] = useState({ ...DEFAULT_ALERT });
 
-  const handleSellMovie = (movieId, selectedStudio) => {
+  const handleSellMovie = useCallback((movieId, selectedStudio) => {
     sellMovie(movieId, selectedStudio.id)
-      .then(() => {
+      .then((response) => {
+        if (!response.ok) throw new Error(response)
         setIsOpen(false);
         setNotification({ msg: "Sale succesfully completed", type: "success" });
         onSuccess && onSuccess();
@@ -19,7 +20,7 @@ function useSellMovieModal(onSuccess, onFailure) {
         setNotification({ msg: "Sorry try again latter", type: "error" });
         onFailure && onFailure();
       });
-  };
+  }, [onSuccess, onFailure]);
 
   const closeNotification = () =>
     setNotification((prev) => ({ ...prev, message: undefined }));

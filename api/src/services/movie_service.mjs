@@ -1,14 +1,14 @@
-import { getMovie } from "../helpers.mjs";
 import logger from "../logger.mjs";
-import { allStudios } from "../../constants/studio_constants.mjs";
-
-/* const validateTransfer */
+import { allStudios, GENRE_STRING } from "../../constants/studio_constants.mjs";
+import { SuccessResponse, ErrorResponse } from './service_response.mjs'
 
 export const transferMovie = (movieId, recipientStudioId) => {
-  const { movie, studioId: sellerStudioId } = getMovie(movieId, allStudios);
-  if (!movie) {
+  const getMovieResult = getMovie(movieId, allStudios);
+  if (getMovieResult.success) {
     return ErrorResponse(`Movie ${movieId} not found`, 404);
   }
+
+  const { movie, studioId: sellerStudioId } = getMovieResult.value;
 
   if (sellerStudioId === recipientStudioId) {
     logger.info("tried to transfer movie to itself");
@@ -41,18 +41,50 @@ export const transferMovie = (movieId, recipientStudioId) => {
   return SuccessResponse();
 };
 
-function ErrorResponse(message, status) {
-  return {
-    success: false,
-    message,
-    status,
-  };
-}
+export const getMovie = (movieId, studios) => {
+  let movie;
+  const studio = studios.find((studio) => {
+    movie = studio.movies.find((p) => p.id === movieId);
+    return movie;
+  });
 
-function SuccessResponse(value, status = 200) {
-  return {
-    success: true,
-    value,
-    status,
-  };
-}
+  if (movie && studio) {
+    return SuccessResponse({ movie, studioId: studio.id });
+  }
+
+  return ErrorResponse(`Movie ${movieId} not found`, 404);
+};
+
+export const getAllMoviesFromStudios = (studios) => {
+  let allMovies = [];
+  studios.forEach((singleStudio) => {
+    singleStudio.movies.map((movie) => {
+      allMovies.push(movieConstructor(movie, singleStudio));
+    });
+  });
+  return allMovies;
+};
+
+export const movieConstructor = (movie, studio) => {
+  //Set url property to img
+  if (movie.url) {
+    Object.defineProperty(
+      movie,
+      "img",
+      Object.getOwnPropertyDescriptor(movie, "url")
+    );
+    delete movie["url"];
+  }
+  //Map position id to string
+  else if (typeof movie.position === "number") {
+    movie["position"] = GENRE_STRING[movie.price];
+  }
+  //Add studioId from parent object
+  Object.defineProperty(
+    movie,
+    "studioId",
+    Object.getOwnPropertyDescriptor(studio, "id")
+  );
+
+  return movie;
+};
