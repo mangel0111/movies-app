@@ -7,7 +7,7 @@ import MovieListSection from './MovieListSection';
 const App = () => {
   const [studios, setStudios] = useState([]);
   const [movies, setMovies] = useState([]);
-  const [filters, setFilters] = useState(null);
+  const [filters, setFilters] = useState(undefined);
   const [transferData, setTransferData] = useState(null);
 
   const styles = useStyles();

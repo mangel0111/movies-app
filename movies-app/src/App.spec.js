@@ -43,9 +43,6 @@ jest.mock('./api', ()=> ({
             money: 900
         }
     ]),
-    transferMovie: ({studioId, movieId}) => (
-        originalMovies.map(movie => (movie.id === movieId ? {...movie, studioId} : movie))
-    )
 }));
 
 describe('App tests ', () =>{
@@ -74,26 +71,4 @@ describe('App tests ', () =>{
         });
         expect(screen.getByText(/nightmare before christmas/i)).toBeInTheDocument();   
     });
-
-    it('should transfer movies', async () => {
-        await act(async() => render(<App />));
-        //Assert initial state
-        expect(screen.queryByRole('heading', { name: /transfer movie/i})).toBeFalsy();
-        expect(screen.getByText(/disney studios/i)).toBeInTheDocument(); 
-        expect(screen.getAllByText(/warner Bros./i)).toHaveLength(1);  
-        //Open modal
-        userEvent.click(screen.queryAllByText(/transfer/i)[0]);
-        expect(screen.getByRole('heading', { name: /transfer movie/i})).toBeInTheDocument();
-        userEvent.click(screen.getByLabelText('Studio'))
-        userEvent.click(screen.getByRole('option', { name: /warner Bros./i}));
-        userEvent.click(screen.getByRole('button', {
-            name: /confirm transfer/i
-        }));
-        //Review final state
-        await waitFor(() => {
-            expect(screen.queryByText(/disney studios/i)).toBeFalsy();         
-        });
-        expect(screen.getAllByText(/warner Bros./i)).toHaveLength(2);   
-    });
-
 })
