@@ -15,15 +15,20 @@ const TransferModal = ({open, onClose, studios, movieId, confirmTransfer}) => {
         setSelectedStudio(event.target.value);
     };
 
+    const handleClose = () => {
+        setSelectedStudio('');
+        onClose();
+    }
+
     const handleTransfer = () => {
         confirmTransfer(selectedStudio, movieId);
-        onClose();
+        handleClose();
     }
 
     return (
     <Modal
         open={open}
-        onClose={onClose}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
     >

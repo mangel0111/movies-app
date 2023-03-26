@@ -16,6 +16,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan('common'));
 
+const errorHandler = (error, req, res, next) => {
+  const status = error.status || 500;
+  res.status(status).send(error.message);
+}
+
 app.get('/studios', function (req, res) {
   let disneyTemp = {...disney}
   delete disneyTemp.movies
@@ -30,45 +35,38 @@ app.get('/studios', function (req, res) {
   ])
 });
 
-app.get('/movies', function (req, res) {
-  try {
-    res.json(getMoviesFromStudios([disney, warner, sony], req.query))
-  } catch (e) {
-    res.status(500).json({ message: "Error in invocation of API: /movies" });
-  }
+app.get('/movies', function (req, res, next) {
+  res.json(getMoviesFromStudios([disney, warner, sony], req.query))
 });
 
 app.get('/movieAge', function (req, res) {
   res.json(movieAge)
 });
 
-app.get('/genres', function(req, res) {
-  try {
-    const genres = Object.keys(GENRE_STRING).map(key => ({
-      key,
-      text: GENRE_STRING[key],
-    }));
-    res.json(genres)
-  } catch (e) {
-    res.status(500).json({ message: "Error in invocation of API: /genres" });
-  }
+app.get('/genres', function(req, res, next) {
+  const genres = Object.keys(GENRE_STRING).map(key => ({
+    key,
+    text: GENRE_STRING[key],
+  }));
+  res.json(genres)
 })
 
 app.post('/transfer', function (req, res) {
-  try {
     const { movieId, studioId } = req.body;
     const studios = [disney, warner, sony];
     const movieStudio = getMovieStudio(movieId, studios);
-    if(movieStudio.id === studioId) 
-    throw new Error("Buyer and seller can't be the same");
+    if(movieStudio.id === studioId) {
+      let error = new Error("Buyer and seller can't be the same");
+      error.status = 400;
+      throw error;
+    }
     const studioTo = getStudio(studioId, studios);
     const {remainingMovies, removedMovie} = removeMovieFromStudio(movieStudio, movieId);
     studioTo.movies.push(removedMovie);
     movieStudio.movies = remainingMovies;
     res.json({ message: 'Book successfully transfered'})
-  } catch (e) {
-    res.status(500).json({ message: "Error in invocation of API: /transfer" });
-  }
 });
+
+app.use(errorHandler);
 
 app.listen(3001)

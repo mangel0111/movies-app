@@ -15,5 +15,21 @@ export const useStyles = makeStyles(() => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+      },
+      success: {
+        left: 'auto',
+        transform: 'inherit',
+        right: 0,
+        '& > div': {
+          backgroundColor: 'green',
+        }
+      },
+      error: {
+        left: 'auto',
+        transform: 'inherit',
+        right: 0,
+        '& > div':{
+          backgroundColor: 'crimson',
+        }
       }
 }));

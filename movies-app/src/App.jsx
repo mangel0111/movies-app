@@ -3,22 +3,31 @@ import { useStyles } from './App.styles';
 import FilterSection from './FilterSection';
 import api from './api';
 import MovieListSection from './MovieListSection';
+import Snackbar from '@material-ui/core/Snackbar';
  
 const App = () => {
   const [studios, setStudios] = useState([]);
   const [movies, setMovies] = useState([]);
   const [filters, setFilters] = useState(undefined);
   const [transferData, setTransferData] = useState(null);
+  const [notification, setNotification] = useState(null);
 
   const styles = useStyles();
 
   useEffect(() => {
-    fetchData().catch(console.error);
+    fetchData().catch((e) => {
+      setNotification({message: 'An error ocurred when fetching data', severity: 'error'});
+      console.error(e);
+    });
   }, []);
 
   useEffect(() => {
     if(filters){
-      filterData(filters).catch(console.error);
+      filterData(filters).catch((e) => {
+        setNotification({message: 'An error ocurred when filtering', severity: 'error'});
+        console.error(e);
+      }
+      );
     }
   }, [filters]);
 
@@ -47,7 +56,9 @@ const App = () => {
         await api.transferMovie(transferData);
         const movies = await api.getMovies(filters);
         setMovies(movies);
+        setNotification({message: 'Movie Transfered', severity: 'success'});
       }catch(e){
+        setNotification({message: e.response?.data || e.message, severity: 'error'});
         console.error(e)
       }
   }
@@ -58,6 +69,13 @@ const App = () => {
 
   return (
     <div className={styles.appContainer}>
+      <Snackbar
+        className={styles[notification?.severity]}
+        open={!!notification?.message}
+        autoHideDuration={4000}
+        message={notification?.message}
+        onClose={() => setNotification(null)}
+      />
       <div className={styles.appFlex}>
         <FilterSection setFilterValues={setFilters} filterValues={filters} />
         <MovieListSection 
