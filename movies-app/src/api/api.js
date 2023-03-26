@@ -1,7 +1,7 @@
 import { buildQueryParams } from './utils';
 import axios from 'axios';
 
-const domain = 'http://localhost:3001'; //should use an env variable
+export const domain = 'http://localhost:3001'; //should use an env variable
 
 const get = (path) => {
     return axios.get(`${domain}${path}`)

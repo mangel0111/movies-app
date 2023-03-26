@@ -56,7 +56,7 @@ const App = () => {
         await api.transferMovie(transferData);
         const movies = await api.getMovies(filters);
         setMovies(movies);
-        setNotification({message: 'Movie Transfered', severity: 'success'});
+        setNotification({message: 'Movie succesfully transfered', severity: 'success'});
       }catch(e){
         setNotification({message: e.response?.data || e.message, severity: 'error'});
         console.error(e)
