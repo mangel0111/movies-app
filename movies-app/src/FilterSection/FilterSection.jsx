@@ -1,15 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { useStyles } from './FilterSection.styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import api from '../api';
+import { useGenresData } from './hooks/useGenresData';
 
 const FilterSection = ({setFilterValues}) => {
 
-    const [genres, setGenres] = useState([]);
     const styles = useStyles();
     const [filters, setFilters] = useState({});
+
+    
 
     const handleChange = (event, key) => {
         setFilters((prevState) => ({...prevState, [key]: event.target.value}));
@@ -19,14 +20,7 @@ const FilterSection = ({setFilterValues}) => {
         setFilterValues(filters);
     };
 
-    useEffect(() => {
-        fetchData().catch(console.error);
-    }, []);
-    
-    const fetchData = async () => {
-        const genresData = await api.getGenres();
-        setGenres(genresData);
-    };
+    const { data: genres } = useGenresData();
 
     return(<>
         <h3>Filters:</h3>

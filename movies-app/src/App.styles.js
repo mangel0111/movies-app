@@ -31,5 +31,10 @@ export const useStyles = makeStyles(() => ({
         '& > div':{
           backgroundColor: 'crimson',
         }
+      },
+      spinner: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
       }
 }));

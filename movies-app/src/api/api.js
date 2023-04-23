@@ -38,9 +38,11 @@ const transferMovie = async (body) => {
     return response;
 };
 
-export default {
-    getMovies,
-    getStudios,
-    getGenres,
-    transferMovie
-}
+const api = {
+  getMovies,
+  getStudios,
+  getGenres,
+  transferMovie
+};
+
+export default api;

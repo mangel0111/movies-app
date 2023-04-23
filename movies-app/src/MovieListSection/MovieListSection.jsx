@@ -6,22 +6,24 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useStyles } from './MovieListSection.styles.js'
 import TransferModal from '../TransferModal';
+import { useStudiosData } from './hooks/useStudiosData.js';
 
 const defaultAvatar = 'https://image.shutterstock.com/image-vector/male-avatar-profile-picture-vector-600w-149083895.jpg'
 
 const MovieListSection = ({
     movies,
-    studios,
     confirm,
     showNoResults
 }) => {
     const styles = useStyles();
 
+    const { data: studios } = useStudiosData();
+
     const [showModal, setShowModal] = useState(false);
     const [modalProps, setModalProps] = useState({studios:[]});
 
     const openModal = (studioId, movieId) => {
-        setModalProps({studios: studios.filter(studio => studio.id !== studioId), movieId})
+        setModalProps({studios: studios?.filter(studio => studio.id !== studioId), movieId})
         setShowModal(true);
     };
 
@@ -31,7 +33,7 @@ const MovieListSection = ({
             <h3>Images:</h3>
             <Grid container justify="center" alignItems="center">
             {movies?.length ? movies.map(movie => {
-                const studio = studios.find(studio => (
+                const studio = studios?.find(studio => (
                 movie.studioId === studio.id
                 ))
                 return (

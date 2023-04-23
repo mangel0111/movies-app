@@ -16,4 +16,6 @@
 16. Would've better to use msw instead of common js.mock.
 17. Need to add proper error handling.
 18. Added proper error handling. Included axios to handle requests.
-18. Corrected point 16. Added msw, this allowed to remove MoviesList unit test and complete the full integration test.
+19. Corrected point 16. Added msw, this allowed to remove MoviesList unit test and complete the full integration test.
+20. Added React Query to manage queries, co-locating api calls and adding loading state management. Created a Home component since App component is now used to define query provider.
+21. After this big refactor, testing didn't need to be changed since behavior is the same and testing case is focused on user. Good testing rocks!
