@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useStyles } from '../App.styles';
+import { useStyles } from './Home.styles';
 import FilterSection from '../FilterSection';
 import MovieListSection from '../MovieListSection';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -49,11 +49,13 @@ const Home = () => {
       />
       <div className={styles.appFlex}>
         <FilterSection setFilterValues={setFilters} filterValues={filters} />
-        <MovieListSection 
+        {isLoading ? <div className={styles.spinner}>
+            <CircularProgress />
+        </div> : <MovieListSection 
           movies={movies} 
           confirm={confirmTransfer}
           showNoResults={!!filters}
-        />
+        />}
       </div>
     </div>
   )
