@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useStyles } from './Home.styles';
 import FilterSection from '../FilterSection';
 import MovieListSection from '../MovieListSection';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Spinner from '../Spinner';
 import Snackbar from '@material-ui/core/Snackbar';
 import { useMoviesData, useTransferMovie } from './hooks/useMoviesData';
 
@@ -31,11 +31,7 @@ const Home = () => {
   }
 
   if (isLoading && !filters) {
-    return (
-        <div className={styles.spinner}>
-            <CircularProgress />
-        </div>    
-    )
+    return <Spinner />
   }
 
   return (
@@ -49,13 +45,15 @@ const Home = () => {
       />
       <div className={styles.appFlex}>
         <FilterSection setFilterValues={setFilters} filterValues={filters} />
-        {isLoading ? <div className={styles.spinner}>
-            <CircularProgress />
-        </div> : <MovieListSection 
-          movies={movies} 
-          confirm={confirmTransfer}
-          showNoResults={!!filters}
-        />}
+        {
+            isLoading ? 
+                <Spinner/> : 
+                <MovieListSection 
+                    movies={movies} 
+                    confirm={confirmTransfer}
+                    showNoResults={!!filters}
+                />
+        }
       </div>
     </div>
   )
