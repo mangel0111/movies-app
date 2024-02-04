@@ -1,0 +1,21 @@
+1. index.html wasn't found at movies-app (react) after installing dependencies and trying yarn start. Moved the index.html file from src folder to a new public folder, to follow react-scripts standard. Also changed the main div's name from 'app' to 'root', to match with index.js selector.
+2. When opening "localhost:3000", a "cannot get" error was received. This was happening because react-app and api where listening to the same port, so it was trying to access '/' path of the api. Changed the port for API to 3001.
+3. For Batman's picture (returning 403) and disney images (except Aladdin's) I needed to add a "referrerPolicy=noReferrer". Since we don't own the server and we won't have legal issues for this app.
+4. For Aladdin's picture, since it really doesn't exists anymore, just looked for another image and replaced it at api constants (in a more realistic scenario we should update the database).
+5. For Sony pictures, decided to normalize the data of our "database", since we don't have any restriction. Same for "img" atribute, normalized to "imgUrl" as a more descriptive name.
+6. For App refactor to functional component, memoization via PureComponent was not justified, so component wasn't wrapped with React.memo.
+7. Found a warning because of a map without key. Defined movie.name as key. If we can have repeated names we can expose movie id and use it.
+8. For filtering, defined a simple component on frontend side, and separated it to don't make App.jsx too big and full of states. Since we now have more than one component, proper folders were created. Needed to read Material UI documentation.
+9. Decided to filter on backend side, since we hace the full information there. Defined query params to send the filters.
+10. Needed to refactor movieConstructor function at api/helpers.mjs since it was directly mutating our constant (real scenario: deleting and adding stuff to our database when performing a query).
+11. Added a little logic to show a No results text if filtering with no results. The proper solution would be adding a status controller and a nice spinner when loading.
+12. A direct price filter was first added. But then it was changed to a min and max, since it's more reasonable. We can discuss it's value since we're not showing the price to the user.
+13. Decided to use tree shaking to import material ui components.
+14. Had a hard time defining how to access Material UI texfields (especially genre selector). Included a testId to every filter component. Analyzed genre selector to reproduce user usage.
+15. Defined just one integration test of app to cover everything following testing library guidance "Write tests. Not too many. Mostly integration".
+16. Would've better to use msw instead of common js.mock.
+17. Need to add proper error handling.
+18. Added proper error handling. Included axios to handle requests.
+19. Corrected point 16. Added msw, this allowed to remove MoviesList unit test and complete the full integration test.
+20. Added React Query to manage queries, co-locating api calls and adding loading state management. Created a Home component since App component is now used to define query provider.
+21. After this big refactor, testing didn't need to be changed since behavior is the same and testing case is focused on user. Good testing rocks!

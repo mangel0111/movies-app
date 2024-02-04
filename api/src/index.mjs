@@ -1,44 +1,28 @@
 import express from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
 import bodyParser from 'body-parser'
-import {getAllMoviesFromStudios} from '../src/helpers.mjs'
-import {sony, warner, disney, movieAge} from '../constants/studio_constants.mjs'
+import { getMovies } from "./controllers/moviesController.mjs";
+import { getStudios } from "./controllers/studiosController.mjs";
+import { getGenres } from "./controllers/genresController.mjs";
+import { transferMovie } from "./controllers/transferController.mjs";
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(morgan('common'));
 
-app.get('/studios', function (req, res) {
-  let disneyTemp = {...disney}
-  delete disneyTemp.movies
-  let warnerTemp = {...warner}
-  delete warnerTemp.movies
-  let sonyTemp = {...sony}
-  delete sonyTemp.movies
-  res.json([
-    disneyTemp,
-    warnerTemp,
-    sonyTemp
-  ])
-});
+const errorHandler = (error, req, res, next) => {
+  const status = error.status || 500;
+  res.status(status).send(error.message);
+}
 
-app.get('/movies', function (req, res) {
-  try {
-    res.json(getAllMoviesFromStudios([disney, warner, sony]))
-  } catch (e) {
-    res.statusCode(500)
-  }
-});
+app.get('/studios', getStudios);
+app.get('/movies', getMovies);
+app.get('/genres', getGenres)
+app.post('/transfer', transferMovie);
 
-app.get('/movieAge', function (req, res) {
-  res.json(movieAge)
-});
+app.use(errorHandler);
 
-//TODO: 1 add the capability to sell the movie rights to another studio
-app.post('/transfer', function (req, res) {
-});
-
-// TODO: 2 Add logging capabilities into the movies-app
-
-app.listen(3000)
+app.listen(3001)
